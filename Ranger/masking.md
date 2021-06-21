@@ -43,3 +43,26 @@ STORED AS KUDU
 AS SELECT col1, col2, col3, col4 FROM test;
 ```
 
+
+---
+
+## Restricting Access to a Table
+
+These notes are a work in progress, as an attempt to incrementally understand how spark/hive/impala/zeppelin work with Ranger.
+
+|                                 	| Hue/Impala 	| Hue/Hive  	| Zeppelin %sql 	| Zeppelin %livy.pyspark 	|
+|---------------------------------	|-----------:	|-----------	|---------------	|------------------------	|
+| Deny Public                     	| ok         	| ok        	| no access     	| no access              	|
+| Deny Public; except cnelson2    	| ok         	| ok        	| ok            	| ok                     	|
+| Allow Public                    	| ok         	| ok        	| ok            	| ok                     	|
+| Allow Public; except cnelson2   	| ok         	| ok        	| ok            	| ok                     	|
+| Deny all others = True          	| no access  	| no access 	| no access     	| no access              	|
+| Allow tlepple; Deny all others  	| no access  	| no access 	| no access     	| no access              	|
+| Allow cnelson2; Deny all others 	| ok         	| ok        	| ok            	| ok                     	|
+
+
+The last 2 rows represent what I (user=cnelson2) was able to do.   Tlepple was able to connect to Hue and access the data if he was in the allow set.
+
+In the allow section, Deny all others seems to be the top level way to deny all access, and then incrementally add users to the allow in order to control access.
+
+
