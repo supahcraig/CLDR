@@ -25,7 +25,7 @@ create external table test
 row format delimited
 fields terminated by ','
 stored as textfile
-location 's3a://crn22-uat2/external'
+location 's3a://crn22-uat2/external';
 ```
 
 ---
@@ -33,7 +33,7 @@ location 's3a://crn22-uat2/external'
 ## Create a Ranger Masking Policy on a Column
 
 
-Create a Kudu table
+Create a Kudu table in Impala
 ```
 drop table if exists test_kudu;
 CREATE TABLE test_kudu
