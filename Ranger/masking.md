@@ -13,7 +13,7 @@ hdfs dfs -put test.csv s3a://crn22-uat2/external/test.csv
 hdfs dfs -put test2.csv s3a://crn22-uat2/external/test2.csv
 ```
 
-Build an external table
+Build an external table in Impala
 
 ```
 drop table if exists test;
