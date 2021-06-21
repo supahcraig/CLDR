@@ -57,7 +57,7 @@ These notes are a work in progress, as an attempt to incrementally understand ho
 | Allow Public                    	| ok         	| ok        	| ok            	| ok                     	|
 | Allow Public; except cnelson2   	| ok         	| ok        	| ok            	| ok                     	|
 | Deny all others = True          	| no access  	| no access 	| no access     	| no access              	|
-| Allow tlepple; Deny all others  	| no access  	| no access 	| no access     	| no access              	|
+| Allow tlepple; Deny all others  	| no access  	| no access 	| no access     	| no access              	| <-- tlepple was able to access data
 | Allow cnelson2; Deny all others 	| ok         	| ok        	| ok            	| ok                     	|
 
 
