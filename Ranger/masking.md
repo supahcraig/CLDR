@@ -28,8 +28,8 @@ hdfs dfs -put test2.csv s3a://crn22-uat2/external/ranger_test_2/test2.csv
 Build an external table in Impala
 
 ```
-drop table if exists test;
-create external table test
+drop table if exists impala_external_1;
+create external table impala_external_1
 (col1 varchar,
  col2 varchar,
  col3 varchar,
@@ -38,6 +38,19 @@ row format delimited
 fields terminated by ','
 stored as textfile
 location 's3a://crn22-uat2/external/ranger_test_1';
+```
+
+```
+drop table if exists impala_external_2;
+create external table impala_external_2
+(col1 varchar,
+ col2 varchar,
+ col3 varchar,
+ col4 varchar)
+row format delimited
+fields terminated by ','
+stored as textfile
+location 's3a://crn22-uat2/external/ranger_test_2';
 ```
 
 ---
