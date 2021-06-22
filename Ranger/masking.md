@@ -9,6 +9,7 @@ echo "goodbye,everybody,5678,2.78" > test2.csv
 
 Make 2 folders in your s3 bucket
 ```
+hdfs dfs -mkdir s3a://crn22-uat2/external
 hdfs dfs -mkdir s3a://crn22-uat2/external/ranger_test_1
 hdfs dfs -mkdir s3a://crn22-uat2/external/ranger_test_2
 ```
