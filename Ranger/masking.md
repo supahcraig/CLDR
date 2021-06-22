@@ -13,6 +13,11 @@ hdfs dfs -put test.csv s3a://crn22-uat2/external/test.csv
 hdfs dfs -put test2.csv s3a://crn22-uat2/external/test2.csv
 ```
 
+```
+hdfs dfs -put test.csv s3a://crn22-uat2/external/ranger_test_2/test.csv
+hdfs dfs -put test2.csv s3a://crn22-uat2/external/ranger_test_2/test2.csv
+```
+
 Build an external table in Impala
 
 ```
@@ -25,7 +30,7 @@ create external table test
 row format delimited
 fields terminated by ','
 stored as textfile
-location 's3a://crn22-uat2/external';
+location 's3a://crn22-uat2/external/ranger_test_1';
 ```
 
 ---
@@ -46,7 +51,7 @@ AS SELECT col1, col2, col3, col4 FROM test;
 
 ---
 
-## Restricting Access to a Table
+# Restricting Access to a Table
 
 These notes are a work in progress, as an attempt to incrementally understand how spark/hive/impala/zeppelin work with Ranger.
 
