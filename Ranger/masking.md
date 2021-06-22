@@ -7,10 +7,16 @@ echo "hello,world,1234,3.14" > test.csv
 echo "goodbye,everybody,5678,2.78" > test2.csv
 ```
 
+Make 2 folders in your s3 bucket
+```
+hdfs dfs -mkdir s3a://crn22-uat2/external/ranger_test_1
+hdfs dfs -mkdir s3a://crn22-uat2/external/ranger_test_2
+```
+
 Copy them into your s3 bucket
 ```
-hdfs dfs -put test.csv s3a://crn22-uat2/external/test.csv
-hdfs dfs -put test2.csv s3a://crn22-uat2/external/test2.csv
+hdfs dfs -put test.csv s3a://crn22-uat2/external/ranger_test_1/test.csv
+hdfs dfs -put test2.csv s3a://crn22-uat2/external/ranger_test_1/test2.csv
 ```
 
 ```
