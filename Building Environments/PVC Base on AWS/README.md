@@ -68,7 +68,7 @@ This will create 3 nodes
 
 ## Create pem files
 
-Near the end of the output from that launch script will be two RSA keys, one for web server and one for default.   The default one is the one you will need.  Copy that into a new pem file:
+Near the end of the output from that launch script will be two RSA keys, one for web server and one for default.   The default one is the one you will need.  Copy that into a new pem file on your local machine.   This will be what you use to ssh into the individual nodes.
 
 ```
 -----BEGIN RSA PRIVATE KEY-----
@@ -108,7 +108,7 @@ cd /tmp/resources
 ```
 
 ## Configure Proxy 
-You will not be able to get to the FreeIPA UI w/o configuring your browser to use a proxy
+You will not be able to get to the FreeIPA UI w/o configuring your browser to use a proxy.   If you don't need to use the FreeIPA UI, you likely will not need any of this.
 
 1.  Install Switchy Omega Chrome extension
 2.  Create a new profile 
@@ -168,11 +168,21 @@ Verify the certs are there:
 And you should see your newly imported certs.
 
 ### Reconfigure Ranger in CM
+
 Open the CM UI:
-http://<default-cluster-0 public IP>:7180
-  
+`http://<default-cluster-0 public IP>:7180`
+
 Update the Ranger config setting for 
 `ranger.usersync.source.impl.class` to be `org.apache.ranger.ldapusersync.process.LdapUserGroupBuilder`
   
 Then push the new config to Ranger and restart Ranger services.
+
+  
+---
+
+# Tearing down the environment
+  
+From your docker container, run this to tear everything down.   Be sure to disable your proxy and close that terminal window as well.
+
+`./setup/terraform/terminate.sh default`
 
