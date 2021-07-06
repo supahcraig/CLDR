@@ -137,7 +137,7 @@ Enable the proxy profile you just created.
 
 From a new terminal window _on your local host_, 
 
-`ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o UserKnownHostsFile=/dev/null -i ~pem/pvcbase.pem -CND 8157 centos@<your FreeIPA public IP>`
+`ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o UserKnownHostsFile=/dev/null -i ~/pem/pvcbase.pem -CND 8157 centos@<your FreeIPA public IP>`
 
 This command will allow Switchy Omega to route traffic.  If you kill this command or close the window, the proxy will stop working.
 
