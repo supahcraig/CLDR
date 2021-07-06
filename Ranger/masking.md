@@ -90,8 +90,11 @@ AS SELECT col1, col2, col3, col4 FROM test;
 ## Creating Impala External Tables
 
 Create a new Hadoop SQL policy
-URL = path to the resource, hdfs or s3, or wildcarded:  `*/user/{USER}`
-Set the user/group/role, and give it all the permissions.  No need to delegate admin.
+URL = path to the resource, hdfs or s3, or wildcarded:  `*/user/{USER}` where `{USER}` is a substitution variable used by Ranger
+
+If you use a path, it can be the full path with port:  `hdfs://cdp.3.138.135.93.nip.io:8020/user/{USER}`
+
+Set the user/group/role, and give it all the permissions.  No need to delegate admin for this use case.
 
 
 ---
