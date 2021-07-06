@@ -53,6 +53,21 @@ stored as textfile
 location 's3a://crn22-uat2/external/ranger_test_2';
 ```
 
+And then in Hive
+```
+create external table test.hive_external_test_1
+(col1 string,
+ col2 string,
+ col3 string,
+ col4 string)
+row format delimited
+fields terminated by ','
+stored as textfile
+location '/user/bob/external';
+```
+
+
+
 ---
 
 ## Create a Ranger Masking Policy on a Column
