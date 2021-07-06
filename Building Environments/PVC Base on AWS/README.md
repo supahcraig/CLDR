@@ -55,6 +55,8 @@ cd /edge2ai-workshop/setup/terraform/edge2ai-workshop
 
 And then wait 45 minutes (or more)....
 
+It will prompt you for a registration code very early in the process, you can just hit enter.
+
 
 ## Resulting environment in AWS
 
