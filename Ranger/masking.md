@@ -83,6 +83,16 @@ STORED AS KUDU
 AS SELECT col1, col2, col3, col4 FROM test;
 ```
 
+---
+
+---
+
+## Creating Impala External Tables
+
+Create a new Hadoop SQL policy
+URL = path to the resource, hdfs or s3, or wildcarded:  `*/user/{USER}`
+Set the user/group/role, and give it all the permissions.  No need to delegate admin.
+
 
 ---
 
