@@ -146,7 +146,7 @@ This command will allow Switchy Omega to route traffic.  If you kill this comman
 ---
 
 ## Enable LDAP with Ranger
-This may not be necessary with later stacks.
+This may not be necessary with later stacks.  You may find that the only necessary step is the Ranger user sync configuration setting in Cloudera Manager.
 
 From the CM node sudo to root:  `sudo -i`
 
