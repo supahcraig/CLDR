@@ -99,11 +99,13 @@ AWS requires that pem files have specific permissions:
 
 `chmod 400 pvcbase.pem`
 
+Using that pem file, SSH into the CM node using the `centos` user.
+
 
 ## Reset the environment
 NGL, no idea what this step does.
 
-SSH into the CM node
+Run this command:
 ```
 cd /tmp/resources
  . reset-to-lab.sh 9
