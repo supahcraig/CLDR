@@ -70,7 +70,7 @@ This will create 3 nodes
 
 ## Create pem files
 
-Near the end of the output from that launch script will be two RSA keys, one for web server and one for default.   The default one is the one you will need.  Copy that into a new pem file on your local machine.   This will be what you use to ssh into the individual nodes.
+Near the end of the output from that launch script will be two RSA keys, one for web server and one for default.   The default one (not the web one) is the one you will need.  Copy that into a new pem file on your local machine.   This will be what you use to ssh into the individual nodes.
 
 ```
 -----BEGIN RSA PRIVATE KEY-----
