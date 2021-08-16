@@ -188,7 +188,59 @@ Update the Ranger config setting for
   
 Then push the new config to Ranger and restart Ranger services.
 
-  
+---
+
+# Preparing for a demo
+
+## Create an S3 bucket to land data
+cnelson2-pvc is a good name.  You may want to clear out contents from prior demos.
+
+
+## Configure cluster for S3
+From CM home, find the 3 dots to the right of you cluster name, choose `Add Service` and find `S3 Connector`
+
+You'll be prompted for your AWS access key & secret key.   Don't enable S3 guard (creates a dynamoDB instance and S3 is consistent now)
+
+Continue to set up the S3 Connector service, use the less secure option (to make things easy)
+Restart services.
+
+## Import nifi template
+
+`twitter-s3-ingest.xml`
+
+
+## Configure nifi template
+* add twitter credentials to `GetTwitter`
+* add AWS creds to PutS3
+* add s3 bucket name to PutS3
+* update hostname on PublishKafka
+* update hostname on ConsumeKafka
+
+## Configure Impala/Hive/Hue
+
+create database baseball_s3 location 's3a://cnelson2-pvc/baseball/';
+
+```
+drop table if exists baseball_s3.tweets;
+create external table baseball_s3.tweets
+(col_1 string)
+stored as textfile
+location 's3a://cnelson2-pvc/twitter-raw'; --/84273115836907';
+
+create table baseball_s3.tweets_curated 
+stored as parquet
+as
+select get_json_object(t.col_1, '$.id') as tweet_id
+     , get_json_object(t.col_1, '$.text') as tweet_text
+     , get_json_object(t.col_1, '$.created_at') as created_at
+     , get_json_object(t.col_1, '$.entities.hashtags[0].text') as hashtag_1
+     , get_json_object(t.col_1, '$.entities.hashtags[1].text') as hashtag_2
+from baseball.tweets t;
+
+select * from baseball_s3.tweets_curated;
+```
+
+
 ---
 
 # Tearing down the environment
