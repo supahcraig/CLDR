@@ -110,7 +110,7 @@ Using that pem file, SSH into the CM node using the `centos` user.
 
 
 ## Reset the environment
-NGL, no idea what this step does.
+This step builds out the EFM & Nifi flows, and likely other components as well.
 
 Run this command:
 ```
@@ -192,6 +192,9 @@ Then push the new config to Ranger and restart Ranger services.
 
 # Preparing for a demo
 
+(much of this is handled by the reset labs script, but if you want to something beyond that...)
+
+
 ## Create an S3 bucket to land data
 cnelson2-pvc is a good name.  You may want to clear out contents from prior demos.
 
@@ -207,6 +210,15 @@ Restart services.
 ## Import nifi template
 
 `twitter-s3-ingest.xml`
+
+### Unsecure cluster
+
+
+### Secure Cluster
+* The kafka brokers are on port `9093`
+* Keytabs are found in `/keytabs/` and the `admin.keytab` is the one you'll use for demo purposes
+* Kerberos principal is `admin`
+* 
 
 
 ## Configure nifi template
