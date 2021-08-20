@@ -48,11 +48,13 @@ It doesn't matter how you get the code into the container, but here is an easy w
 
 
 To create a secured cluster:
-`curl -k "https://github.infra.cloudera.com/raw/araujo/workshop-templates/master/stack.cdp717-secure.sh" > ./setup/terraform/resources/stack.sh`
+
+```curl -k "https://github.infra.cloudera.com/raw/araujo/workshop-templates/master/stack.cdp717-secure.sh" > ./setup/terraform/resources/stack.sh```
 
 
 To create an unsecured cluster:
-`curl -k "https://github.infra.cloudera.com/raw/araujo/workshop-templates/master/stack.cdp717.sh" > ./setup/terraform/resources/stack.sh`
+
+```curl -k "https://github.infra.cloudera.com/raw/araujo/workshop-templates/master/stack.cdp717.sh" > ./setup/terraform/resources/stack.sh```
 
 
 ```
