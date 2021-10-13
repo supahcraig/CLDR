@@ -112,7 +112,7 @@ AWS requires that pem files have specific permissions:
 
 `chmod 400 pvcbase.pem`
 
-Using that pem file, SSH into the CM node using the `centos` user.
+Using that pem file, SSH into the CM node (that is, the "default-cluster" node) using the `centos` user.
 
 
 ## Reset the environment
