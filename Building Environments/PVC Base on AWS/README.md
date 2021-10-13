@@ -114,6 +114,8 @@ AWS requires that pem files have specific permissions:
 
 Using that pem file, SSH into the CM node (that is, the "default-cluster" node) using the `centos` user.
 
+You may need to add your IP address to the security group for all traffic on all ports.
+
 
 ## Reset the environment
 This step builds out the EFM & Nifi flows, and likely other components as well.
