@@ -27,9 +27,9 @@ aws ec2 describe-instances --filters Name=tag:owner,Values=cnelson2 Name=instanc
 
 ### NiFi Steps
 * add an ExecuteProcess
-*   `Command`: `python3`
-*   `Command Arguments`: `/opt/demo/simulate.py`
-*   Set Run Schedule to 1 sec
-*   Terminate success
+  * `Command`: `python3`
+  * `Command Arguments`: `/opt/demo/simulate.py`
+  * Set Run Schedule to 1 sec
+  * Terminate success
 
 
