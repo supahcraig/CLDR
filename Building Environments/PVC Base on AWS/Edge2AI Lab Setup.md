@@ -23,9 +23,9 @@ aws ec2 describe-instances --filters Name=tag:owner,Values=cnelson2 Name=instanc
 | CDSW                      	|       	|                	|                    	|
 
 
-## Setting up The Edge to Kafka Flow
+# Setting up The Edge to Kafka Flow
 
-### Schema Registry Steps
+## Schema Registry Steps
 * Copy the schema definition:  `https://raw.githubusercontent.com/cloudera-labs/edge2ai-workshop/master/sensor.avsc`
  * In the schema registry UI, click `+` to register a new schema
  * Paste the schema text
@@ -37,23 +37,29 @@ aws ec2 describe-instances --filters Name=tag:owner,Values=cnelson2 Name=instanc
   * `Compatibility:  Backward`
   * `Evolve:  (checked)`
 
-### NiFi Steps
-* add an ExecuteProcess
+## NiFi Steps
+
+### Add ExecuteProcess
  * `Command`: `python3`
  * `Command Arguments`: `/opt/demo/simulate.py`
  * Set Run Schedule to 1 sec
  * Terminate success
-* add an Input Port
+
+### Add an Input Port
  * name it "From Gateway"
  * right click on it and copy the Id (should look something like 078ef0aD-1000-000-00023f6f0e9b)
-* add a Process Group
+
+### Add a Process Group
  * name it Process Senso Data
  * Connect the Input Port to the process group
-* Add 3 Controller Services (under the NiFi global [aka hamburger] menu)
- * Under Registry Clients, add a new registry client
+
+### Add Controller Services
+Under the NiFi global (aka the hamburger), go to Controller Services
+
+1.  Under Registry Clients, add a new registry client
   * `Name:  NiFi Registry`
   * `URL:  http://edge2ai-1.dim.local:18080`
- * Under Reporting Task Controller Services, add a new `HortonworksSchemaRegistry` service
+2.  Under Reporting Task Controller Services, add a new `HortonworksSchemaRegistry` service
   * `Schema Registry URL:  http://edge2ai-1.dim.local:7788/api/v1`
   * Apply & enable the service
  * Add `JsonTreeReader`
