@@ -62,14 +62,38 @@ Under the NiFi global (aka the hamburger), go to Controller Services
 2.  Under Reporting Task Controller Services, add a new `HortonworksSchemaRegistry` service
   * `Schema Registry URL:  http://edge2ai-1.dim.local:7788/api/v1`
   * Apply & enable the service
- * Add `JsonTreeReader`
+3.  Under Reporting Task Controller Services, add a new `JsonTreeReader` service
   * `Schema Access Strategy:  Use 'Schema Name' Property` 
   * `Schema Registry:  HortonworksSchemaRegistry` (this is the service you just created)
   * `Schema Name:  ${schema.name}` (this is the default setting)
   * Apply & enable (click the lightning bolt)
- * Add `JsonRecordSetWriter`
+4.  Under Reporting Task Controller Services, add a new `JsonRecordSetWriter` service
   * `Schema Write Strategy:  HWS Schema Reference Attributes`
   * `Schema Access Strategy:  Use 'Schema Name' Property`
   * `Schema Registry:  HortonworksSchemaRegistry` (this is the service you just created) 
   * Apply & enable (click the lightning bolt)
 
+### Create the Flow
+From within the process group...
+
+1.  Add a new Input Port (name it Sensor Data)
+2.  Add an UpdateAttribute
+ * Name it Set Schema Name
+ * Add a new attribute
+  * `Name:  schema.name`
+  * `Property Value:  SensorReading`
+3.  Connect the Input Port to Set Schema Name
+4.  Add a PublishKafkaRecord_2.6
+  * `Kafka Brokers:  edge2ai-1.dim.local:9092`
+  * `Topic Name:     iot`
+  * `Record Reader:  JsonTreeReader`
+  * `Redord Writer:  JsonRecordSetWriter`
+  * `Use Transactions:  false`
+  * `Attributes to Send as Headers (Regex):  schema.*`
+Then add these properties to help identify the publisher later
+  * `Property Name:  client.id`
+  * `Property Value:  nifi-sensor-data`
+  * Connect to the output of "Set Schema Name"
+  * Terminate on success
+5.  Add a funnel
+  * connect the failure output of the Kafka producer to the funnel
