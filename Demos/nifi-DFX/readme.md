@@ -79,14 +79,14 @@ Getting this service to enable is one of the hardest parts of this whole thing. 
 
 ### Mongo Connectivity
 
-The Mongo processor allows you to establish connectivity either through the Mongo URI setting or through the MongoDBControllerService.  In practice, either work run running out of a Data Hub, _but the controller service did not work when running out of DFX (need to file a bug on that)._
+The Mongo processor allows you to establish connectivity either through the Mongo URI setting or through the MongoDBControllerService.  In practice, either work run running out of a Data Hub.
 
 ##Mongo URI###
 There are two ways to set up the connection string:
-* `mongodb://username:password@host:port`
+* `mongodb://username:password@hostname:port` (where hostname is the *private* IP address of where you are running your containerized Mongo instance.)
 * `mongodb://host:port`
 
-The PutMongoRecord processor does not have a place to put the user/password, so you have to use the first style.  The controller service does have properties for user/password, so you can use the 2nd style.
+The PutMongoRecord processor does not have a place to put the user/password, so you have to use the first style.  The controller service does have properties for user/password, so you can use the 2nd style there.
 
 
 ### Create Parameter Context
@@ -115,7 +115,7 @@ The solution is to parameterize those values.   In particular, you'll need to cr
 * Paremeter Value = `/tmp/postgresql-42.3.1.jar`
 
 Then in the Database Driver Location property, set it to the parameter:  `#{postgres_jar_location}`
-If it changes to blue, you're good to go.   Also, if you type `#{` and hit ctrl+space, all the available paramters will pop up for you.
+If it changes to blue, you're good to go.   Also, if you type `#{` and hit ctrl+space, all the available paramters will pop up for you.  When you import your flow you will have an opportunity to upload this jar file.
 
 
 
