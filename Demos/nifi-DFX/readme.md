@@ -68,6 +68,11 @@ chmod 777 postgresql-42.3.1.jar
 
 ```
 
+### OPTIONAL:  Import flow definition
+This should be just about all you need to do if you just want to import the flow from this repository.  The controller services are all created, the parameter context & parameters are all there with the exception of any sensitive paramters not being set since they are not stored as part of the flow definition for security reasons.
+
+Create a new procesor group and upload the flow definition.  Set the parameters and enable the controller services.   You're done!
+
 
 ### DBCP Connection Pool service
 
