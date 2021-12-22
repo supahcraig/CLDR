@@ -49,7 +49,7 @@ If you want to use Dbeaver and/or MongoDB Compass to log into your containerized
 
 _note:  you may need to be VPN'd so your "naked" home IP may not be what you need_
 
-If you created the containers for Postgres & Mongo on the nifi nodes, then no additional security group rules are needed to allow connectivity.
+If you created the containers for Postgres & Mongo on the nifi nodes, then no additional security group rules are needed to allow connectivity.  Apparently the EC2 instances that DFX spins up live in the default SG, same as the nifi nodes.  So whatever traffic is allowed on the nifi nodes is also allowed on the DFX nodes, and by extension the containers/k8s pods within those nodes.
 
 
 ## Nifi Setup
