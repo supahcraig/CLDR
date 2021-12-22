@@ -171,6 +171,67 @@ Your flow should be deployed and running.  You can use your KPIs to verify, or y
 
 
 
+# Data Warehouse Experience
+
+You may want to tie things together by using Hive/Impala to query the data you pushed to S3.
+
+## Spin up your DW environment
+Go to Data Warehouse, and find Environments...it's probably collapsed on the left hand side (right of the navigation bar).   Find your CDP environment and click the lightning bolt to activate your environment.
+
+Wait ~45 minutes
+
+## Create your Database Catalog
+This used to happen automatically, but no longer does.
+
+Click the (+) under Database Catalogs
+
+* Name:  whatever you want
+* Environments:  your CDP environment (mine is crnxx-aw-env)
+* Image Version:  default is probably ok
+* Datalake:  SDX (this the only choice at this time)
+* Tenant Storage Role:  this is the ARN of the dladmin IAM role
+* Tenant Storage Location:  this is the bucket name (mine is crnxx-uat2)
+
+Wait 5 minutes.
+
+## Create the Virtual DW (VDW)
+Click the (+) under Virtual Warehouses
+
+* Name:  whatever you want
+* Hive/Impala:  I prefer Impala when I have a choice.
+* Database Catalog:  the db catalog you just created
+* Enable SSO:  [checked]
+* User Groups:  crnxx-aw-env-admin-group. ==> Cloudera Deploy MAY have created this for me, based on the name.
+* Size:  doesn't matter, lol
+* Enable Impala HA:  you can disable this
+* _everything else can be left as defaults_
+
+TODO: I definitely need to understand the CDP user/group/permisions component much, much better.
+
+Wait 5 minutes.
+
+## Open up Hue
+Table DDL
+```
+create external table customers
+(col_data varchar)
+ROW FORMAT delimited
+STORED AS textfile
+location 's3a://crnxx-uat2/inventory.customers';
+```
+
+JSON'd SQL
+```
+select get_json_object(col_data, "$.id") as id
+     , get_json_object(col_data, "$.first_name") as first_name
+     , get_json_object(col_data, "$.last_name") as last_name
+     , get_json_object(col_data, "$.email") as email
+     , col_data as raw_json
+from customers;
+```
+
+
+
 # Tearing it all down
 
 * terminate the data hub cluster
