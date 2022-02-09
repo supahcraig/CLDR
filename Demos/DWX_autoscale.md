@@ -2,6 +2,21 @@
 
 https://cloudera.atlassian.net/wiki/spaces/person/pages/2211938365/How+to+set+up+for+load+testing+with+JMeter
 
+Cliff notes version:
+* Install Java 8, OpenJDK8 works great
+ * check internet for specific install instructions
+* Install JMeter
+ * `wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.4.3.tgz`
+ * `tar -xvzf apache-jmeter-5.4.3.tgz`
+* Download JDBC driver from your VDW
+ * unzip it and put ImpalaJDBC42.jar into the lib folder of JMeter
+* create a myconfig.jmx file 
+ * with your query, CDP username & workload password
+ * Use the JDBC URL found in your VDW
+  * you may need to change the authMech to 3
+* mkdir output
+* Run this:  `HEAP="-Xms1g -Xmx1g -XX:MaxMetaspaceSize=256m" CLASSPATH=$(pwd) ./bin/jmeter -n -t myconfig.jmx -l ./resultsfile -e -o output`
+
 
 
 
