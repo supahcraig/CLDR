@@ -1,0 +1,10 @@
+# how to use a PutKudu processor in a kerberized cluster
+
+https://docs.cloudera.com/cdf-datahub/7.2.10/nifi-kudu-ingest/topics/cdf-datahub-kudu-ingest-data-target.html
+
+In a nutshell:
+
+* kudu masters are the FQDN of your masters, comma separated.  No port is necessary.
+* table name is either `database.table_name` or `impala::database.table_name`
+* kerberos principal is your CDP user
+* kerberos password is your workload password
