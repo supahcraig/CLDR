@@ -1,3 +1,6 @@
+RELOCATED TO CLDR/Building Environments/Private Cloud Base/3 Node via Terraform (andre).md
+
+
 # Spin up 3 node CDP Private Cloud cluster in AWS
 This is based on Andre's automated scripts
 
