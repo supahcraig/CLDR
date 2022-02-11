@@ -55,3 +55,16 @@ STORED AS KUDU;
 * autoscale?
 * add kpi's?
 * DEPLOY!
+
+
+
+
+
+## Disable the Datafow environment
+
+```
+cdp df disable-service \
+  --service-crn crn:cdp:df:us-west-1:558bc1d2-8867-4357-8524-311d51259233:service:ee8a1239-ef82-4785-929f-775a4a118873 \
+  --terminate-deployments \
+  --no-persist
+  ```
