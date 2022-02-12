@@ -29,3 +29,38 @@ r.show()
 ```
 
 Then run the job.  You can visually see the progress from the overview tab.
+
+Ideally this would be done in Ansible.   Time to learn Ansible!!
+
+# Setting up things from the CLI
+
+## Create the service
+
+```
+cdp de enable-service --name crnxx-de-service --env crnxx-aw-env --instance-type m5.2xlarge --minimum-instances 1 --maximum-instances 3
+```
+^^^ need to set subnets, public endpoint, autoscaling params
+
+Can grab the clusterId from the response, or use list-services to figure out the clusterId
+
+Check the status field from the reponse to describe-service, and look for "ClusterCreationCompleted"
+
+```
+cdp de describe-service --cluster-id cluster-rqz86hfm
+```
+
+
+## create the virtual cluster
+```
+cdp de create-vc --name crnxx-test-vc --cluster-id cluster-j25gp6md --cpu-requests 10 --memory-requests 80Gi --spark-version SPARK3
+```
+
+## create the resource?
+
+
+
+
+## create the job
+
+## run the job
+
