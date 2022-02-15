@@ -10,7 +10,7 @@
 
 # Table of Contents
 
-![Creating a Hve Virtual Warehouse from the CDP Console](#Hive-Virtual-Warehouse)
+* [Creating a Hve Virtual Warehouse from the CDP Console](#Hive-Virtual-Warehouse)
 
 
 
