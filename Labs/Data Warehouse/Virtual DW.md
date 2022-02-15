@@ -119,6 +119,10 @@ cdp dw delete-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | sel
 ```
 
 ### Deactivate Data Warehouse environment (aka cluster)
+This will delete the DW environment.   Be careful with this, it can take over an hour to re-create this piece.
 
+```
+cdp dw delete-cluster --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id')
+```
 
 
