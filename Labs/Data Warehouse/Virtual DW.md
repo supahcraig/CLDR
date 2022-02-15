@@ -8,6 +8,11 @@
 
 ^^^^^ these things will be documented next time I spin up a CDP env from scratch
 
+# Table of Contents
+
+![Creating a Hve Virtual Warehouse from the CDP Console](#Hive-Virtual-Warehouse)
+
+
 
 ## Hive Virtual Warehouse
 
@@ -58,8 +63,9 @@ cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@c
 
 Finding the db catalog ID requires knowing the cluster ID, so combining `cdw dw list-dbcs` with the call to find the cluster ID we can extract the db catalog ID:
 
-cdp dw list-dbcs --cluster-id `cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id'` | jq -r '.dbcs[].id'
-
+```
+cdp dw list-dbcs --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id') | jq -r '.dbcs[].id'
+```
 
 
 ### Creating an Impala virtual warehouse
