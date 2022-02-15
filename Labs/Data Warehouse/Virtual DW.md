@@ -11,8 +11,11 @@
 # Table of Contents
 
 * [Creating a Hve Virtual Warehouse from the CDP Console](#Hive-Virtual-Warehouse)
+* [Creating an Impala VW using the CDP CLI](#Creating-an-Impala-VW-using-the-CDP-CLI)
 
+* [Deleting the environment](#Deleting-the-environment)
 
+---
 
 ## Hive Virtual Warehouse
 
@@ -44,8 +47,9 @@ It will take several minutes to create the virtual data warehouse, keep an eye o
 
 
 
+---
 
-## Creating VW using the CDP CLI
+## Creating an Impala VW using the CDP CLI
 
 _TODO:  create the DW environment from the CLI, returning the cluster ID_
 _TODO:  create the DB catalog from the CLI, returning the dbcatalog ID_
