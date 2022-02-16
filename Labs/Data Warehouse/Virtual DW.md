@@ -64,6 +64,9 @@ Upon clicking the (+) to create a new database catalog, a form will come up.
 ![Filling out the form](./images/dbc-create-form.png)
 
 
+Then click `CREATE`.   It will take some time to create the database catalog.
+
+
 ---
 ## Hive Virtual Warehouse
 
@@ -94,7 +97,7 @@ It will take several minutes to create the virtual data warehouse, keep an eye o
 ![Hive virtual warehouse in the process of being created](./images/vdw-hive-creating.png)
 
 
-
+---
 ---
 
 # Creating an Impala VW using the CDP CLI
