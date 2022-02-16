@@ -2,11 +2,6 @@
 
 *assumes a CDP PC environment exists*
 
-*assumes the DW environment is activated*
-
-*assumes the database catalog has been created*
-
-^^^^^ these things will be documented next time I spin up a CDP env from scratch
 
 # Table of Contents
 
@@ -15,12 +10,16 @@
   * [Creating a Hive Virtual Warehouse](#Hive-Virtual-Warehouse)
 
 * Using the CDP CLI
-  * [Creating an Impala VW using the CDP CLI](#Creating-an-Impala-VW-using-the-CDP-CLI)
+  * [Creating/Activating a DW Environment/Cluster](#Create-the-cluster)
+  * [Creating a Database Catalog](#Creating-the-Database-Catalog)
+  * [Creating a VW using the CDP CLI](#Creating-a-Virtual-warehouse)
 
 
 * [Deleting the environment](#Deleting-the-environment)
 
 ---
+
+# Using the CDP Data Warehouse Console 
 
 ## Creating a Database Catalog from the console
 
@@ -64,7 +63,7 @@ Upon clicking the (+) to create a new database catalog, a form will come up.
 ![Filling out the form](./images/dbc-create-form.png)
 
 
-Then click `CREATE`.   It will take some time to create the database catalog.
+Then click `CREATE`.   It will take 5-10 minutes to create the database catalog.
 
 
 ---
@@ -100,7 +99,8 @@ It will take several minutes to create the virtual data warehouse, keep an eye o
 ---
 ---
 
-# Creating an Impala VW using the CDP CLI
+# Using the CDP CLI
+If you would rather build these components programatically, CDP has a CLI utility that allows you to build the pieces from the command line or shell script.
 
 
 ## Create the DW Cluster
@@ -153,9 +153,6 @@ cdp dw list-clusters | jq -r '.clusters[] | select(.id == "$(cdp environments de
 
 ## Creating the Database Catalog
 
-
-_TODO:  create the DB catalog from the CLI, returning the dbcatalog ID_
-
 Creating the database catalog is probably the most involved step in the process, since you must leave the warm comfort of CDP and get some information from AWS.
 
 
@@ -186,10 +183,14 @@ The only remaning piece of information needed is the Tenant Storage Location, wh
 cdp dw create-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id') \
  --name crnxx-dbcatalog \
  --no-load-demo-data \
+ --is-default \
  --tenant-storage-role $(aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "crnxx-dladmin-role").Arn') \
  --tenant-storage-location $CDP_TENANT_STORAGE_LOCATION
  ```
 
+The response to this call is a json object containing the database catalog ID.  You can capture this, or remember it, or forget it.  We will be using other CLI calls to figure out what it is dynamically, because it is much more likely you need it but won't have it handy.
+
+Expect it to take 5-10 minutes to create the database catalog.
 
 
 
@@ -202,7 +203,7 @@ cdp dw list-dbcs --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | sele
 ```
 
 
-### Creating an Impala virtual warehouse
+### Creating a Virtual warehouse
 
 The cluster ID & database catalog ID can be found in the CDP UI, 
 
