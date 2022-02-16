@@ -51,7 +51,7 @@ It will take several minutes to create the virtual data warehouse, keep an eye o
 
 ## Creating an Impala VW using the CDP CLI
 
-_TODO:  create the DW environment from the CLI, returning the cluster ID_
+_TODO:  create the DW environment from the CLI, returning the cluster ID_ 
 
 (an exercise in building a CDP CLI call)
 * First we need to find the environment-crn
