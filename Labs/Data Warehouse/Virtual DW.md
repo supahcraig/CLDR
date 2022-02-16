@@ -55,16 +55,16 @@ _TODO:  create the DW environment from the CLI, returning the cluster ID_
 
 (an exercise in building a CDP CLI call)
 * First we need to find the environment-crn
- * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn'`
+    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn'`
 * Then we need to find the subnets in which the environment is deployed
- * Three distinct calls, one per subnet 
-  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetIds[0]`
-  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetIds[1]`
-  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetIds[2]`
- * But that is highly specific to a 3 subnet VPC, this should really be generic enough to handle all the subnets
-  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds`
+  * Three distinct calls, one per subnet 
+    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetIds[0]`
+    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetIds[1]`
+    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetIds[2]`
+  * But that is highly specific to a 3 subnet VPC, this should really be generic enough to handle all the subnets
+    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds`
 * Once we have a list of subnets, we need to flatten the array and quote & comma separate them, because that's how we'll need to present them later
- * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds | @csv'`
+  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds | @csv'`
 * Lastly, we can string all that together to build the call to create the DW cluster
 
 ```
