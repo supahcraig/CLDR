@@ -10,12 +10,57 @@
 
 # Table of Contents
 
-* [Creating a Hve Virtual Warehouse from the CDP Console](#Hive-Virtual-Warehouse)
-* [Creating an Impala VW using the CDP CLI](#Creating-an-Impala-VW-using-the-CDP-CLI)
+* Using the CDP Data Warehouse Console
+  * [Creating a Database Catalog](#Creating-a-Database-Catalog-from-the-console)
+  * [Creating a Hive Virtual Warehouse](#Hive-Virtual-Warehouse)
+
+* Using the CDP CLI
+  * [Creating an Impala VW using the CDP CLI](#Creating-an-Impala-VW-using-the-CDP-CLI)
+
 
 * [Deleting the environment](#Deleting-the-environment)
 
 ---
+
+## Creating a Database Catalog from the console
+
+![Create a new database catalog](./images/dbc-create-new.png)
+
+
+### Getting the Tenant Storage Role
+
+The Tenant Storage Role is also known as the datalake admin role, which you specified when you created the environment (or was created for you if you used something like cloudera-deploy to build your CDP environment).  Only you know for sure what the name of that role is, but it is probably of the form `<env prefix>-dladmin-role`.   Unfortunately we don't need the role name, we need the role ARN, which we must get from the AWS console.
+
+
+1.  Go to the AWS Console
+2.  Within AWS, go to the IAM page
+3.  Click on `Roles` on the left hand navigation bar
+4.  Find your role name through whatever means necessary.  You _may_ find it easiest to simply type in your environment prefix in the search bar
+5.  Click on the role
+6.  The ARN is found in the summary, along with a copy icon to make it easy copy the long ARN string
+
+
+![Open the IAM page](./images/dbc-open-iam.png)
+
+![Search IAM roles](./images/dbc-search-roles.png)
+
+![Copy the role ARN](./images/dbc-copy-arn.png)
+
+
+### Completing the form
+
+Upon clicking the (+) to create a new database catalog, a form will come up.
+
+* `Name:` Give your db catalog a name
+* `Environments:` Specify your CDP environment
+* `Image Version:` Pick the latest Image Version
+* `Datalake:` Choose `SDX`
+* `Tenant Storage Role:` Paste the role ARN
+* `Tenant Storage Location:` the _name_ of the S3 bucket you specified when you created your CDP environment (no s3:// prefix; just the name of the bucket)
+
+
+![Filling out the form](./images/dbc-create-form.png)
+
 
 ## Hive Virtual Warehouse
 
@@ -49,23 +94,38 @@ It will take several minutes to create the virtual data warehouse, keep an eye o
 
 ---
 
-## Creating an Impala VW using the CDP CLI
+# Creating an Impala VW using the CDP CLI
 
-_TODO:  create the DW environment from the CLI, returning the cluster ID_ 
 
-(an exercise in building a CDP CLI call)
+## Create the DW Cluster
+Creating a DW cluster requires at a minimum the CRN for your CDP environment and a list of subnets you want to deploy your DW cluster to.   The assumption is that it will deploy to all your subnets, since for our purposes it is typically only 3 subnets.
+
+*NOTE:  the CLI calls this process creating a DW cluster, but the UI uses "activate/dectivate" terminology.  
+
+### Establish an environment variable for your environment name:
+
+```
+export ENV_NAME=your-env-name
+```
+
+### Determine which subnets are in play
+
+_An exercise in building a CDP CLI call_
 * First we need to find the environment-crn
-    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn'`
+    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn'`
 * Then we need to find the subnets in which the environment is deployed
   * Three distinct calls, one per subnet 
-    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetIds[0]`
-    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetIds[1]`
-    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetIds[2]`
+    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r .environment.network.subnetIds[0]`
+    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r .environment.network.subnetIds[1]`
+    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r .environment.network.subnetIds[2]`
   * But that is highly specific to a 3 subnet VPC, this should really be generic enough to handle all the subnets
-    * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds`
+    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.network.subnetIds`
 * Once we have a list of subnets, we need to flatten the array and quote & comma separate them, because that's how we'll need to present them later
-  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds | @csv'`
-* Lastly, we can string all that together to build the call to create the DW cluster
+  * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.network.subnetIds | @csv'`
+
+
+### Create the cluster
+Lastly, we can string all that together to build the call to create the DW cluster.  Go grab a bite, this will run for the better part of an hour.
 
 ```
 cdp dw create-cluster --environment-crn $(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn') \
@@ -74,22 +134,58 @@ cdp dw create-cluster --environment-crn $(cdp environments describe-environment 
  --aws-options publicSubnetIds=$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds | @csv')
 ```
 
+The response to this call is a json object containing the cluster ID.  You can capture this, or remember it, or forget it.  We will be using other CLI calls to figure out what it is dynamically, because it is much more likely you need it but won't have it handy.
 
-This command will also list the subnets a much more convoluted way, and I'm keeping it here to show that there is a hard way and an easy way to do most things.
-`cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '..|.subnetId? | select(. != null)' | sed -e 's/.*/"&"/' | paste -sd, -`
 
+### Monitor creation progress
+_*for some reason this doesn't return any result -- need to investigate*_
+You can monitor the status of the cluster with this command.  Once the status is 'running' you can proceed to creating the database catalog.
+```
+cdp dw list-clusters | jq -r '.clusters[] | select(.id == "$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')").status'
+```
+
+
+## Creating the Database Catalog
 
 
 _TODO:  create the DB catalog from the CLI, returning the dbcatalog ID_
 
+Creating the database catalog is probably the most involved step in the process, since you must leave the warm comfort of CDP and get some information from AWS.
+
+
+### Finding the Tenant Storage Role
+When you created your CDP environment, several IAM roles were created in AWS.  If you used clodera-deploy to spin up your CDP environment, it is very likely the tenant storage role is named `<env prefix>-dladmin-role`.   We need the ARN for this IAM role
+
+```
+aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "crnxx-dladmin-role").Arn'
+```
+
+which returns `arn:aws:iam::981304421142:role/crnxx-dladmin-role`, but yours will obviously be different.  You don't need the actual ARN, we will dynamically build the call by composting the AWS call with other CDP calls.
+
+
 ### Finding the cluster ID
 
-
-When you activate the DW environment the reponse payload will include the cluster ID.   It can be fetched after the fact using `cdp dw list-clusters` with some jq to filter for the creator email address will return the cluster ID:
-
+When you activate the DW environment the reponse payload will include the cluster ID.   It can be fetched after the fact using `cdp dw list-clusters` by using the creator's email address.  A better way would be to use the environmentCrn but that does not appear to be working at this time.
 ```
 cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id'
 ```
+
+### Create the Database Catalog
+The only remaning piece of information needed is the Tenant Storage Location, which is just the S3 bucket where your data is found.  Just the name of the bucket; no s3:// prefix.  Put it into an environment variable to make the calls a little cleaner.
+
+`export CDP_TENANT_STORAGE_LOCATION=your-bucket-name`
+
+
+```
+cdp dw create-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id') \
+ --name crnxx-dbcatalog \
+ --no-load-demo-data \
+ --tenant-storage-role $(aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "crnxx-dladmin-role").Arn') \
+ --tenant-storage-location $CDP_TENANT_STORAGE_LOCATION
+ ```
+
+
+
 
 ### Finding the database catalog ID
 
