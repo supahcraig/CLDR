@@ -24,6 +24,8 @@
 
 ## Creating a Database Catalog from the console
 
+From the CDP Data Warehouse console, click on the (+) under Database Catalogs.
+
 ![Create a new database catalog](./images/dbc-create-new.png)
 
 
@@ -62,6 +64,7 @@ Upon clicking the (+) to create a new database catalog, a form will come up.
 ![Filling out the form](./images/dbc-create-form.png)
 
 
+---
 ## Hive Virtual Warehouse
 
 From the Data Warehouse console within CDP, click on the (+) to reate a new Virtual Warehouse
