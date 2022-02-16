@@ -147,8 +147,13 @@ The response to this call is a json object containing the cluster ID.  You can c
 _*for some reason this doesn't return any result -- need to investigate*_
 You can monitor the status of the cluster with this command.  Once the status is 'running' you can proceed to creating the database catalog.
 ```
-cdp dw list-clusters | jq -r '.clusters[] | select(.id == "$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')").status'
+cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCRN == "$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')").status'
 ```
+
+```
+cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')").id'
+```
+
 
 
 ## Creating the Database Catalog
