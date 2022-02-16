@@ -52,6 +52,61 @@ It will take several minutes to create the virtual data warehouse, keep an eye o
 ## Creating an Impala VW using the CDP CLI
 
 _TODO:  create the DW environment from the CLI, returning the cluster ID_
+
+(an exercise in building a CDP CLI call)
+* First we need to find the environment-crn
+ * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn'`
+* Then we need to find the subnets in which the environment is deployed
+ * Three distinct calls, one per subnet 
+  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetMetadata | jq 'keys' | jq -r .[0]`
+  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetMetadata | jq 'keys' | jq -r .[1]`
+  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetMetadata | jq 'keys' | jq -r .[2]`
+ * But that is highly specific to a 3 subnet VPC, this should really be generic enough to handle all the subnets
+  * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds`
+* Once we have a list of subnets, we need to flatten the array and quote & comma separate them, because that's how we'll need to present them later
+ * `cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds | @csv'`
+* Lastly, we can string all that together to build the call to create the DW cluster
+ * ```
+cdp dw create-cluster --environment-crn $(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn') \
+ --no-use-overlay-network \
+ --no-use-private-load-balancer \
+ --aws-options publicSubnetIds=$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds | @csv')
+```
+
+
+
+
+```
+cdp dw create-cluster --environment-crn $(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn') \
+ --no-use-overlay-network \
+ --no-use-private-load-balancer \
+ --aws-options publicSubnetIds=\
+""$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetMetadata | jq 'keys' | jq -r .[0])"",\
+""$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetMetadata | jq 'keys' | jq -r .[1])"",\
+""$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetMetadata | jq 'keys' | jq -r .[2])""
+```
+
+
+
+This command will give you all your subnets, quoted & comma separated which is how create-cluster needs to see them.
+`cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds | @csv'`
+
+This command will also do it in a much more convoluted way, and I'm keeping it here to show that there is a hard way and an easy way to do most things.
+`cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '..|.subnetId? | select(. != null)' | sed -e 's/.*/"&"/' | paste -sd, -`
+
+
+```
+cdp dw create-cluster --environment-crn $(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn') \
+ --no-use-overlay-network \
+ --no-use-private-load-balancer \
+ --aws-options publicSubnetIds=\
+$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r .environment.network.subnetMetadata | jq 'keys' | jq -r .[] | join(",")
+```
+
+cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetMetadata | jq 'keys' | jq -r .[] | join(",")'
+
+
+
 _TODO:  create the DB catalog from the CLI, returning the dbcatalog ID_
 
 ### Finding the cluster ID
@@ -119,7 +174,10 @@ cdp dw delete-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | sel
 ```
 
 ### Deactivate Data Warehouse environment (aka cluster)
-This will delete the DW environment.   Be careful with this, it can take over an hour to re-create this piece.
+This will delete the DW environment.   Be careful with this, there is no way to recreate the environment/cluster.  The CDP console gives an additional option to "Disable" which isn't available from the CLI.  
+
+(TODO:  research creating a new data warehouse environment after a delete)
+
 
 ```
 cdp dw delete-cluster --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id')
