@@ -231,7 +231,7 @@ Creating a virtual warehouse requires you to know the cluster ID & database cata
 cdp dw create-vw --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id') \
   --dbc-id warehouse-1645036606-s54g \
   --vw-type impala \
-  --name cnelson2-cli-vdw \
+  --name cnelson2-cli-impala-vdw \
   --template xsmall
 ```
 which gives a reponse like:
@@ -242,8 +242,31 @@ which gives a reponse like:
 }
 ```
 
+![Impala Virtual Warehouse](/.images/vdw-impala-cli.png)
+
+
 ### Building a Hive Virtual Warehouse
 
+
+```
+cdp dw create-vw \
+ --cluster-id  $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id') \
+ --dbc-id warehouse-1645121747-shhm\
+ --vw-type hive \
+ --name cnelson2-cli-hive-vdw \
+ --template xsmall \
+ --autoscaling minClusters=2,maxClusters=10
+ ```
+ 
+ which gives a response like:
+ 
+ ```
+ {
+    "vwId": "compute-1645133214-4pmz"
+}
+ ```
+
+![Hive Virtual Warehouse](./images/vdw-hive-cli.png)
 
 
 ---
