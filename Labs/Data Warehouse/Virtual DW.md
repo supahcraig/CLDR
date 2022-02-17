@@ -199,7 +199,7 @@ With a response like
 
 ```
 {
-    foo: bar
+    "dbcId": "warehouse-1645036606-shhm"
 }
 ```
 
