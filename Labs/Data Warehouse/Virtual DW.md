@@ -172,7 +172,8 @@ When you created your CDP environment, several IAM roles were created in AWS.  I
 We'll use a few environment variables to make this a little more re-usable, obviously changing the values as necessary for your system.
 
 `export CDP_TENANT_STORAGE_ROLE=crnxx-dladmin-role`
-`export CDP_TENATN_STORAGE_LOCATION=crnxx-uat2`
+
+`export CDP_TENANT_STORAGE_LOCATION=crnxx-uat2`
 
 And then find the role ARN from the AWS CLI
 ```
