@@ -111,7 +111,7 @@ It will take several minutes to create the virtual data warehouse, keep an eye o
 ---
 
 # Using the CDP CLI
-If you would rather build these components programatically, CDP has a CLI utility that allows you to build the pieces from the command line or shell script.
+If you would rather build these components programatically, CDP has a CLI utility that allows you to build the pieces from the command line or shell script.  Combining the CDP CLI with liberal use of jq, we can string together 
 
 
 ## Create the DW Cluster
@@ -155,10 +155,10 @@ The response to this call is a json object containing the cluster ID.  You can c
 
 
 ### Monitor creation progress
-_*for some reason this doesn't return any result -- need to investigate*_
 You can monitor the status of the cluster with this command.  Once the status is 'running' you can proceed to creating the database catalog.
+
 ```
-cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCRN == "$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')").status'
+cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").status'
 ```
 
 
