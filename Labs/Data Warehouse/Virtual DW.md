@@ -177,7 +177,7 @@ We'll use a few environment variables to make this a little more re-usable, obvi
 
 And then find the role ARN from the AWS CLI
 ```
-aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "$(CDP_TENANT_STORAGE_ROLE").Arn'
+aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "'$CDP_TENANT_STORAGE_ROLE'").Arn'
 ```
 
 which returns `arn:aws:iam::981304421142:role/crnxx-dladmin-role`, but yours will obviously be different.  You don't need the actual ARN, we will dynamically build the call by composting the AWS call with other CDP calls.
@@ -191,7 +191,7 @@ cdp dw create-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | sel
  --name crnxx-dbcatalog2 \
  --no-load-demo-data \
  --is-default \
- --tenant-storage-role $(aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "$CDP_TENANT_STORAGE_ROLE").Arn') \
+ --tenant-storage-role $(aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "'$CDP_TENANT_STORAGE_ROLE'").Arn') \
  --tenant-storage-location $CDP_TENANT_STORAGE_LOCATION
 ```
 
