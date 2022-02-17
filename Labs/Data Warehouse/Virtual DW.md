@@ -127,17 +127,7 @@ export ENV_NAME=your-env-name
 
 ### Determine which subnets are in play
 
-_An exercise in building a CDP CLI call_
-* First we need to find the environment-crn
-    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn'`
-* Then we need to find the subnets in which the environment is deployed
-  * Three distinct calls, one per subnet 
-    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r .environment.network.subnetIds[0]`
-    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r .environment.network.subnetIds[1]`
-    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r .environment.network.subnetIds[2]`
-  * But that is highly specific to a 3 subnet VPC, this should really be generic enough to handle all the subnets
-    * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.network.subnetIds`
-* Once we have a list of subnets, we need to flatten the array and quote & comma separate them, because that's how we'll need to present them later
+Creating a DW cluster requires specifying a subnet list.   We can determine these subnets by interrorgating our CDP environment to return a list of subnets.  Once we have a list of subnets, we need to flatten the array and quote & comma separate them, because that's how we'll need to present them later.
   * `cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.network.subnetIds | @csv'`
 
 
@@ -151,7 +141,9 @@ cdp dw create-cluster --environment-crn $(cdp environments describe-environment 
  --aws-options publicSubnetIds=$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds | @csv')
 ```
 
-The response to this call is a json object containing the cluster ID.  You can capture this, or remember it, or forget it.  We will be using other CLI calls to figure out what it is dynamically, because it is much more likely you need it but won't have it handy.
+The response to this call is a json object containing the cluster ID.  You can capture this, or remember it, or forget it.  We will be using other CLI calls to figure out what it is dynamically, because it is much more likely you need it but won't have it handy.  Of course you can also find it in the UI.
+
+![DW Cluster status & cluster-id](./images/vdw-cluster-id.png)
 
 
 ### Monitor creation progress
@@ -178,13 +170,6 @@ aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "crnxx-dladmin-role")
 which returns `arn:aws:iam::981304421142:role/crnxx-dladmin-role`, but yours will obviously be different.  You don't need the actual ARN, we will dynamically build the call by composting the AWS call with other CDP calls.
 
 
-### Finding the cluster ID
-
-When you activate the DW environment the reponse payload will include the cluster ID.   It can be fetched after the fact using `cdp dw list-clusters` by using the creator's email address. 
-
-```
-cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id'
-```
 
 ### Create the Database Catalog
 The only remaning piece of information needed is the Tenant Storage Location, which is just the S3 bucket where your data is found.  Just the name of the bucket; no s3:// prefix.  Put it into an environment variable to make the calls a little cleaner.
@@ -204,34 +189,24 @@ cdp dw create-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | sel
 
 
 
-The response to this call is a json object containing the database catalog ID.  You can capture this, or remember it, or forget it.  We will be using other CLI calls to figure out what it is dynamically, because it is much more likely you need it but won't have it handy.
+The response to this call is a json object containing the database catalog ID.  You can capture this, or remember it, or forget it.  We will be using other CLI calls to figure out what it is dynamically, because it is much more likely you need it but won't have it handy.  The db catalog ID can be found from the UI as well.
 
-Expect it to take 5-10 minutes to create the database catalog, you can monitor build status with this command:
+![Database Catalog ID](./images/vdw-catalog-id.png)
+
+Expect it to take 5-10 minutes to create the database catalog, you can monitor build status with the CLI.   While you can string together CLI commands to build this dynamically, it can get pretty convoluted.   Probably best to just use the db catalog ID returned by the call to `create-dbc`
+
 
 ```
-cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").status'
+cdp dw describe-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id')\
+ --dbc-id warehouse-1645036606-s54g
 ```
 
-
-
-
-### Finding the database catalog ID
-
-Finding the db catalog ID requires knowing the cluster ID, so combining `cdw dw list-dbcs` with the call to find the cluster ID we can extract the db catalog ID:
-
-```
-cdp dw list-dbcs --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id') | jq -r '.dbcs[].id'
-```
-
-```
-cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id'
-```
 
 
 
 ## Creating a Virtual warehouse
 
-The cluster ID & database catalog ID can be found in the CDP UI, 
+The cluster ID & database catalog ID can be found in the CDP UI, or you
 
 ```
 cdp dw create-vw --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id') \
