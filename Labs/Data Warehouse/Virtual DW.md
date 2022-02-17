@@ -13,7 +13,7 @@
   * [Creating a Hive Virtual Warehouse](#Hive-Virtual-Warehouse)
 
 * Using the CDP CLI
-  * [Creating/Activating a DW Environment/Cluster](#Create-the-cluster)
+  * [Creating/Activating a DW Environment/Cluster](#Create-the-DW-cluster)
   * [Creating a Database Catalog](#Creating-the-Database-Catalog)
   * [Creating a VW using the CDP CLI](#Creating-a-Virtual-warehouse)
 
