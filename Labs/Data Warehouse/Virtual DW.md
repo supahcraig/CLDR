@@ -135,13 +135,19 @@ Creating a DW cluster requires specifying a subnet list.   We can determine thes
 Lastly, we can string all that together to build the call to create the DW cluster.  Go grab a bite, this will run for the better part of an hour.
 
 ```
-cdp dw create-cluster --environment-crn $(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn') \
+cdp dw create-cluster --environment-crn $(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn') \
  --no-use-overlay-network \
  --no-use-private-load-balancer \
- --aws-options publicSubnetIds=$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.network.subnetIds | @csv')
+ --aws-options publicSubnetIds=$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.network.subnetIds | @csv')
 ```
 
 The response to this call is a json object containing the cluster ID.  You can capture this, or remember it, or forget it.  We will be using other CLI calls to figure out what it is dynamically, because it is much more likely you need it but won't have it handy.  Of course you can also find it in the UI.
+
+```
+{
+    "clusterId": "env-d2fjrr"
+}
+```
 
 ![DW Cluster status & cluster-id](./images/vdw-cluster-id.png)
 
@@ -150,7 +156,7 @@ The response to this call is a json object containing the cluster ID.  You can c
 You can monitor the status of the cluster with this command.  Once the status is 'running' you can proceed to creating the database catalog.
 
 ```
-cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").status'
+cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").status'
 ```
 
 
@@ -160,11 +166,17 @@ cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp en
 Creating the database catalog is probably the most involved step in the process, since you must leave the warm comfort of CDP and get some information from AWS.
 
 
-### Finding the Tenant Storage Role
-When you created your CDP environment, several IAM roles were created in AWS.  If you used clodera-deploy to spin up your CDP environment, it is very likely the tenant storage role is named `<env prefix>-dladmin-role`.   We need the ARN for this IAM role
+### Finding the Tenant Storage Role & Location.
+When you created your CDP environment, several IAM roles were created in AWS.  If you used clodera-deploy to spin up your CDP environment, it is very likely the tenant storage role is named `<env prefix>-dladmin-role`.   We need the ARN for this IAM role, which we'll have to get from AWS.   The Tenant Storage Role is just the name of the s3 bucket where your data is found, as defined in your CDP environment.   If you used cloudera-deploy, that s3 bucket is probably named something like `<env prefix>-uat2`.
 
+We'll use a few environment variables to make this a little more re-usable, obviously changing the values as necessary for your system.
+
+`export CDP_TENANT_STORAGE_ROLE=crnxx-dladmin-role`
+`export CDP_TENATN_STORAGE_LOCATION=crnxx-uat2`
+
+And then find the role ARN from the AWS CLI
 ```
-aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "crnxx-dladmin-role").Arn'
+aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "$(CDP_TENANT_STORAGE_ROLE").Arn'
 ```
 
 which returns `arn:aws:iam::981304421142:role/crnxx-dladmin-role`, but yours will obviously be different.  You don't need the actual ARN, we will dynamically build the call by composting the AWS call with other CDP calls.
@@ -172,32 +184,35 @@ which returns `arn:aws:iam::981304421142:role/crnxx-dladmin-role`, but yours wil
 
 
 ### Create the Database Catalog
-The only remaning piece of information needed is the Tenant Storage Location, which is just the S3 bucket where your data is found.  Just the name of the bucket; no s3:// prefix.  Put it into an environment variable to make the calls a little cleaner.
-
-`export CDP_TENANT_STORAGE_LOCATION=your-bucket-name`
-
 
 ```
-cdp dw create-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id') \
+cdp dw create-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id') \
  --name crnxx-dbcatalog2 \
  --no-load-demo-data \
  --is-default \
- --tenant-storage-role $(aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "crnxx-dladmin-role").Arn') \
+ --tenant-storage-role $(aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "$CDP_TENANT_STORAGE_ROLE").Arn') \
  --tenant-storage-location $CDP_TENANT_STORAGE_LOCATION
 ```
 
+With a response like
+
+```
+{
+    foo: bar
+}
+```
 
 
 
 The response to this call is a json object containing the database catalog ID.  You can capture this, or remember it, or forget it.  We will be using other CLI calls to figure out what it is dynamically, because it is much more likely you need it but won't have it handy.  The db catalog ID can be found from the UI as well.
 
-![Database Catalog ID](./images/vdw-catalog-id.png)
+![Database Catalog ID](./images/vdw-dbcatalog-id.png)
 
 Expect it to take 5-10 minutes to create the database catalog, you can monitor build status with the CLI.   While you can string together CLI commands to build this dynamically, it can get pretty convoluted.   Probably best to just use the db catalog ID returned by the call to `create-dbc`
 
 
 ```
-cdp dw describe-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id')\
+cdp dw describe-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id')\
  --dbc-id warehouse-1645036606-s54g
 ```
 
@@ -209,7 +224,7 @@ cdp dw describe-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | s
 The cluster ID & database catalog ID can be found in the CDP UI, or you
 
 ```
-cdp dw create-vw --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id') \
+cdp dw create-vw --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id') \
   --dbc-id  \
   --vw-type impala \
   --name cnelson2-cli-vdw \
@@ -223,41 +238,44 @@ cdp dw create-vw --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | sele
 
 ## Deleting the environment 
 
-### Delete a virtual warehouse
+Deleting from the top will will delete all the resources underneath it:  DW Cluster --> DB Catalog --> Virtual Warehouse
+You can also surgically delete individual components from the bottom.
 
-start by listing the vws for your cluster:
 
-```
-cdp dw list-vws --cluster-id `cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id'`
-```
-
-Find the ID of the VW you want to delete:
+### Deactivate Data Warehouse environment (aka cluster)
+This will delete the DW environment, which is called "Deactivate" in the UI.   Be careful with this, it can take a while to delete, and will automatically spawn the creation of a new cluster.  The db catalog & virtual warehouses will be deleted as well.
 
 ```
-cdp dw delete-vw --cluster-id `cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id'` \
-  --vw-id compute-1644863225-j8h8
+cdp dw delete-cluster --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-$ENV_NAME | jq -r '.environment.crn')'").id')
 ```
-
-(TODO:  single command to loop over all VWs and delete)
-
 
 ### Delete Database Catalog
 
-Nesting several CDP list commands to create the delete-dbc command:
+Deleting the database catalog requires knowing the db catalog ID, but that requires knowing the cluster ID, so it requires nesting several CDP list commands to create the delete-dbc command for our db catalog.  The virtual warehouses will be deleted as well.
 
 ```
-cdp dw delete-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id') \
-  --dbc-id $(cdp dw list-dbcs --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id') | jq -r '.dbcs[].id')
+cdp dw delete-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id') \
+  --dbc-id $(cdp dw list-dbcs --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id')
 ```
 
-### Deactivate Data Warehouse environment (aka cluster)
-This will delete the DW environment.   Be careful with this, there is no way to recreate the environment/cluster.  The CDP console gives an additional option to "Disable" which isn't available from the CLI.  
 
-(TODO:  research creating a new data warehouse environment after a delete)
 
+### Delete a virtual warehouse
+
+Start by listing the vws for your cluster:
 
 ```
-cdp dw delete-cluster --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id')
+cdp dw list-vws --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id')
 ```
+
+Then run the delete command for the specific virtual warehouse you want to remove:
+
+```
+cdp dw delete-vw --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id')
+  --vw-id compute-1644863225-j8h8
+```
+
+
+
 
 
