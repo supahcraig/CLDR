@@ -52,7 +52,7 @@ The Tenant Storage Role is also known as the datalake admin role, which you spec
 6.  The ARN is found in the summary, along with a copy icon to make it easy copy the long ARN string
 
 
-![Open the IAM page](./images/dbc-iam-page.png){:height="36px"}
+![Open the IAM page](./images/dbc-iam-page.png | width=100)
 
 ![Search IAM roles](./images/dbc-search-roles.png)
 
