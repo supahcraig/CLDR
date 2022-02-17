@@ -45,23 +45,29 @@ The Tenant Storage Role is also known as the datalake admin role, which you spec
 
 
 1.  Go to the AWS Console
+
+
+![Open the IAM page](./images/dbc-iam-page.png)
+
 2.  Within AWS, go to the IAM page
 3.  Click on `Roles` on the left hand navigation bar
-4.  Find your role name through whatever means necessary.  You _may_ find it easiest to simply type in your environment prefix in the search bar
-5.  Click on the role
-6.  The ARN is found in the summary, along with a copy icon to make it easy copy the long ARN string
-
-
-![Open the IAM page](./images/dbc-iam-page.png|width=100)
 
 ![Search IAM roles](./images/dbc-search-roles.png)
 
+4.  Find your role name through whatever means necessary.  You _may_ find it easiest to simply type in your environment prefix in the search bar
+5.  Click on the role
+
+
 ![Copy the role ARN](./images/dbc-copy-arn.png)
+
+6.  The ARN is found in the summary, along with a copy icon to make it easy copy the long ARN string
 
 
 ### Completing the form
 
 Upon clicking the (+) to create a new database catalog, a form will come up.
+
+![Filling out the form](./images/dbc-create-form.png)
 
 * `Name:` Give your db catalog a name
 * `Environments:` Specify your CDP environment
@@ -69,9 +75,6 @@ Upon clicking the (+) to create a new database catalog, a form will come up.
 * `Datalake:` Choose `SDX`
 * `Tenant Storage Role:` Paste the role ARN
 * `Tenant Storage Location:` the _name_ of the S3 bucket you specified when you created your CDP environment (no s3:// prefix; just the name of the bucket)
-
-
-![Filling out the form](./images/dbc-create-form.png)
 
 
 Then click `CREATE`.   It will take 5-10 minutes to create the database catalog.
@@ -84,22 +87,27 @@ From the Data Warehouse console within CDP, click on the (+) to reate a new Virt
 
 ![alt text](./images/vdw-create-new.png)
 
+The new virtual warehouse form will open up:
+
 ![Example Hive virtual warehouse create options](./images/vdw-hive-setup.png)
 
-* Give your virtual warehouse a name,  Be creative, but not too creative.  You can only use alphanumeric & dashes.
+* `Name:`  Give your virtual warehouse a name,  Be creative, but not too creative.  You can only use alphanumeric & dashes.
 * Select `HIVE`
-* Pick your database catalog from the dropdown.
-* Make sure `Enable SSO` is checked.
-* Under User Groups, select a usergroup to allow access to the virutal warehouse.  
-  * You should find a user group called `<environment name>-admin-group` which will work nicely for this lab.
-* Enter any tags you want attached to the cloud resources that get spun up to support the virtual warehouse.
-* For size, start with xsmall (2 Executor Nodes) to minimize costs
-* Disable Disable AusoSuspend (confusing?  Yes.   We want AutoSuspend to be _enabled_.), set the timeout to 300 seconds
-* Set Concurrency Autoscaling to min=2, max=6
-* Select `HEADROOM`
-* Set Desired Free Capacity to 1
-* Disable Query Isolation & do not enable Data Visualization
-* Choose the most recent Image Version
+* `Database Catalog:` Select your database catalog from the dropdown.
+* `Enable SSO:` _I have not been able to see a behavioral difference if this is enabled/disabled_
+* `User Groups:` Select a usergroup to allow access to the virutal warehouse.  
+  * You _probably_ have a user group called `<env name>-admin-group` which will work for this exercise.
+* `Taggin:` Enter any tags you want attached to the cloud resources that get spun up to support the virtual warehouse.
+* `Size:` Start with xsmall (2 Executor Nodes) to minimize costs
+* `Disable AusoSuspend:` Disabled  (confusing?  Yes.   We want AutoSuspend to be _enabled_.)
+  * set the timeout to 300 seconds
+* Default options will work for the remainder
+  * `Concurrency Autoscaling:`  Min 2, Max 6
+  * `HEADROOM`
+  * `Desired Free Capacity:` 1
+  * `Query Isolation:` Disabled
+  * `Enable Data Visualization:` Disabled
+* `Image Version:` Choose the most recent version
 * Click `CREATE`!
 
 It will take several minutes to create the virtual data warehouse, keep an eye on the status.
