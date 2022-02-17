@@ -222,16 +222,27 @@ cdp dw describe-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | s
 
 ## Creating a Virtual warehouse
 
-The cluster ID & database catalog ID can be found in the CDP UI, or you
+Creating a virtual warehouse requires you to know the cluster ID & database catalog ID, both of which can be found in the CDP UI.  Alternatively you can get those from CLI commands.  
+
+
+### Building an Impala Virtual Warehouse
 
 ```
 cdp dw create-vw --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id') \
-  --dbc-id  \
+  --dbc-id warehouse-1645036606-s54g \
   --vw-type impala \
   --name cnelson2-cli-vdw \
   --template xsmall
 ```
+which gives a reponse like:
 
+```
+{
+    "vwId": "impala-1645123540-vdhf"
+}
+```
+
+### Building a Hive Virtual Warehouse
 
 
 
