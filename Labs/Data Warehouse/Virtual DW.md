@@ -5,6 +5,9 @@
 
 # Table of Contents
 
+* Prequisites & Assumptions
+  * [Prerequisites](#Prerequisites-and-Assumptions)
+
 * Using the CDP Data Warehouse Console
   * [Creating a Database Catalog](#Creating-a-Database-Catalog-from-the-console)
   * [Creating a Hive Virtual Warehouse](#Hive-Virtual-Warehouse)
@@ -16,6 +19,14 @@
 
 
 * [Deleting the environment](#Deleting-the-environment)
+
+---
+
+# Prerequisites and Assumptions
+
+* It is assumed you have a CDP (public cloud) environment built
+* CDP CLI should be installed & configured
+* jq should be installed, we're going to use it heavily
 
 ---
 
@@ -150,10 +161,6 @@ You can monitor the status of the cluster with this command.  Once the status is
 cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCRN == "$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')").status'
 ```
 
-```
-cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')").id'
-```
-
 
 
 ## Creating the Database Catalog
@@ -173,9 +180,10 @@ which returns `arn:aws:iam::981304421142:role/crnxx-dladmin-role`, but yours wil
 
 ### Finding the cluster ID
 
-When you activate the DW environment the reponse payload will include the cluster ID.   It can be fetched after the fact using `cdp dw list-clusters` by using the creator's email address.  A better way would be to use the environmentCrn but that does not appear to be working at this time.
+When you activate the DW environment the reponse payload will include the cluster ID.   It can be fetched after the fact using `cdp dw list-clusters` by using the creator's email address. 
+
 ```
-cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id'
+cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id'
 ```
 
 ### Create the Database Catalog
@@ -185,17 +193,25 @@ The only remaning piece of information needed is the Tenant Storage Location, wh
 
 
 ```
-cdp dw create-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id') \
- --name crnxx-dbcatalog \
+cdp dw create-dbc --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id') \
+ --name crnxx-dbcatalog2 \
  --no-load-demo-data \
  --is-default \
  --tenant-storage-role $(aws iam list-roles | jq -r '.Roles[] | select(.RoleName == "crnxx-dladmin-role").Arn') \
  --tenant-storage-location $CDP_TENANT_STORAGE_LOCATION
- ```
+```
+
+
+
 
 The response to this call is a json object containing the database catalog ID.  You can capture this, or remember it, or forget it.  We will be using other CLI calls to figure out what it is dynamically, because it is much more likely you need it but won't have it handy.
 
-Expect it to take 5-10 minutes to create the database catalog.
+Expect it to take 5-10 minutes to create the database catalog, you can monitor build status with this command:
+
+```
+cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").status'
+```
+
 
 
 
@@ -207,14 +223,19 @@ Finding the db catalog ID requires knowing the cluster ID, so combining `cdw dw 
 cdp dw list-dbcs --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.creator.email == "cnelson2@cloudera.com").id') | jq -r '.dbcs[].id'
 ```
 
+```
+cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id'
+```
 
-### Creating a Virtual warehouse
+
+
+## Creating a Virtual warehouse
 
 The cluster ID & database catalog ID can be found in the CDP UI, 
 
 ```
-cdp dw create-vw --cluster-id env-zl6xdc \
-  --dbc-id warehouse-1644862931-l9sq \
+cdp dw create-vw --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name crnxx-aw-env | jq -r '.environment.crn')'").id') \
+  --dbc-id  \
   --vw-type impala \
   --name cnelson2-cli-vdw \
   --template xsmall
