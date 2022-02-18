@@ -32,6 +32,25 @@
 
 # Using the CDP Data Warehouse Console 
 
+## Activating the DW Environment
+From the UI, this is called an Environment (confusing name to be sure) and it exists by default when you create a CDP Environment.  If you've never used it, it will be in the "Created" state but will need to activated before you can do anything with it.  Environments are sometimes collapsed in the UI, so you'll need to expand that section in order to find your environment.
+
+1.  Expand the "Environments" section to show all the environments
+
+![Collapsed environments list](./vdw-environments-more.png)
+
+2.  Find your environment (it will be named the same as your CDP environment
+3.  Click the green lightning bolt to bring up the Activation screen.
+
+![Activating your environment](./images/vdw-activate-env.png)
+
+4.  The activation screen has several choices depending on your needs, but `Public Load Balancer with Public Worker Nodes` works great for our needs.   You probably don't need to worry about the advanced settings unless you really like talking about AWS subnets.
+
+![Public Load Balancer](./images/vdw-activate-public-lb.png)
+
+5.  Hit `ACTIVATE` and curl up with a good book; it can take an hour or so to complete this step.
+
+---
 ## Creating a Database Catalog from the console
 
 From the CDP Data Warehouse console, click on the (+) under Database Catalogs.
@@ -119,10 +138,13 @@ It will take several minutes to create the virtual data warehouse, keep an eye o
 ---
 
 # Using the CDP CLI
-If you would rather build these components programatically, CDP has a CLI utility that allows you to build the pieces from the command line or shell script.  Combining the CDP CLI with liberal use of jq, we can string together 
+If you would rather build these components programatically, CDP has a CLI utility that allows you to build the pieces from the command line or shell script.  Combining the CDP CLI with liberal use of jq, we can string together fairly complex commands that leverage multiple CLI commands to build the necessary components.
 
+*NOTE:* These steps are analagous to the steps to do this in the UI, but some of the naming conventions are different, so be aware of the differences.
 
 ## Create the DW Cluster
+The CLI calls this step "creating a cluster" wheras the UI calls it an environment and shows that it is already created.  Furthermore the call to `cdp create-cluster` performs the same action as "Activate" does from the UI.   Why we've used two different sets of nouns & verbs to describe this is a question for Slido.
+
 Creating a DW cluster requires at a minimum the CRN for your CDP environment and a list of subnets you want to deploy your DW cluster to.   The assumption is that it will deploy to all your subnets, since for our purposes it is typically only 3 subnets.
 
 *NOTE:  the CLI calls this process creating a DW cluster, but the UI uses "activate/dectivate" terminology.  
@@ -288,9 +310,38 @@ You can also surgically delete individual components from the bottom.
 ### Deactivate Data Warehouse environment (aka cluster)
 This will delete the DW environment, which is called "Deactivate" in the UI.   Be careful with this, it can take a while to delete, and will automatically spawn the creation of a new cluster.  The db catalog & virtual warehouses will be deleted as well.
 
+
+_this command has some sort of jq issue, probably with nested commands & escaping quotes_
 ```
-cdp dw delete-cluster --cluster-id $(cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-$ENV_NAME | jq -r '.environment.crn')'").id')
+cdp dw delete-cluster --cluster-id $(cdp dw list-clusters | jq -r ".clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r "'.environment.crn'")'").id")
 ```
+
+```
+cdp dw list-clusters | jq -r '.clusters[] | select(.environmentCrn == "'$(cdp environments describe-environment --environment-name $ENV_NAME | jq -r '.environment.crn')'").id'
+```
+Which returns
+
+```
+{
+  "id": "env-q8cqxx",
+  "environmentCrn": "crn:cdp:environments:us-west-1:558bc1d2-8867-4357-8524-311d51259233:environment:72617d69-460b-425c-b951-08d6d6857d58",
+  "status": "Deleting",
+  "creator": {
+    "crn": "crn:altus:iam:us-west-1:558bc1d2-8867-4357-8524-311d51259233:user:7874df1a-5cab-4e76-8f54-48ed0039e149",
+    "email": "cnelson2@cloudera.com",
+    "workloadUsername": "cnelson2"
+  },
+  "cloudPlatform": "AWS"
+}
+```
+
+
+And then use the ID from that response delete the cluster
+
+```
+cdp dw delete-cluster --cluster-id env-q8cqxx
+```
+
 
 ### Delete Database Catalog
 
