@@ -28,6 +28,8 @@
 * CDP CLI should be installed & configured
 * jq should be installed, we're going to use it heavily
 
+This covers the CDP CLI & CDP environment spin up, installing `jq` is left as an exercise for the reader.
+
 ---
 
 # Using the CDP Data Warehouse Console 
