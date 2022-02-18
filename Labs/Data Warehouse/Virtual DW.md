@@ -37,7 +37,7 @@ From the UI, this is called an Environment (confusing name to be sure) and it ex
 
 1.  Expand the "Environments" section to show all the environments
 
-![Collapsed environments list](./vdw-environments-more.png)
+![Collapsed environments list](./images/vdw-environments-more.png)
 
 2.  Find your environment (it will be named the same as your CDP environment
 3.  Click the green lightning bolt to bring up the Activation screen.
