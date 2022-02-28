@@ -60,6 +60,7 @@ sed -i -e 's/TF_VAR_web_server_admin_email=<CHANGE_ME>/TF_VAR_web_server_admin_e
 sed -i -e 's/TF_VAR_web_server_admin_password=<CHANGE_ME>/TF_VAR_web_server_admin_password="Cl0uD3r4r0ck2"/g' ./setup/terraform/.env
 sed -i -e "s/TF_VAR_enddate=<CHANGE_ME>/TF_VAR_enddate=$(date '+%m%d%y')/g" ./setup/terraform/.env
 sed -i -e 's/TF_VAR_project="<CHANGE_ME>"/TF_VAR_project="self-development"/g' ./setup/terraform/.env
+sed -i -e "s/TF_VAR_aws_region=<CHANGE_ME>/TF_VAR_aws_region=us-east-2/g" ./setup/terraform/.env
 sed -i -e "s/TF_VAR_aws_access_key_id=/TF_VAR_aws_access_key_id=$AWS_KEY/g" ./setup/terraform/.env
 sed -i -e "s/TF_VAR_aws_secret_access_key=/TF_VAR_aws_secret_access_key=$AWS_SECRET/g" ./setup/terraform/.env
 ```
