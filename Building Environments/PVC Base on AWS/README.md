@@ -24,22 +24,47 @@ cd edge2ai-workshop
 cp ./setup/terraform/.env.template ./setup/terraform/.env
 ```
 
+## Updating the environment file
+
+### Option 1:  Manually edit the file
+
 `vi  ./setup/terraform/.env`
 
 There are 3 sections you need to update in the .env file
-### Admin Parameters
+#### Admin Parameters
 * `export TF_VAR_owner=cnelson2`
 * `export TF_VAR_web_server_admin_email="cnelson2@cloudera.com"`
 * `export TF_VAR_web_server_admin_password="Cl0uD3r4r0ck2"`
 
-### VM Tags
+#### VM Tags
 * `export TF_VAR_enddate=07312021`
 * `export TF_VAR_project="self development"`
 
-### AWS Credentials
+#### AWS Credentials
 * `export TF_VAR_aws_region=us-east-2`
 * `export TF_VAR_aws_access_key_id=*your access key*`
 * `export TF_VAR_aws_secret_access_key=*your secret key*`
+
+### Option 2:  Use `sed` to update them automatically
+
+
+Use environment variables for your aws credentials
+```
+export AWS_KEY=<your aws key>
+export AWS_SECRET=<your aws secret>
+```
+
+```
+sed -i -e "s/TF_VAR_owner=<CHANGE_ME>/TF_VAR_owner=cnelson2/g" ./setup/terraform/.env
+sed -i -e 's/TF_VAR_web_server_admin_email=<CHANGE_ME>/TF_VAR_web_server_admin_email="cnelson2@cloudera.com"/g' ./setup/terraform/.env
+sed -i -e 's/TF_VAR_web_server_admin_password=<CHANGE_ME>/TF_VAR_web_server_admin_password="Cl0uD3r4r0ck2"/g' ./setup/terraform/.env
+sed -i -e "s/TF_VAR_enddate=<CHANGE_ME>/TF_VAR_enddate=$(date '+%m%d%y')/g" ./setup/terraform/.env
+sed -i -e 's/TF_VAR_project="<CHANGE_ME>"/TF_VAR_project="self-development"/g' ./setup/terraform/.env
+sed -i -e "s/TF_VAR_aws_access_key_id=/TF_VAR_aws_access_key_id=$AWS_KEY/g" ./setup/terraform/.env
+sed -i -e "s/TF_VAR_aws_secret_access_key=/TF_VAR_aws_secret_access_key=$AWS_SECRET/g" ./setup/terraform/.env
+```
+
+
 
 ## Configure AWS CLI
 `aws configure`
