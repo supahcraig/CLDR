@@ -17,9 +17,12 @@ docker run -it \
 This will drop you into the shell on that container, where you will do _most_ of the remaining work.
 
 ## Clone the repo and update the .env file
-`git clone https://github.com/cloudera-labs/edge2ai-workshop.git`
 
-`cp ./setup/terraform/.env.template ./setup/terraform/.env`
+```
+git clone https://github.com/cloudera-labs/edge2ai-workshop.git
+cd edge2ai-workshop
+cp ./setup/terraform/.env.template ./setup/terraform/.env
+```
 
 `vi  ./setup/terraform/.env`
 
