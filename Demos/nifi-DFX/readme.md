@@ -58,10 +58,9 @@ If you created the containers for Postgres & Mongo on the nifi nodes, then no ad
 
 Find the latest version of the postgres jar (or whatever version you want to use) from this site:  https://jdbc.postgresql.org/download.html#current
 
-Put that jar on each nifi node under `tmp`, and give it `777` privs.
+Put that jar on each nifi node under `tmp`, and give it `777` privs.   *NOTE*:  you do not need sudo/root privs to make this section work.
 
 ```
-sudo -i
 cd /tmp
 wget https://jdbc.postgresql.org/download/postgresql-42.3.1.jar
 chmod 777 postgresql-42.3.1.jar
