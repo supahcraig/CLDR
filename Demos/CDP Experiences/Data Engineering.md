@@ -1,5 +1,7 @@
 # Using the Data Engineering Experience
 
+Helpful deck:  https://docs.google.com/presentation/d/1CHcntNI8_IhYpaeUZdR4VEw8b7N0cdR6Xe8NiTG4Iv0/edit#slide=id.g8ca5adf6e2_0_2837
+
 this will run a spark job in DEX
 
 First create the DE Service, make sure the public load balancer is checked & select all 3 subnets
@@ -11,14 +13,17 @@ upload your python script into the resource
 
 Then create your job against that resource.  No advanced options, main class, arguments etc are necessary.
 
-Here is my sample spark, you can find working examples in this repo (Long atbats without a curveball/fastball.py)
+Here is my sample spark, you can find working examples in this repo (Long atbats without a curveball/fastball.py).  A simple spark.sql SELECT statement is enough to show CDE doing it's thing, but adding a drop/create table step makes for good lineage graphs in Data Catalog.
 
 ```
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.appName('app').getOrCreate()
 
+spark.sql('DROP TABLE IF EXISTS database.table')
+
 sql = """
+create table database.table as
 your query here
 """
 
