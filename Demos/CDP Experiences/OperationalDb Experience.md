@@ -83,8 +83,16 @@ CA,San Jose,912332
 phoenix-psql ddl.sql data.csv
 ```
 
-You should see it report back that there were 10 rows upserted, but let's check just to be sure.
+You should output similar to below, note the "10 rows upserted" 
+```
+22/03/11 23:46:25 WARN impl.MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-phoenix.properties,hadoop-metrics2.properties
+no rows upserted
+Time: 0.014 sec(s)
 
+csv columns from database.
+CSV Upsert complete. 10 rows upserted
+Time: 1.014 sec(s)
+```
 
 4.  Create a file called `select.sql`to hold our select query
 
