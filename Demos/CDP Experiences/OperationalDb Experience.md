@@ -5,6 +5,7 @@ Connecting to dbeaver (untested):  https://community.cloudera.com/t5/Community-A
 
 If Hue doesn't work, go to Ranger, under Hbase add Hue user to one of the policies.
 
+# Create a COD Database
 
 1.  From the CDP Management Console, go to Operational Database
 2.  Click `Create Database`
@@ -14,9 +15,9 @@ If Hue doesn't work, go to Ranger, under Hbase add Hue user to one of the polici
 6.  Wait ~40 minutes
 
 
-Once it is created, you will find it in the list of databases in the COD UI.  Clicking on it will take you to the info page for your database.  There is very little you can do from here.
+Once it is created, you will find it in the list of databases in the COD UI.  Clicking on it will take you to the info page for your database.  There is very little you can do from here.   You will also find that it has created a data hub cluster in your environment.
 
-
+---
 ## Using Phoenix in Hue
 You'll see a link for Hue, but you'll find that opening Hue throws a permissions error which must be corrected in Ranger.
 
@@ -38,7 +39,7 @@ Once you've saved the new policy, it will need to propogate to the rest of the c
 
 You should now be able to open the Hue browser for Phoenix.
 
-
+---
 ## Using the Phoenix CLI
 From the terminal you can run Phoenix queries, although it is not an interactive REPL-type experience.
 
