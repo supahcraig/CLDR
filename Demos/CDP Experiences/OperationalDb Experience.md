@@ -124,3 +124,21 @@ PA                                        1                                  146
 AZ                                        1                                  1461575
 Time: 1.266 sec(s)
 ```
+
+---
+## Using Phoenix with Dbeaver
+
+The thin client should give us connectivity through an external tool.   The database page has tabs for several different connectivity methods, navigate to the Phonenix (thin) tab.
+
+The jar file isn't directly given to us.   From the repository link provided, it is under `org/apache/phoenix/phoenix-queryserver-client/` and then navigate to the version required for your database, then download the jar.  <<< which doesn't actually work for dbeaver.
+
+```
+wget https://repository.cloudera.com/artifactory/cloudera-repos/org/apache/phoenix/phoenix-queryserver-client/6.0.0.7.2.14.0-149/phoenix-queryserver-client-6.0.0.7.2.14.0-149.jar
+```
+
+Instead go to the Hbase Client Tarball tab and paste the download URL into a new browser tab.  It'll ask for your CDP username/password because it's actually cleverly stored on your cluster.  
+
+I don't have this working yet.
+
+
+
