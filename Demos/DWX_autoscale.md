@@ -301,9 +301,34 @@ where 1 = 1
   and 1 = 1;
   ```
 
+Pivoted version of umpire assignements:
+
+```
+drop table umpire_game_totals;
+create table umpire_game_totals as
+select count(*), umpire_name, assigned_base
+from (
+  select umpire_1b as umpire_name
+       , '1B' as assigned_base
+  from bb.games_r
+  union all 
+  select umpire_2b as umpire_name
+       , '2B' as assigned_base
+  from bb.games_r
+  union all 
+  select umpire_3b as umpire_name
+       , '3B' as assigned_base
+  from bb.games_r
+  union all 
+  select umpire_hp as umpire_name
+       , 'HP' as assigned_base
+  from bb.games_r) x
+group by umpire_name, assigned_base;
+```
+
 
 ### LOAD TEST SQL
-Using the JMeter load test technique, this is the load test for Impala scale-up:
+Using the JMeter load test technique, this is the load test for Impala scale-up.   The query identifies at bats of more than 6 pitches where no curveball was thrown.   Why?  Because it seems like fun.
 
 ```
 select count(*), g.game_id, g.venue_name
