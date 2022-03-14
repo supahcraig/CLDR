@@ -8,11 +8,18 @@ It can be a challenge to get Nifi processors working correctly in a kerberized c
 * `SASL Mechanism`:  GSSAPI
 * `Kerberos Credentials Serice`:  KeytabCredentialsService _(see below)_
 * `Kerberos Service Name`:  kafka
-* `Kerberos Principal`:  _no value set_
-* `Kerberos Keytab`:  _no value set_
+* `Kerberos Principal`:  _no value set_ ==> _see KeytabCredentialsServcie_
+* `Kerberos Keytab`:  _no value set_ ==> _see KeytabCredentialsServcie_
 * `Username`:  _no value set_
 * `Password`:  _no value set_
 * `SSL Contect Service`:  Default NiFi SSL Context Service _(see below)_
+
+## KeytabCredentialsService
+
+* `Kerberos Keytab`:  /keytabs/admin.keytab
+* `Kerberos Principal`:  admin
+
+
 
 # Consume Kafka
 
