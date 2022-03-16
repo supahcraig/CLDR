@@ -145,6 +145,7 @@ I don't have this working yet.
 
 # AWS Resources for COD
 
+##Data Lake
 A base environment/data lake for CDP consists of 8 EC2 instances:
 
 * FreeIPA Master (2) <env prefix>-aw-env-freeipa-xxxxx-master (m5.large)
@@ -152,7 +153,8 @@ A base environment/data lake for CDP consists of 8 EC2 instances:
 * ID Broker (1) <env prefix>-aw-dl-yyyyyy-idbroker (t3.medium)
 * ??? (4) <env prefix>-vm-e7-00, 01, 02, 03 (m5.2xlarge)
  
- 
+
+ ## COD
  Creating a COD instance spins up a new data hub cluster in your datalake, backed by 9 additional EC2 instances:
  
  opdb-prefix is the name of the data hub, and is of the form `cod-gobbledygook`
