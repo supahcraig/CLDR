@@ -153,7 +153,7 @@ A base environment/data lake for CDP consists of 8 EC2 instances:
 * ??? (4) <env prefix>-vm-e7-00, 01, 02, 03 (m5.2xlarge)
  
  
- Creating a COD instance spins up a new data hub cluster in your datalake, backed by these additional EC2 instances:
+ Creating a COD instance spins up a new data hub cluster in your datalake, backed by 9 additional EC2 instances:
  
  opdb-prefix is the name of the data hub, and is of the form `cod-gobbledygook`
  
