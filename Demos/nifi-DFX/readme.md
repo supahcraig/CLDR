@@ -28,6 +28,7 @@ Once you're in, you'll need to install Docker & get it running as a service.
 sudo -i
 yum install docker -y
 systemctl start docker
+
 ```
 
 ### Create Postgres & MongoDB containers
