@@ -95,6 +95,22 @@ CSV Upsert complete. 10 rows upserted
 Time: 1.014 sec(s)
 ```
 
+In a pinch, you can directly _upsert_ the data from Hue:
+
+```
+upsert into us_population values ('NY', 'New York', 8143197);
+upsert into us_population values ('CA', 'Los Angeles', 3844829);
+upsert into us_population values ('IL', 'Chicago', 2842518);
+upsert into us_population values ('TX', 'Houston', 2016582);
+upsert into us_population values ('PA', 'Philadelphia', 1463281);
+upsert into us_population values ('AZ', 'Phoenix', 1461575);
+upsert into us_population values ('TX', 'San Antonio', 1256509);
+upsert into us_population values ('CA', 'San Diego', 1255540);
+upsert into us_population values ('TX', 'Dallas', 1213825);
+upsert into us_population values ('CA', 'San Jose', 91233);
+```
+
+
 4.  Create a file called `select.sql`to hold our select query
 
 ```
