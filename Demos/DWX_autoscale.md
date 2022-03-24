@@ -26,7 +26,7 @@ I found some baseball data that works ok, it's not a ton, I probalby need to bui
 
 s3://crnxx-uat2/baseball/
 
-
+Source:  https://www.kaggle.com/pschale/mlb-pitch-data-20152018
 
 ## DDL
 
