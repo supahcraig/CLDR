@@ -97,6 +97,7 @@ hostnamectl set-hostname $NEWHOSTNAME
 
 
 hostnamectl set-hostname ipa.demo.local
+# make this match the hosts you'll be joining to.  i.e. dim.local for edge2ai cluster
 
 #########################################
 #	reboot and check hostname is set correctly
