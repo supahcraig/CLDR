@@ -48,6 +48,7 @@ tags: [ 📜 curated freeipa security kerberos ]
 *  Stand up a new AWS host to install IPA Server software. 
 
 `ami-02eac2c0129f6376b`
+`ami-0f18ced0fd6aae5c2` in us-east-2
 
 * I chose an instance size of m4.large w/ 50 gb of disk
 
