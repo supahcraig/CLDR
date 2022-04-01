@@ -67,7 +67,7 @@ hostnamectl
 Which should return this output:
 
 
-> 
+```
 >
 > Static hostname: ipa.demo.local
 >         Icon name: computer-vm
@@ -79,7 +79,10 @@ Which should return this output:
 >       CPE OS Name: cpe:/o:centos:centos:7
 >            Kernel: Linux 3.10.0-957.1.3.el7.x86_64
 >      Architecture: x86-64
-      
+```
+
+
+```
 
  
 ###################################################################################
