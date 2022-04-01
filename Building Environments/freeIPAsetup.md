@@ -253,108 +253,108 @@ This will kick off the actual install process, which can take a few minutes to c
 >   [3/3]: restarting directory server
 > Done configuring directory server (dirsrv).
 > Configuring ipa-otpd
+> 
+> 
+> [1/2]: starting ipa-otpd 
+>   [2/2]: configuring ipa-otpd to start on boot
+> Done configuring ipa-otpd.
+> Configuring the web interface (httpd)
+>   [1/22]: stopping httpd
+>   [2/22]: setting mod_nss port to 443
+>   [3/22]: setting mod_nss cipher suite
+>   [4/22]: setting mod_nss protocol list to TLSv1.2
+>   [5/22]: setting mod_nss password file
+>   [6/22]: enabling mod_nss renegotiate
+>   [7/22]: disabling mod_nss OCSP
+>   [8/22]: adding URL rewriting rules
+>   [9/22]: configuring httpd
+>   [10/22]: setting up httpd keytab
+>   [11/22]: configuring Gssproxy
+>   [12/22]: setting up ssl
+>   [13/22]: configure certmonger for renewals
+>   [14/22]: importing CA certificates from LDAP
+>   [15/22]: publish CA cert
+>   [16/22]: clean up any existing httpd ccaches
+>   [17/22]: configuring SELinux for httpd
+>   [18/22]: create KDC proxy config
+>   [19/22]: enable KDC proxy
+>   [20/22]: starting httpd
+>   [21/22]: configuring httpd to start on boot
+>   [22/22]: enabling oddjobd
+> Done configuring the web interface (httpd).
+> Configuring Kerberos KDC (krb5kdc)
+>   [1/1]: installing X509 Certificate for PKINIT
+> Done configuring Kerberos KDC (krb5kdc).
+> Applying LDAP updates
+> Upgrading IPA:. Estimated time: 1 minute 30 seconds
+>   [1/10]: stopping directory server
+>   [2/10]: saving configuration
+>   [3/10]: disabling listeners
+>   [4/10]: enabling DS global lock
+>   [5/10]: disabling Schema Compat
+>   [6/10]: starting directory server
+>   [7/10]: upgrading server
+>   [8/10]: stopping directory server
+>   [9/10]: restoring configuration
+>   [10/10]: starting directory server
+> Done.
+> Restarting the KDC
+> Configuring client side components
+> Using existing certificate '/etc/ipa/ca.crt'.
+> Client hostname: ipa.dim.local
+> Realm: DIM.LOCAL
+> DNS Domain: dim.local
+> IPA Server: ipa.dim.local
+> BaseDN: dc=dim,dc=local
+> 
+> Skipping synchronizing time with NTP server.
+> New SSSD config will be created
+> Configured sudoers in /etc/nsswitch.conf
+> Configured /etc/sssd/sssd.conf
+> trying https://ipa.dim.local/ipa/json
+> [try 1]: Forwarding 'schema' to json server 'https://ipa.dim.local/ipa/json'
+> trying https://ipa.demo.local/ipa/session/json
+> [try 1]: Forwarding 'ping' to json server 'https://ipa.dim.local/ipa/session/json'
+> [try 1]: Forwarding 'ca_is_enabled' to json server 'https://ipa.dim.local/ipa/session/json'
+> Systemwide CA database updated.
+> Adding SSH public key from /etc/ssh/ssh_host_rsa_key.pub
+> Adding SSH public key from /etc/ssh/ssh_host_ecdsa_key.pub
+> Adding SSH public key from /etc/ssh/ssh_host_ed25519_key.pub
+> [try 1]: Forwarding 'host_mod' to json server 'https://ipa.dim.local/ipa/session/json'
+> Could not update DNS SSHFP records.
+> SSSD enabled
+> Configured /etc/openldap/ldap.conf
+> Configured /etc/ssh/ssh_config
+> Configured /etc/ssh/sshd_config
+> Configuring dim.local as NIS domain.
+> Client configuration complete.
+> The ipa-client-install command was successful
+> 
+> ipaserver.dns_data_management: ERROR    unable to resolve host name ipa.dim.local. to IP address, ipa-ca DNS record will be incomplete
+> ipaserver.dns_data_management: ERROR    unable to resolve host name ipa.dim.local. to IP address, ipa-ca DNS record will be incomplete
+> Please add records in this file to your DNS system: /tmp/ipa.system.records.aPdJox.db
+> ==============================================================================
+> Setup complete
+> 
+> 
+> Next steps:
+> 	1. You must make sure these network ports are open:
+> 		TCP Ports:
+> 		  * 80, 443: HTTP/HTTPS
+> 		  * 389, 636: LDAP/LDAPS
+> 		  * 88, 464: kerberos
+> 		UDP Ports:
+> 		  * 88, 464: kerberos
+> 		  * 123: ntp
+> 
+> 	2. You can now obtain a kerberos ticket using the command: 'kinit admin'
+> 	   This ticket will allow you to use the IPA tools (e.g., ipa user-add)
+> 	   and the web user interface.
+> 
+> Be sure to back up the CA certificates stored in /root/cacert.p12
+> These files are required to create replicas. The password for these
+> files is the Directory Manager password
 > ```
-
-[1/2]: starting ipa-otpd 
-  [2/2]: configuring ipa-otpd to start on boot
-Done configuring ipa-otpd.
-Configuring the web interface (httpd)
-  [1/22]: stopping httpd
-  [2/22]: setting mod_nss port to 443
-  [3/22]: setting mod_nss cipher suite
-  [4/22]: setting mod_nss protocol list to TLSv1.2
-  [5/22]: setting mod_nss password file
-  [6/22]: enabling mod_nss renegotiate
-  [7/22]: disabling mod_nss OCSP
-  [8/22]: adding URL rewriting rules
-  [9/22]: configuring httpd
-  [10/22]: setting up httpd keytab
-  [11/22]: configuring Gssproxy
-  [12/22]: setting up ssl
-  [13/22]: configure certmonger for renewals
-  [14/22]: importing CA certificates from LDAP
-  [15/22]: publish CA cert
-  [16/22]: clean up any existing httpd ccaches
-  [17/22]: configuring SELinux for httpd
-  [18/22]: create KDC proxy config
-  [19/22]: enable KDC proxy
-  [20/22]: starting httpd
-  [21/22]: configuring httpd to start on boot
-  [22/22]: enabling oddjobd
-Done configuring the web interface (httpd).
-Configuring Kerberos KDC (krb5kdc)
-  [1/1]: installing X509 Certificate for PKINIT
-Done configuring Kerberos KDC (krb5kdc).
-Applying LDAP updates
-Upgrading IPA:. Estimated time: 1 minute 30 seconds
-  [1/10]: stopping directory server
-  [2/10]: saving configuration
-  [3/10]: disabling listeners
-  [4/10]: enabling DS global lock
-  [5/10]: disabling Schema Compat
-  [6/10]: starting directory server
-  [7/10]: upgrading server
-  [8/10]: stopping directory server
-  [9/10]: restoring configuration
-  [10/10]: starting directory server
-Done.
-Restarting the KDC
-Configuring client side components
-Using existing certificate '/etc/ipa/ca.crt'.
-Client hostname: ipa.demo.local
-Realm: DEMO.LOCAL
-DNS Domain: demo.local
-IPA Server: ipa.demo.local
-BaseDN: dc=demo,dc=local
-
-Skipping synchronizing time with NTP server.
-New SSSD config will be created
-Configured sudoers in /etc/nsswitch.conf
-Configured /etc/sssd/sssd.conf
-trying https://ipa.demo.local/ipa/json
-[try 1]: Forwarding 'schema' to json server 'https://ipa.demo.local/ipa/json'
-trying https://ipa.demo.local/ipa/session/json
-[try 1]: Forwarding 'ping' to json server 'https://ipa.demo.local/ipa/session/json'
-[try 1]: Forwarding 'ca_is_enabled' to json server 'https://ipa.demo.local/ipa/session/json'
-Systemwide CA database updated.
-Adding SSH public key from /etc/ssh/ssh_host_rsa_key.pub
-Adding SSH public key from /etc/ssh/ssh_host_ecdsa_key.pub
-Adding SSH public key from /etc/ssh/ssh_host_ed25519_key.pub
-[try 1]: Forwarding 'host_mod' to json server 'https://ipa.demo.local/ipa/session/json'
-Could not update DNS SSHFP records.
-SSSD enabled
-Configured /etc/openldap/ldap.conf
-Configured /etc/ssh/ssh_config
-Configured /etc/ssh/sshd_config
-Configuring demo.local as NIS domain.
-Client configuration complete.
-The ipa-client-install command was successful
-
-ipaserver.dns_data_management: ERROR    unable to resolve host name ipa.demo.local. to IP address, ipa-ca DNS record will be incomplete
-ipaserver.dns_data_management: ERROR    unable to resolve host name ipa.demo.local. to IP address, ipa-ca DNS record will be incomplete
-Please add records in this file to your DNS system: /tmp/ipa.system.records.aPdJox.db
-==============================================================================
-Setup complete
-
-
-Next steps:
-	1. You must make sure these network ports are open:
-		TCP Ports:
-		  * 80, 443: HTTP/HTTPS
-		  * 389, 636: LDAP/LDAPS
-		  * 88, 464: kerberos
-		UDP Ports:
-		  * 88, 464: kerberos
-		  * 123: ntp
-
-	2. You can now obtain a kerberos ticket using the command: 'kinit admin'
-	   This ticket will allow you to use the IPA tools (e.g., ipa user-add)
-	   and the web user interface.
-
-Be sure to back up the CA certificates stored in /root/cacert.p12
-These files are required to create replicas. The password for these
-files is the Directory Manager password
-```
 
 
 ### Test that you can kinit as user `admin`
