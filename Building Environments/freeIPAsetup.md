@@ -1,34 +1,5 @@
 
-Autocorrected to haveConversation opened. 1 unread message.
 
-Skip to content
-Using Cloudera, Inc. Mail with screen readers
-Meet
-New meeting
-My meetings
-Hangouts
-
-1 of 1,306
-ipa server install markdown doc
-Inbox
-
-Tim Lepple
-Attachments
-3:33 PM (3 minutes ago)
-to me
-
-
-
---
-Tim Lepple | Senior Solutions Engineer
-t. (214) 649-6732
-cloudera.com
-Cloudera
-Cloudera on Twitter	Cloudera on Facebook	Cloudera on LinkedIn
-
-Attachments area
-Got it, thanks!Thanks!Got it.
----
 UUID: 2022032909342693
 topic: technical
 short_name: ipa_server
@@ -138,9 +109,11 @@ vi /etc/hosts
 10.0.8.251 ipa.demo.local ipa
 
 ```
-
+_double check the host name here; ipa.dim.local_
 
 ### Install FreeIPA Server
+
+you may need to `yum update nss* -y`
 
 ```
 yum install -y epel-release
