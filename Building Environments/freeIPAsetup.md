@@ -136,7 +136,7 @@ It will then prompt you for directory manager & IPA admin passwords
 
 This will kick off the actual install process, which can take a few minutes to complete.
 
-> The following operations may take some minutes to complete.
+> ``` The following operations may take some minutes to complete.
 > Please wait until the prompt is returned.
 > 
 > Configuring NTP daemon (ntpd)
@@ -169,91 +169,93 @@ This will kick off the actual install process, which can take a few minutes to c
 >   [21/45]: enabling referential integrity plugin
 >   [22/45]: configuring certmap.conf
 >   [23/45]: configure new location for managed entries
-  [24/45]: configure dirsrv ccache
-  [25/45]: enabling SASL mapping fallback
-  [26/45]: restarting directory server
-  [27/45]: adding sasl mappings to the directory
-  [28/45]: adding default layout
-  [29/45]: adding delegation layout
-  [30/45]: creating container for managed entries
-  [31/45]: configuring user private groups
-  [32/45]: configuring netgroups from hostgroups
-  [33/45]: creating default Sudo bind user
-  [34/45]: creating default Auto Member layout
-  [35/45]: adding range check plugin
-  [36/45]: creating default HBAC rule allow_all
-  [37/45]: adding entries for topology management
-  [38/45]: initializing group membership
-  [39/45]: adding master entry
-  [40/45]: initializing domain level
-  [41/45]: configuring Posix uid/gid generation
-  [42/45]: adding replication acis
-  [43/45]: activating sidgen plugin
-  [44/45]: activating extdom plugin
-  [45/45]: configuring directory to start on boot
-Done configuring directory server (dirsrv).
-Configuring Kerberos KDC (krb5kdc)
-  [1/10]: adding kerberos container to the directory
-  [2/10]: configuring KDC
-  [3/10]: initialize kerberos container
-  [4/10]: adding default ACIs
-  [5/10]: creating a keytab for the directory
-  [6/10]: creating a keytab for the machine
-  [7/10]: adding the password extension to the directory
-  [8/10]: creating anonymous principal
-  [9/10]: starting the KDC
-  [10/10]: configuring KDC to start on boot
-Done configuring Kerberos KDC (krb5kdc).
-Configuring kadmin
-  [1/2]: starting kadmin 
-  [2/2]: configuring kadmin to start on boot
-Done configuring kadmin.
-Configuring ipa-custodia
-  [1/5]: Making sure custodia container exists
-  [2/5]: Generating ipa-custodia config file
-  [3/5]: Generating ipa-custodia keys
-  [4/5]: starting ipa-custodia 
-  [5/5]: configuring ipa-custodia to start on boot
-Done configuring ipa-custodia.
-Configuring certificate server (pki-tomcatd). Estimated time: 3 minutes
-  [1/30]: configuring certificate server instance
-  [2/30]: secure AJP connector
-  [3/30]: reindex attributes
-  [4/30]: exporting Dogtag certificate store pin
-  [5/30]: stopping certificate server instance to update CS.cfg
-  [6/30]: backing up CS.cfg
-  [7/30]: disabling nonces
-  [8/30]: set up CRL publishing
-  [9/30]: enable PKIX certificate path discovery and validation
-  [10/30]: starting certificate server instance
-  [11/30]: configure certmonger for renewals
-  [12/30]: requesting RA certificate from CA
-  [13/30]: setting audit signing renewal to 2 years
-  [14/30]: restarting certificate server
-  [15/30]: publishing the CA certificate
-  [16/30]: adding RA agent as a trusted user
-  [17/30]: authorizing RA to modify profiles
-  [18/30]: authorizing RA to manage lightweight CAs
-  [19/30]: Ensure lightweight CAs container exists
-  [20/30]: configure certificate renewals
-  [21/30]: configure Server-Cert certificate renewal
-  [22/30]: Configure HTTP to proxy connections
-  [23/30]: restarting certificate server
-  [24/30]: updating IPA configuration
-  [25/30]: enabling CA instance
-  [26/30]: migrating certificate profiles to LDAP
-  [27/30]: importing IPA certificate profiles
-  [28/30]: adding default CA ACL
-  [29/30]: adding 'ipa' CA entry
-  [30/30]: configuring certmonger renewal for lightweight CAs
-Done configuring certificate server (pki-tomcatd).
-Configuring directory server (dirsrv)
-  [1/3]: configuring TLS for DS instance
-  [2/3]: adding CA certificate entry
-  [3/3]: restarting directory server
-Done configuring directory server (dirsrv).
-Configuring ipa-otpd
-  [1/2]: starting ipa-otpd 
+>   [24/45]: configure dirsrv ccache
+>   [25/45]: enabling SASL mapping fallback
+>   [26/45]: restarting directory server
+>   [27/45]: adding sasl mappings to the directory
+>   [28/45]: adding default layout
+>   [29/45]: adding delegation layout
+>   [30/45]: creating container for managed entries
+>   [31/45]: configuring user private groups
+>   [32/45]: configuring netgroups from hostgroups
+>   [33/45]: creating default Sudo bind user
+>   [34/45]: creating default Auto Member layout
+>   [35/45]: adding range check plugin
+>   [36/45]: creating default HBAC rule allow_all
+>   [37/45]: adding entries for topology management
+>   [38/45]: initializing group membership
+>   [39/45]: adding master entry
+>   [40/45]: initializing domain level
+>   [41/45]: configuring Posix uid/gid generation
+>   [42/45]: adding replication acis
+>   [43/45]: activating sidgen plugin
+>   [44/45]: activating extdom plugin
+>   [45/45]: configuring directory to start on boot
+> Done configuring directory server (dirsrv).
+> Configuring Kerberos KDC (krb5kdc)
+>   [1/10]: adding kerberos container to the directory
+>   [2/10]: configuring KDC
+>   [3/10]: initialize kerberos container
+>   [4/10]: adding default ACIs
+>   [5/10]: creating a keytab for the directory
+>   [6/10]: creating a keytab for the machine
+>   [7/10]: adding the password extension to the directory
+>   [8/10]: creating anonymous principal
+>   [9/10]: starting the KDC
+>   [10/10]: configuring KDC to start on boot
+> Done configuring Kerberos KDC (krb5kdc).
+> Configuring kadmin
+>   [1/2]: starting kadmin 
+>   [2/2]: configuring kadmin to start on boot
+> Done configuring kadmin.
+> Configuring ipa-custodia
+>   [1/5]: Making sure custodia container exists
+>   [2/5]: Generating ipa-custodia config file
+>   [3/5]: Generating ipa-custodia keys
+>   [4/5]: starting ipa-custodia 
+>   [5/5]: configuring ipa-custodia to start on boot
+> Done configuring ipa-custodia.
+> Configuring certificate server (pki-tomcatd). Estimated time: 3 minutes
+>   [1/30]: configuring certificate server instance
+>   [2/30]: secure AJP connector
+>   [3/30]: reindex attributes
+>   [4/30]: exporting Dogtag certificate store pin
+>   [5/30]: stopping certificate server instance to update CS.cfg
+>   [6/30]: backing up CS.cfg
+>   [7/30]: disabling nonces
+>   [8/30]: set up CRL publishing
+>   [9/30]: enable PKIX certificate path discovery and validation
+>   [10/30]: starting certificate server instance
+>   [11/30]: configure certmonger for renewals
+>   [12/30]: requesting RA certificate from CA
+>   [13/30]: setting audit signing renewal to 2 years
+>   [14/30]: restarting certificate server
+>   [15/30]: publishing the CA certificate
+>   [16/30]: adding RA agent as a trusted user
+>   [17/30]: authorizing RA to modify profiles
+>   [18/30]: authorizing RA to manage lightweight CAs
+>   [19/30]: Ensure lightweight CAs container exists
+>   [20/30]: configure certificate renewals
+>   [21/30]: configure Server-Cert certificate renewal
+>   [22/30]: Configure HTTP to proxy connections
+>   [23/30]: restarting certificate server
+>   [24/30]: updating IPA configuration
+>   [25/30]: enabling CA instance
+>   [26/30]: migrating certificate profiles to LDAP
+>   [27/30]: importing IPA certificate profiles
+>   [28/30]: adding default CA ACL
+>   [29/30]: adding 'ipa' CA entry
+>   [30/30]: configuring certmonger renewal for lightweight CAs
+> Done configuring certificate server (pki-tomcatd).
+> Configuring directory server (dirsrv)
+>   [1/3]: configuring TLS for DS instance
+>   [2/3]: adding CA certificate entry
+>   [3/3]: restarting directory server
+> Done configuring directory server (dirsrv).
+> Configuring ipa-otpd
+> ```
+
+[1/2]: starting ipa-otpd 
   [2/2]: configuring ipa-otpd to start on boot
 Done configuring ipa-otpd.
 Configuring the web interface (httpd)
@@ -333,6 +335,7 @@ ipaserver.dns_data_management: ERROR    unable to resolve host name ipa.demo.loc
 Please add records in this file to your DNS system: /tmp/ipa.system.records.aPdJox.db
 ==============================================================================
 Setup complete
+
 
 Next steps:
 	1. You must make sure these network ports are open:
