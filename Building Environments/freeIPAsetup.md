@@ -1,20 +1,5 @@
+Hey friends, let's kerberize a CDP cluster.  First step is to set up freeIPA. 
 
-
-UUID: 2022032909342693
-topic: technical
-short_name: ipa_server
-titlename: 2022-03-29-ipa_server-note
-create_date: 2022032909342693
-tags: [ 📜 curated freeipa security kerberos ]
----
-
----
-####  📜  Purpose: technical
----
-
----
-##### 📒  Notes:
--- the goal of this document is to build a stand alone FreeIPA Server to be used for LDAP, Kerberos, TLS and other documents.
 
 
 ## Create EC2 Instance
@@ -124,13 +109,13 @@ in favor of ntpd
 
 It will then prompt you for directory manager & IPA admin passwords
 
-
+> ```
 > The IPA Master Server will be configured with:
 > Hostname:       ipa.dim.local
 > IP address(es): 10.0.8.251
 > Domain name:    dim.local
 > Realm name:     DIM.LOCAL
-
+> ```
 
 * Continue to configure the system with these values? [no]: _actually type `YES`_
 
@@ -356,165 +341,155 @@ This will kick off the actual install process, which can take a few minutes to c
 > files is the Directory Manager password
 > ```
 
+---
 
-### Test that you can kinit as user `admin`
+### Test kinit
+
+Do a `kinit` for the admin user.    The password is what you supplied during the install process above.
+
 ```
 kinit admin
-
-      
-Password for admin@DEMO.LOCAL:
-
-
-#########################################
-# list the ticket
-#########################################
 klist
 
-#########################################
-# output
-#########################################
- 
-Ticket cache: KEYRING:persistent:0:0
-Default principal: admin@DEMO.LOCAL
-
-Valid starting Expires Service principal
-03/31/2022 14:35:51 04/01/2022 14:35:43 krbtgt/DEMO.LOCAL@DEMO.LOCAL
-
-
-#########################################
-# search for the admin user:
-#########################################
-ipa user-find admin
-
-#########################################
-# output
-#########################################
-
--------------
-1 user matched
---------------
-  User login: admin
-  Last name: Administrator
-  Home directory: /home/admin
-  Login shell: /bin/bash
-  Principal alias: admin@DEMO.LOCAL
-  UID: 1599000000
-  GID: 1599000000
-  Account disabled: False
-----------------------------
-Number of entries returned 1
-----------------------------
-
 ```
+
+You should see output similar to this:
+
+> ```
+> Ticket cache: KEYRING:persistent:0:0
+> Default principal: admin@DIM.LOCAL
+> 
+> Valid starting Expires Service principal
+> 03/31/2022 14:35:51 04/01/2022 14:35:43 krbtgt/DIM.LOCAL@DIM.LOCAL
+> ```
+
+### Find admin user
+
+`ipa user-find admin`
+
+Should return this:
+
+> ```
+> -------------
+> 1 user matched
+> --------------
+>   User login: admin
+>   Last name: Administrator
+>   Home directory: /home/admin
+>   Login shell: /bin/bash
+>   Principal alias: admin@DIM.LOCAL
+>   UID: 1599000000
+>   GID: 1599000000
+>   Account disabled: False
+> ----------------------------
+> Number of entries returned 1
+> ----------------------------
+> ```
+
+
 
 ### Create a new user
 
+Next create your user.
 
 ```
-#########################################
-# create a user for yourself:
-#########################################
-ipa user-add tlepple  --first=Tim --last=Lepple --email=tlepple@cloudera.com  --shell=/bin/bash --password
+ipa user-add cnelson --first=Craig --last=Nelson --email=cnelson2@cloudera.com --shell=/bin/bash --password
+```
 
+You should see output like this:
 
-#########################################
-# output
-#########################################
-Password: 
-Enter Password again to verify: 
---------------------
-Added user "tlepple"
---------------------
-  User login: tlepple
-  First name: Tim
-  Last name: Lepple
-  Full name: Tim Lepple
-  Display name: Tim Lepple
-  Initials: TL
-  Home directory: /home/tlepple
-  GECOS: Tim Lepple
-  Login shell: /bin/bash
-  Principal name: tlepple@DEMO.LOCAL
-  Principal alias: tlepple@DEMO.LOCAL
-  User password expiration: 20220331152633Z
-  Email address: tlepple@cloudera.com
-  UID: 1599000001
-  GID: 1599000001
-  Password: True
-  Member of groups: ipausers
-  Kerberos keys available: True
+> ```
+> --------------------
+> Added user "cnelson"
+> --------------------
+>   User login: cnelson
+>   First name: Craig
+>   Last name: Nelson
+>   Full name: Craig Nelson
+>   Display name: Craig Nelson
+>   Initials: CN
+>   Home directory: /home/cnelson
+>   GECOS: Craig Nelson
+>   Login shell: /bin/bash
+>   Principal name: cnelson@DIM.LOCAL
+>   Principal alias: cnelson@DIM.LOCAL
+>   User password expiration: 20220401203658Z
+>   Email address: cnelson2@cloudera.com
+>   UID: 855000001
+>   GID: 855000001
+>   Password: True
+>   Member of groups: ipausers
+>   Kerberos keys available: True
+>   ```
   
 
-#########################################
-# search for user
-#########################################
-ipa user-find tlepple
+#### Search for user
 
-#########################################
-# output
-#########################################
---------------
-1 user matched
---------------
-  User login: tlepple
-  First name: Tim
-  Last name: Lepple
-  Home directory: /home/tlepple
-  Login shell: /bin/bash
-  Principal name: tlepple@DEMO.LOCAL
-  Principal alias: tlepple@DEMO.LOCAL
-  Email address: tlepple@cloudera.com
-  UID: 1599000001
-  GID: 1599000001
-  Account disabled: False
-----------------------------
-Number of entries returned 1
-----------------------------
+`ipa user-find cnelson`
 
-#########################################
-# setup ipa so that it creates home directories
-#########################################
-sudo authconfig --enablemkhomedir --update
+Should return output like this:
 
+> ```
+> --------------
+> 1 user matched
+> --------------
+>   User login: cnelson
+>   First name: Craig
+>   Last name: Nelson
+>   Home directory: /home/cnelson
+>   Login shell: /bin/bash
+>   Principal name: cnelson@DIM.LOCAL
+>   Principal alias: cnelson@DIM.LOCAL
+>   Email address: cnelson2@cloudera.com
+>   UID: 855000001
+>   GID: 855000001
+>   Account disabled: False
+> ----------------------------
+> Number of entries returned 1
+> ----------------------------
+> ```
 
-#########################################
-# test that you can ssh locally to this user
-#########################################
+### Configure ipa to create home directories
 
-ssh tlepple@ipa.demo.local
-
-#########################################
-# Output:
-#########################################
-Password: 
-Password expired. Change your password now.
-Current Password: 
-New password: 
-Retype new password: 
-Creating home directory for tlepple.
-
-#########################################
-# check the kerberos ticket
-#########################################
-klist
-
-#########################################
-# output
-#########################################
-Ticket cache: KEYRING:persistent:1599000001:krb_ccache_kgv2lS4
-Default principal: tlepple@DEMO.LOCAL
-
-Valid starting       Expires              Service principal
-03/31/2022 15:32:25  04/01/2022 15:32:24  krbtgt/DEMO.LOCAL@DEMO.LOCAL
-
-
-#########################################
-# output
-#########################################
-
-
+Users should have a home directory created under `/home/`
 
 ```
+sudo authconfig --enablemkhomedir --update
+```
+
+### Test new user
+
+From the ipa host, ssh back into itself using the user you just created.  It will prompt you to change your password on first login (you can re-use the same password if you want)
+
+```
+ssh cnelson@ipa.dim.local
+```
+
+#### Check the kerberos ticket
+
+`klist`
+
+And verify the output:
+
+> ```
+> Ticket cache: KEYRING:persistent:855000001:krb_ccache_Wo6UJ4k
+> Default principal: cnelson@DIM.LOCAL
+> 
+> Valid starting       Expires              Service principal
+> 04/01/2022 22:00:47  04/02/2022 22:00:47  krbtgt/DIM.LOCAL@DIM.LOCAL
+> ```
+
+---
+
+## Test the server
+
+Use your public IP to call up the freeIPA UI
+
+From a browser, navgate to `https://18.119.162.9`
+
+If it just spins, ensure that your secuity group is open on 443 from your IP.  It uses a self-signed cert, so your browser will tell you this is unsafe.  Tell it to pound sand, you know whay you're doing.
+
+---
 
 -- Next steps to document... create a server and set it up to connect to this IPA host
 
