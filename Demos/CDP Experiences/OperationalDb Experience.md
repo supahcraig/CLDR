@@ -140,6 +140,23 @@ PA                                        1                                  146
 AZ                                        1                                  1461575
 Time: 1.266 sec(s)
 ```
+---
+## Secondary Hue table creates & inserts
+
+
+```
+CREATE TABLE IF NOT EXISTS us_state_totals (
+      state CHAR(2) NOT NULL,
+      city_count bigint,
+      total_population BIGINT
+      CONSTRAINT state_pk PRIMARY KEY (state));
+
+upsert into us_state_totals 
+SELECT state, count(*) as city_count, sum(population) as total_population
+FROM us_population
+GROUP BY state;
+```
+
 
 ---
 ## Using Phoenix with Dbeaver
