@@ -69,16 +69,16 @@ Which should return this output:
 
 ```
 >
-> Static hostname: ipa.demo.local
->         Icon name: computer-vm
->           Chassis: vm
->        Machine ID: 05cb8c7b39fe0f70e3ce97e5beab809d
->           Boot ID: 34451e69f37d4b6baa948804eacc4220
->    Virtualization: xen
->  Operating System: CentOS Linux 7 (Core)
->       CPE OS Name: cpe:/o:centos:centos:7
->            Kernel: Linux 3.10.0-957.1.3.el7.x86_64
->      Architecture: x86-64
+>    Static hostname: ipa.demo.local
+>             Icon name: computer-vm
+>               Chassis: vm
+>            Machine ID: 05cb8c7b39fe0f70e3ce97e5beab809d
+>               Boot ID: 34451e69f37d4b6baa948804eacc4220
+>        Virtualization: xen
+>      Operating System: CentOS Linux 7 (Core)
+>           CPE OS Name: cpe:/o:centos:centos:7
+>                Kernel: Linux 3.10.0-957.1.3.el7.x86_64
+>          Architecture: x86-64
 ```
 
 
