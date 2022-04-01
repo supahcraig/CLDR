@@ -68,8 +68,7 @@ Which should return this output:
 
 
 > ```
->
->    Static hostname: ipa.demo.local
+>       Static hostname: ipa.demo.local
 >             Icon name: computer-vm
 >               Chassis: vm
 >            Machine ID: 05cb8c7b39fe0f70e3ce97e5beab809d
@@ -81,50 +80,31 @@ Which should return this output:
 >          Architecture: x86-64
 > ```
 
+### Create entry in /etc/hosts
+
+As `root`, edit `/etc/hosts` to add an entry for _your_ private IP & domain name
 
 ```
-
- 
-###################################################################################
-#	create an entry in /etc/hosts on the ipa server
-###################################################################################
-
-vi /etc/hosts
-
-#  add 
-10.0.8.251 ipa.demo.local ipa
-
+10.0.8.251 ipa.dim.local ipa
 ```
 
-_double check the host name here; ipa.dim.local_
 
 ### Install FreeIPA Server
 
-you may need to `yum update nss* -y`
+you may need to `yum update nss* -y` _this may be due to the AMI used during initial testing_
+
 
 ```
+sudo -i
 yum install -y epel-release
-
-
-#########################################
-# Install
-#########################################
 yum install ipa-server bind-dyndb-ldap -y
-
-#########################################
-# setup
-#########################################
-
 ipa-server-install 
+```
 
-#########################################
-# Input / Output. - password used --> Supersecret1
-#########################################
-#      The log file for this installation can be found in /var/log/ipaserver-install.log
-==============================================================================
-This program will set up the IPA Server.
+Logs for the ipa server install can be found at `/var/log/ipaserver-install.log`
 
-This includes:
+The install includes:
+
   * Configure a stand-alone CA (dogtag) for certificate management
   * Configure the Network Time Daemon (ntpd)
   * Create and configure an instance of Directory Server
@@ -134,85 +114,61 @@ This includes:
 
 To accept the default shown in brackets, press the Enter key.
 
-WARNING: conflicting time&date synchronization service 'chronyd' will be disabled
+*WARNING:* conflicting time&date synchronization service 'chronyd' will be disabled
 in favor of ntpd
 
-Do you want to configure integrated DNS (BIND)? [no]: no
+* Do you want to configure integrated DNS (BIND)? [no]: _hit ENTER_
+* Server host name [ipa.dim.local]: _hit ENTER_
+* Please confirm the domain name [demo.local]: _hit ENTER_
+* Please provide a realm name [DIM.LOCAL]: _hit ENTER_
+
+It will then prompt you for directory manager & IPA admin passwords
 
 
-Enter the fully qualified domain name of the computer
-on which you're setting up server software. Using the form
-<hostname>.<domainname>
-Example: master.example.com.
+> The IPA Master Server will be configured with:
+> Hostname:       ipa.dim.local
+> IP address(es): 10.0.8.251
+> Domain name:    dim.local
+> Realm name:     DIM.LOCAL
 
 
-Server host name [ipa.demo.local]: 
+* Continue to configure the system with these values? [no]: _actually type `YES`_
 
-The domain name has been determined based on the host name.
+This will kick off the actual install process, which can take a few minutes to complete.
 
-Please confirm the domain name [demo.local]: 
-
-The kerberos protocol requires a Realm name to be defined.
-This is typically the domain name converted to uppercase.
-
-Please provide a realm name [DEMO.LOCAL]: 
-Certain directory server operations require an administrative user.
-This user is referred to as the Directory Manager and has full access
-to the Directory for system management tasks and will be added to the
-instance of directory server created for IPA.
-The password must be at least 8 characters long.
-
-Directory Manager password: 
-Password (confirm): 
-
-The IPA server requires an administrative user, named 'admin'.
-This user is a regular system account used for IPA server administration.
-
-IPA admin password: 
-Password (confirm): 
-
-
-The IPA Master Server will be configured with:
-Hostname:       ipa.demo.local
-IP address(es): 10.0.8.251
-Domain name:    demo.local
-Realm name:     DEMO.LOCAL
-
-Continue to configure the system with these values? [no]: yes
-
-The following operations may take some minutes to complete.
-Please wait until the prompt is returned.
-
-Configuring NTP daemon (ntpd)
-  [1/4]: stopping ntpd
-  [2/4]: writing configuration
-  [3/4]: configuring ntpd to start on boot
-  [4/4]: starting ntpd
-Done configuring NTP daemon (ntpd).
-Configuring directory server (dirsrv). Estimated time: 30 seconds
-  [1/45]: creating directory server instance
-  [2/45]: enabling ldapi
-  [3/45]: configure autobind for root
-  [4/45]: stopping directory server
-  [5/45]: updating configuration in dse.ldif
-  [6/45]: starting directory server
-  [7/45]: adding default schema
-  [8/45]: enabling memberof plugin
-  [9/45]: enabling winsync plugin
-  [10/45]: configure password logging
-  [11/45]: configuring replication version plugin
-  [12/45]: enabling IPA enrollment plugin
-  [13/45]: configuring uniqueness plugin
-  [14/45]: configuring uuid plugin
-  [15/45]: configuring modrdn plugin
-  [16/45]: configuring DNS plugin
-  [17/45]: enabling entryUSN plugin
-  [18/45]: configuring lockout plugin
-  [19/45]: configuring topology plugin
-  [20/45]: creating indices
-  [21/45]: enabling referential integrity plugin
-  [22/45]: configuring certmap.conf
-  [23/45]: configure new location for managed entries
+> The following operations may take some minutes to complete.
+> Please wait until the prompt is returned.
+> 
+> Configuring NTP daemon (ntpd)
+>   [1/4]: stopping ntpd
+>   [2/4]: writing configuration
+>   [3/4]: configuring ntpd to start on boot
+>   [4/4]: starting ntpd
+> Done configuring NTP daemon (ntpd).
+> Configuring directory server (dirsrv). Estimated time: 30 seconds
+>   [1/45]: creating directory server instance
+>   [2/45]: enabling ldapi
+>   [3/45]: configure autobind for root
+>   [4/45]: stopping directory server
+>   [5/45]: updating configuration in dse.ldif
+>   [6/45]: starting directory server
+>   [7/45]: adding default schema
+>   [8/45]: enabling memberof plugin
+>   [9/45]: enabling winsync plugin
+>   [10/45]: configure password logging
+>   [11/45]: configuring replication version plugin
+>   [12/45]: enabling IPA enrollment plugin
+>   [13/45]: configuring uniqueness plugin
+>   [14/45]: configuring uuid plugin
+>   [15/45]: configuring modrdn plugin
+>   [16/45]: configuring DNS plugin
+>   [17/45]: enabling entryUSN plugin
+>   [18/45]: configuring lockout plugin
+>   [19/45]: configuring topology plugin
+>   [20/45]: creating indices
+>   [21/45]: enabling referential integrity plugin
+>   [22/45]: configuring certmap.conf
+>   [23/45]: configure new location for managed entries
   [24/45]: configure dirsrv ccache
   [25/45]: enabling SASL mapping fallback
   [26/45]: restarting directory server
