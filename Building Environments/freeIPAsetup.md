@@ -16,80 +16,63 @@ tags: [ 📜 curated freeipa security kerberos ]
 ##### 📒  Notes:
 -- the goal of this document is to build a stand alone FreeIPA Server to be used for LDAP, Kerberos, TLS and other documents.
 
-*  Stand up a new AWS host to install IPA Server software. 
 
-`ami-02eac2c0129f6376b`
+## Create EC2 Instance
 
+Stand up a new EC2 instance to install IPA Server software. 
+
+`ami-02eac2c0129f6376b` in us-east-1
 
 `ami-01e36b7901e884a10` in us-east-2
 
-* I chose an instance size of m4.large w/ 50 gb of disk
+* I chose an instance size of m4.large w/ 50 gb EBS volume
+* needs to have security group open on ports 22 & 443
 
+
+## ssh into that instance 
+
+Use the public IP and the keypair you created the instance with, and `centos` as the user
+```
+ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o UserKnownHostsFile=/dev/null -i ~/pem/keypairs/cnelson_se_kp.pem centos@44.203.26.132
+```
+
+
+### Pre-Reqs
+
+* `rng-tools` is a random number generator which is required, and needs to run as a service and comes back up upon reboot.
 
 ```
-Public IP -->44.203.26.132
-
-ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o UserKnownHostsFile=/dev/null -i ~/fishermans_wharf/tlepple-us-east-1-i-0f7783a1fd0c510d5-10.0.8.242.pem centos@44.203.26.132
-
-#########################################
-# Become Root
-#########################################
 sudo -i
 
-
-
-
-```
-
-
-
-### Pre-Reqs:
-
-```
-#########################################
-#	pre-reqs:
-#########################################
-
-#  Random Number Generator
 yum install -y rng-tools
-
-# start it
 systemctl start rngd
-
-# ensure it runs after reboot:
 systemctl enable rngd
 ```
 
 ### Set a new hostname
 
+The hostname `dim.local` corresponds to what the unsecueed edge2ai cluster uses.
+
 ```
-#########################################
-#	Set the hostname
-#########################################
-hostnamectl set-hostname $NEWHOSTNAME
-
-
-hostnamectl set-hostname ipa.demo.local
-# make this match the hosts you'll be joining to.  i.e. dim.local for edge2ai cluster
-
-#########################################
-#	reboot and check hostname is set correctly
-#########################################
-
+hostnamectl set-hostname ipa.dim.local
 reboot
+```
 
-#########################################
-#	check hostname
-#########################################
+Once the reboot is complete, re-ssh (and sudo) to verify the hostname change.
+
+```
 hostnamectl
- 
-######################################### 
-#  expected output:
-#########################################
- Static hostname: ipa.demo.local
-         Icon name: computer-vm
-           Chassis: vm
-        Machine ID: 05cb8c7b39fe0f70e3ce97e5beab809d
+```
+
+Which should return this output:
+
+```
+> 
+>
+> Static hostname: ipa.demo.local
+>         Icon name: computer-vm
+>           Chassis: vm
+>        Machine ID: 05cb8c7b39fe0f70e3ce97e5beab809d
            Boot ID: 34451e69f37d4b6baa948804eacc4220
     Virtualization: xen
   Operating System: CentOS Linux 7 (Core)
@@ -109,6 +92,7 @@ vi /etc/hosts
 10.0.8.251 ipa.demo.local ipa
 
 ```
+
 _double check the host name here; ipa.dim.local_
 
 ### Install FreeIPA Server
