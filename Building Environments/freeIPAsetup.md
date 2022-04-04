@@ -32,6 +32,7 @@ sudo -i
 yum install -y rng-tools
 systemctl start rngd
 systemctl enable rngd
+
 ```
 
 ### Set a new hostname
@@ -41,12 +42,14 @@ The hostname `dim.local` corresponds to what the unsecueed edge2ai cluster uses.
 ```
 hostnamectl set-hostname ipa.dim.local
 reboot
+
 ```
 
 Once the reboot is complete, re-ssh (and sudo) to verify the hostname change.
 
 ```
 hostnamectl
+
 ```
 
 Which should return this output:
