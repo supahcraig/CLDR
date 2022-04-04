@@ -79,11 +79,10 @@ As `root`, edit `/etc/hosts` to add an entry for _your_ private IP & domain name
 
 ### Install FreeIPA Server
 
-you may need to `yum update nss* -y` _this may be due to the AMI used during initial testing_
-
 
 ```
 sudo -i
+yum update nss* -y
 yum install -y epel-release
 yum install ipa-server bind-dyndb-ldap -y
 ipa-server-install 
