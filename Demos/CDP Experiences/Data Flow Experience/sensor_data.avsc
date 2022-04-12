@@ -1,0 +1,35 @@
+{
+  "name": "MyClass",
+  "type": "record",
+  "namespace": "com.acme.avro",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "measurement_time",
+      "type": "long"
+    },
+    {
+      "name": "sensor_1",
+      "type": "float"
+    },
+    {
+      "name": "sensor_2",
+      "type": "float"
+    },
+    {
+      "name": "sensor_3",
+      "type": "float"
+    },
+    {
+      "name": "sensor_4",
+      "type": "float"
+    },
+    {
+      "name": "sensor_5",
+      "type": "float"
+    }
+  ]
+}
