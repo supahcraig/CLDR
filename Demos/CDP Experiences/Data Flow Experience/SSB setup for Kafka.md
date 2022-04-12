@@ -16,9 +16,9 @@ this whole thing needs a better sotry....maybe its the making of an edge2ai for 
 
 ## Data Hubs
 
-* streams messaging (for Kafka & SMM)
 * streaming analytics (for SBB)
 * flow management (only if you need to modify the flows)
+* streams messaging (for Kafka & SMM). ==> don't need if you use the 2 node kafka cluster on the streamin analytics hub
 
 
 ---
@@ -27,7 +27,7 @@ this whole thing needs a better sotry....maybe its the making of an edge2ai for 
 
 ### Data Provider
 
-You'll see a Local Kafka already setup, but it's pointing to a kafka cluster presumbly part of thr streams analytics data hub.  If you set up a separate kafka cluster you'll have to point SSB at it.
+You'll see a Local Kafka already setup, but it's pointing to a 2 node kafka cluster on the streams analytics data hub.  If you set up a separate kafka cluster you'll have to point SSB at it.
 
 1. click (+) Register Kafka Provider
 2. Give it a name
