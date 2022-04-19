@@ -70,3 +70,17 @@ You can't just query a kafka stream, you have to create a "table" which uses you
 select * from raw_sensors
 ```
 
+or a more complex SSB query
+
+```
+select hop_end(eventTimestamp, interval '3' second, interval '30' second) as windowEnd
+     , count(*) as measurement_count
+     , avg(sensor_1) as sensor_average
+     , min(sensor_2) as sensor_2_min
+     , max(sensor_3) as sensor_3_max
+     , sum(case when sensor_1 < 0.1 then 1 else 0 end) as sensor_failure
+from raw_sensors
+group by hop(eventTimestamp, interval '3' second, interval '30' second)
+```
+
+
