@@ -304,26 +304,30 @@ where 1 = 1
 Pivoted version of umpire assignements:
 
 ```
-drop table umpire_game_totals;
-create table umpire_game_totals as
+drop table bb.umpire_game_totals;
+create table bb.umpire_game_totals as
 select count(*), umpire_name, assigned_base
 from (
-  select umpire_1b as umpire_name
+  select game_id
+       , umpire_1b as umpire_name
        , '1B' as assigned_base
   from bb.games_r
   union all 
-  select umpire_2b as umpire_name
+  select game_id
+       , umpire_2b as umpire_name
        , '2B' as assigned_base
   from bb.games_r
   union all 
-  select umpire_3b as umpire_name
+  select game_id
+       , umpire_3b as umpire_name
        , '3B' as assigned_base
   from bb.games_r
   union all 
-  select umpire_hp as umpire_name
+  select game_id
+       , umpire_hp as umpire_name
        , 'HP' as assigned_base
   from bb.games_r) x
-group by umpire_name, assigned_base;
+group by game_id, umpire_name, assigned_base;
 ```
 
 
