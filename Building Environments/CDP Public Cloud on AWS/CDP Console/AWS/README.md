@@ -43,26 +43,26 @@ Roles could be prefixed with your username to ensure uniquness.   The former nam
 
 *NOTE* the permissions on these roles change from time to time.  The version in this repo may be stale.
 
-* `assumer-instance-role` _(formerly known as id-broker-role)_
+* `assumer-instance-role` _(formerly known as id-broker-role)_ aks Assumer Instance Profile
   * Attach policy `idbroker-assume-role-policy`
   * Use ec2 as the use case
-* `data-access-role` _(formerly known as datalake-admin-role)_
-  * Attach policy `dynamodb-policy`
-  * Attach policy `bucket-policy-s3-access`
-  * Attach policy `datalake-admin-policy-s3-access`
+* `data-access-role` _(formerly known as datalake-admin-role)_ aka Data Access Role
+  * Attach policy `dynamodb-policy`  >>> _no longer necessary due to s3 Object Guard no longer being a thing_
+  * Attach policy `bucket-policy-s3-access` / `xxxx-dladmin-policy`
+  * Attach policy `datalake-admin-policy-s3-access` / `xxxx-storage-policy`
   * Use ec2 as the use case, although it will not matter after we update the trust relationship
   * Trust Relationship:
     * Trash the existing trust relationship 
     * Replace it with the datalake trust policy found in this repo
     * Update the Principal to be the arn of your `assumer-instance-role`
-* `logger-instance-role` _(formerly log-role)_
+* `logger-instance-role` _(formerly log-role)_ 
   * Attach policy `log-policy-s3-access`
   * Attach policy `bucket-policy-s3-access`
   * Use ec2 as the use case
 * `ranger-audit-role`
-  * Attach policy `ranger-audit-policy-s3-access`
-  * Attach policy `dynamodb-policy`
-  * Attach policy `bucket-policy-s3-access`
+  * Attach policy `ranger-audit-policy-s3-access` aka `xxx-audit-policy`
+  * Attach policy `dynamodb-policy` >>> _not necessary_
+  * Attach policy `bucket-policy-s3-access` aka `xxxx-storage-policy`
   * Use ec2 as the use case, although it will not matter after we update the trust relationship
   * Trust Relationship:
     * Trash the existing trust relationship 
