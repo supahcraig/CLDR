@@ -86,6 +86,7 @@ Below that you will find 3 things of vital importance:
   * Use the JSON policy document from this repo OR get the most up-to-date version from the CDP Create Environment Page 
 * Create a new role `CDP-cross-account-role`
   * Use "Another AWS Account" as the type of trusted entity
+    * >> new role steps:   AWS acct, click other AWS acct and put in the Account ID
     * Use the Service Manager Account ID for the Account ID
     * Check Require external ID
     * Use the External ID for External ID
