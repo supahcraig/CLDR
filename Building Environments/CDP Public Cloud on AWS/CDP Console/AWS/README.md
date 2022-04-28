@@ -24,6 +24,8 @@ The IAM policies are json documents found in this repo.
 
 ### Create IAM Policies
 
+https://docs.cloudera.com/cdp/latest/requirements-aws/topics/mc-iam-policy-definitions.html
+
 Policies could be prefixed with your username to ensure uniquness.  Also note references to ARN's & s3 buckets which will need to be updated to point to _your_ buckets & other AWS objects.
 
 * `idbroker-assume-role-policy`
