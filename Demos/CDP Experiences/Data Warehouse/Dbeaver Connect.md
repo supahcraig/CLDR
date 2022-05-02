@@ -24,16 +24,16 @@
 2.  Select Apache Hive
 3.  Copy the JDBC URL from the CDP VDW screen, paste into the host box.  Remove the `jdbc:hive2://` from the URL; dbeaver will add it for you.
 4.  Port should be empty
-5.  database/schema ?
+5.  database/schema can be `default` or a database of your choosing.
 
 
-### Impala Set up
+### Impala Connection Setup
 
 1.  create a new connection in Dbeaver
 2.  Select Cloudera Impala
 3.  Copy the JDBC URL from the CDP VDW screen, paste into the host box.  Remove the `jdbc:impala://` from the URL; dbeaver will add it for you.
 4.  Port is 443
-5.  database/schema ?
+5.  database/schema can be `default` or a database of your choosing.
 
 ---
 
@@ -65,3 +65,6 @@ _for Non-SSO enabled Virtual Data Warehouse_
 
 ---
 
+### Running Queries
+
+Open a new SQL window and execute a query.  If you see the barber pole for execution, you're in good shape.  You may have to wait for the VDW to spin back up, but it should run to completion.   SSO connections may ask for your SSO (Okta) username & password, which will briefly open a tab in your web browser to handle the SSO authentication.  If connection issues arise, invalidate/reconnect or a full disconnect/reconnect seems to do the trick.
