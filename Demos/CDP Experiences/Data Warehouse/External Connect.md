@@ -40,10 +40,14 @@
 ### Authentication
 
 _for Non-SSO enabled Virtual Data Warehouse_
+
 6.  Username/password are your CDP workload password; save password locally
 
 _for Non-SSO enabled Virtual Data Warehouse_
+
 7.  Leave the username/password blank; it will prompty you for credentials
+
+---
 
 ### Driver Setup
 
