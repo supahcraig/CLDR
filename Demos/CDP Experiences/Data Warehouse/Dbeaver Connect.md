@@ -23,8 +23,11 @@
 1.  create a new connection in Dbeaver
 2.  Select Apache Hive
 3.  Copy the JDBC URL from the CDP VDW screen, paste into the host box.  Remove the `jdbc:hive2://` from the URL; dbeaver will add it for you.
-4.  Port should be empty
-5.  database/schema can be `default` or a database of your choosing.
+
+`jdbc:hive2://hs2-cnelson2-hive-sso.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;auth=browser;`
+
+5.  Port should be empty
+6.  database/schema can be `default` or a database of your choosing.
 
 
 ### Impala Connection Setup
