@@ -52,12 +52,12 @@ _for Non-SSO enabled Virtual Data Warehouse_
 10.  Delete the existing files (click on each one, hit Delete)
 13.  Add File, select the jar you downloaded from CDP"
   *  Hive:
-    *  `hive-jdbc-3.10-SNAPSHOT-standalone.jar`
-    *  Click Find Class, it should return `org.apache.hive.jdbc.HiveDriver`
+      *  `hive-jdbc-3.10-SNAPSHOT-standalone.jar`
+      *  Click Find Class, it should return `org.apache.hive.jdbc.HiveDriver`
   *  Impala: 
-    *  `ClouderaImpalaJDBC41-<version>.zip`
-    *  Click Find Class, it should return `com.cloudera.jdbc41.Driver`
-16.  Click Test Connection, verify successful connection.  SSO connections will prompt for your Okta/SSO username & password.
+      *  `ClouderaImpalaJDBC41-<version>.zip`
+      *  Click Find Class, it should return `com.cloudera.jdbc41.Driver`
+14.  Click Test Connection, verify successful connection.  SSO connections will prompt for your Okta/SSO username & password.
 
 ---
 
