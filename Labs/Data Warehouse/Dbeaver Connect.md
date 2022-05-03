@@ -20,14 +20,23 @@
 
 ### Hive Connection Setup 
 
-1.  create a new connection in Dbeaver
+1.  Create a new connection in Dbeaver by right-clicking in the Database Navigator window, and navigating to Create --> Connection
 
 ![](./images/dbeaver/dbeaver-new-connection.png)
 
-3.  Select Apache Hive
-4.  Copy the JDBC URL from the CDP VDW screen, paste into the host box.  Remove the `jdbc:hive2://` from the URL; dbeaver will add it for you.
+3.  Select Apache Hive from the ist of database drivers.   
 
-`jdbc:hive2://hs2-cnelson2-hive-sso.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;auth=browser;`
+![](./images/dbeaver/dbeaver-hive-select.png)
+
+5.  Copy the JDBC URL from the CDP VDW screen, under the "3-dot" context menu for your virtual warehouse.   It will look something like this:
+
+*Non-SSO:* `hs2-cnelson2-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;retries=3;`
+
+*SSO:* `jdbc:hive2://hs2-cnelson2-hive-sso.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;auth=browser;`
+
+![](./images/dbeaver/cdp-vdw-copy-jdbc-url.png)
+
+5a. Paste the URL into the host box.   Remove the `jdbc:hive2://` from the URL; dbeaver will add it for you.
 
 5.  Port should be empty
 6.  database/schema can be `default` or a database of your choosing.
