@@ -82,7 +82,7 @@ cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
 3.  Copy the JDBC URL from the CDP VDW screen, under the "3-dot" context menu for your virtual warehouse.   It will look something like this, depending on whether or not you enabled SSO when you created the Virtual Warehouse.
 
     * **Non-SSO:** 
-        * `hs2-cnelson2-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;retries=3;`
+        * `jdbc:hive2://hs2-cnelson2-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;retries=3;`
 
     * **SSO:** 
         * `jdbc:hive2://hs2-cnelson2-hive-sso.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;auth=browser;`
@@ -105,11 +105,35 @@ cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
 
 ### Impala Connection Setup
 
-1.  create a new connection in Dbeaver
-2.  Select Cloudera Impala
-3.  Copy the JDBC URL from the CDP VDW screen, paste into the host box.  Remove the `jdbc:impala://` from the URL; dbeaver will add it for you.
-4.  Port is 443
-5.  database/schema can be `default` or a database of your choosing.
+1.  Create a new connection in Dbeaver by right-clicking in the Database Navigator window, and navigating to Create --> Connection
+
+![](./images/dbeaver/dbeaver-new-connection.png)
+
+
+2.  Select Cloudera Impala from the ist of database drivers.   
+
+![](./impala/dbeaver/dbeaver-impala-select.png)
+
+3.  Copy the JDBC URL from the CDP VDW screen, under the "3-dot" context menu for your virtual warehouse.   It will look something like this, depending on whether or not you enabled SSO when you created the Virtual Warehouse.
+
+    * **Non-SSO:** 
+        * `jdbc:impala://coordinator-cnelson2-impala.dw-se-sandbox-aws.a465-9q4k.cloudera.site:443/default;AuthMech=3;transportMode=http;httpPath=cliservice;ssl=1;UID=cnelson2;PWD=PASSWORD`
+
+    * **SSO:** 
+        * `jdbc:impala://coordinator-cnelson2-impala-SSO.dw-se-sandbox-aws.a465-9q4k.cloudera.site:443/default;AuthMech=12;transportMode=http;httpPath=cliservice;ssl=1;auth=browser`
+
+![](./images/dbeaver/cdp-vdw-impala-jdbc-url.png)
+
+4. General Hive Connectivity
+
+    * Take the copied URL and past into the host box.
+        * remove the `jdbc:impala://` prefix from the URL; dbeaver will add it for you in the JDBC URL box.
+    * Set the port to 443.  
+    * Database/Schema can be left empty or set to the database you want to connect into.
+    * _The authentication section & Driver Settings will be covered later in this document._
+
+![](./impala/dbeaver/dbeaver-impala-update-host.png)
+
 
 ---
 
