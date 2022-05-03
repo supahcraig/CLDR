@@ -21,8 +21,11 @@
 ### Hive Connection Setup 
 
 1.  create a new connection in Dbeaver
-2.  Select Apache Hive
-3.  Copy the JDBC URL from the CDP VDW screen, paste into the host box.  Remove the `jdbc:hive2://` from the URL; dbeaver will add it for you.
+
+![](./images/dbeaver/dbeaver-new-connection.png)
+
+3.  Select Apache Hive
+4.  Copy the JDBC URL from the CDP VDW screen, paste into the host box.  Remove the `jdbc:hive2://` from the URL; dbeaver will add it for you.
 
 `jdbc:hive2://hs2-cnelson2-hive-sso.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;auth=browser;`
 
