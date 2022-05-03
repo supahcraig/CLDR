@@ -5,18 +5,30 @@
 1.  create a virtual warehouse (hive or impala, SSO enabled or otherwise...we'll connect to both, although beeline doesn't work with SSO yet)
 2.  Download the JDBC/ODBC jar
 
-### Hive Jar
-1.  copy the jar to wherever you like to keep your jars
+![](./images/dbeaver/cdp-vdw-download-jar.png)
 
+### Hive Jar
+1.  Optionally copy the jar to wherever you like to keep your jars.  Wherever you put it, you'll need this location later when we point dbeaver to the downloaded jar.
+
+2.  [Proceed to Dbeaver Connectivity](#Dbeaver-Connectivty)
+
+---
 
 ### Impala Jar
 1.  The impala jdbc/odbc comes down as a zip Unzip it, and navigate to `ClouderaImpalaJDBC-<version>`
 2.  Find `ClouderaImpala_JDBC-<version>.zip` and copy it to wherever you keep your jars.
+3.  [Proceed to Dbeaver Connectivity](#Dbeaver-Connectivty)
 
 
 ---
 
 ## Dbeaver Connectivity
+
+[Jump to Hive Connection](#Hive-Connection-Setup)
+
+[Jump to Impala Connection](#Impala-Connection-Setup)
+
+
 
 ### Hive Connection Setup 
 
@@ -74,17 +86,34 @@ _for Non-SSO enabled Virtual Data Warehouse_
 
 ### Driver Setup
 
+The drivers that install with Dbeaver _may_ not work perfectly with your Virtual Warehouse.  It is recommended to use the drivers you can download directly from your Virtual Warehouse.  (See [Downloading Hive Jar](#Hive-Jar) and/or [Downloading Impala Jar](#Impala-Jar))
+
 8.  Edit Driver Settings
-9.  Go to Libraries
-10.  Delete the existing files (click on each one, hit Delete)
-13.  Add File, select the jar you downloaded from CDP"
+
+![](./images/dbeaver/dbeaver-edit-driver.png)
+
+10.  Go to the Libraries tab in the Edit Driver window.
+  
+11.  Dbeaver may have existing drivers for Hive/Impala.  You'll need to delete those in order for it to use your Cloudera-supplied driver.  Delete each of the existing files (click on each one, hit Delete).
+
+![](./images/dbeaver/dbeaver-delete-jar.png)
+
+12.  Click Add File to point dbeaver to your Cloudera-supplied driver.  Navigate to the location where you put the jar and select your file.
   *  Hive:
       *  `hive-jdbc-3.10-SNAPSHOT-standalone.jar`
       *  Click Find Class, it should return `org.apache.hive.jdbc.HiveDriver`
   *  Impala: 
       *  `ClouderaImpalaJDBC41-<version>.zip`
       *  Click Find Class, it should return `com.cloudera.jdbc41.Driver`
-14.  Click Test Connection, verify successful connection.  SSO connections will prompt for your Okta/SSO username & password.
+
+Add File             |  Verify Driver Location
+:-------------------------:|:-------------------------:
+![](./images/dbeaver/dbeaver-add-jar.png)  |  ![](./images/dbeaver/dbeaver-verify-jar.png)
+
+
+13.  Click Test Connection, verify successful connection.  SSO connections will prompt for your Okta/SSO username & password.
+
+![](./images/dbeaver/dbeaver-test-connection.png)
 
 ---
 
