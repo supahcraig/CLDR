@@ -116,7 +116,15 @@ Add File             |  Verify Driver Location
 
 13.  Click Test Connection to verify successful configuration & connectivity.  If you didn't supply your credentials, it will prompt you for them now.   _If_ your Virtual Warehouse has SSO enabled, a browser tab will open to handle the authentication, which you can close if you like.   If you _aren't_ already signed into your SSO provider, the browser tab will be your SSO sign-in page.  You will need to authenticate before Dbeaver will connect.  If you _don't_ have SSO enabled, none of that applies.
 
-![](./images/dbeaver/dbeaver-test-connection.png)
+Hive Test Connection             |  Impala Test Connection
+:-------------------------:|:-------------------------:
+![](./images/dbeaver/dbeaver-test-connection.png)  |  ![](./images/dbeaver/dbeaver-test-connection-impala.png)
+
+
+
+
+
+
 
 ---
 
