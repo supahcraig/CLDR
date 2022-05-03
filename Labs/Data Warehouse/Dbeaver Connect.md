@@ -4,7 +4,7 @@
 
 1.  Create a Virtual Warehouse (Hive or Impala, SSO enabled or otherwise...we'll connect to both)
 
-[Walkthrough of creating a Virtual Warehouse](https://github.com/supahcraig/CLDR/blob/main/Labs/Data%20Warehouse/Virtual%20DW.md)
+    * [Walkthrough of creating a Virtual Warehouse](https://github.com/supahcraig/CLDR/blob/main/Labs/Data%20Warehouse/Virtual%20DW.md)
 
 2.  Download the JDBC jar for Hive or the JDBC/ODBC driver for Impala
 
