@@ -46,7 +46,7 @@
 
 ![](./images/dbeaver/dbeaver-update-host.png)
 
-5.  [Proceed to Authentication[(#Authentication)
+5.  [Proceed to Authentication](#Authentication)
 
 ---
 
