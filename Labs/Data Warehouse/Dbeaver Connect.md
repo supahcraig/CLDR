@@ -1,5 +1,10 @@
 # Connecting to a Virtual Warehouse via Dbeaver
 
+Video Walkthrough:
+
+![Video Walkthrough](https://youtu.be/bKibGaCicW0)
+
+
 ## Environment setup
 
 1.  Create a Virtual Warehouse (Hive or Impala, SSO enabled or otherwise...we'll connect to both)
