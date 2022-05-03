@@ -197,7 +197,7 @@ Hive Test Connection             |  Impala Test Connection
 
 ---
 
-### Running Queries
+# Running Queries
 
 Open a new SQL window and execute a query.  If you see the barber pole for execution, you're in good shape.  You may have to wait for the VDW to spin back up, but it should run to completion.   SSO connections may ask for your SSO (Okta) username & password, which will briefly open a tab in your web browser to handle the SSO authentication.  If connection issues arise, invalidate/reconnect or a full disconnect/reconnect seems to do the trick.
 
@@ -206,7 +206,7 @@ Open a new SQL window and execute a query.  If you see the barber pole for execu
 
 ---
 
-## Troubleshooting
+# Troubleshooting
 
 * SSO sign-in?
 * AWS security groups?
@@ -215,11 +215,11 @@ Open a new SQL window and execute a query.  If you see the barber pole for execu
 
 If you've already demonstrated that you are able to connect & run queries, but then mysteriously start seeing connection errors, it can usually be solved by using Dbeaver's Invaliate/Reconnect option, or by Disconnecting and the Reconnecting.
 
-![](./images/dbeaver/beaver-connection-troubleshoot.png)
+![](./images/dbeaver/dbeaver-connection-troubleshoot.png)
 
 You can monitor the status of an establishing connection in the lower right corner of Dbeaver, although it will not show anything once the connection process has completed or failed.
 
-![](./images/dbeaver/connection-progress.png)
+![](./images/dbeaver/dbeaver-connection-progress.png)
 
 You can also check the status of a connection in the Database Navigator.   Connected databases will show a green check.  Valid disconnected databases will not have any icon overlaid.   Invalid databases will have a red X.
 
