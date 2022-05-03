@@ -82,10 +82,10 @@ cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
 3.  Copy the JDBC URL from the CDP VDW screen, under the "3-dot" context menu for your virtual warehouse.   It will look something like this, depending on whether or not you enabled SSO when you created the Virtual Warehouse.
 
     * **Non-SSO:** 
-        * `jdbc:hive2://hs2-cnelson2-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;retries=3;`
+        * `jdbc:hive2://hs2-<vdw name>.<env name>.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;retries=3;`
 
     * **SSO:** 
-        * `jdbc:hive2://hs2-cnelson2-hive-sso.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;auth=browser;`
+        * `jdbc:hive2://hs2-<vdw name>.<env name>.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;auth=browser;`
 
 ![](./images/dbeaver/cdp-vdw-copy-jdbc-url.png)
 
@@ -117,10 +117,10 @@ cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
 3.  Copy the JDBC URL from the CDP VDW screen, under the "3-dot" context menu for your virtual warehouse.   It will look something like this, depending on whether or not you enabled SSO when you created the Virtual Warehouse.
 
     * **Non-SSO:** 
-        * `jdbc:impala://coordinator-cnelson2-impala.dw-se-sandbox-aws.a465-9q4k.cloudera.site:443/default;AuthMech=3;transportMode=http;httpPath=cliservice;ssl=1;UID=cnelson2;PWD=PASSWORD`
+        * `jdbc:impala://coordinator-<vdw name>.<env name>.a465-9q4k.cloudera.site:443/default;AuthMech=3;transportMode=http;httpPath=cliservice;ssl=1;UID=cnelson2;PWD=PASSWORD`
 
     * **SSO:** 
-        * `jdbc:impala://coordinator-cnelson2-impala-SSO.dw-se-sandbox-aws.a465-9q4k.cloudera.site:443/default;AuthMech=12;transportMode=http;httpPath=cliservice;ssl=1;auth=browser`
+        * `jdbc:impala://coordinator-hs2-<vdw name>.<env name>.a465-9q4k.cloudera.site:443/default;AuthMech=12;transportMode=http;httpPath=cliservice;ssl=1;auth=browser`
 
 ![](./images/dbeaver/cdp-vdw-impala-jdbc-url.png)
 
