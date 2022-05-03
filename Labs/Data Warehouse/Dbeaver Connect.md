@@ -1,23 +1,62 @@
-# Connecting to a Virtual Warehouse via External Tools
+# Connecting to a Virtual Warehouse via Dbeaver
 
 ## Environment setup
 
-1.  Create a Virtual Warehouse (hive or impala, SSO enabled or otherwise...we'll connect to both, although beeline doesn't work with SSO yet)
+1.  Create a Virtual Warehouse (Hive or Impala, SSO enabled or otherwise...we'll connect to both)
 2.  Download the JDBC jar for Hive or the JDBC/ODBC jar for Impala
 
 ![](./images/dbeaver/cdp-vdw-download-jar.png)
 
 ### Hive Jar
-1.  Optionally copy the jar to wherever you like to keep your jars.  Wherever you put it, you'll need this location later when we point dbeaver to the downloaded jar.
+1.  Optionally copy the jar to wherever you like to keep your jars.  Wherever you decide to put it, you'll need this location later when we point Dbeaver to the downloaded jar.
 
 2.  [Proceed to Dbeaver Connectivity](#Dbeaver-Connectivty)
 
 ---
 
 ### Impala Jar
-1.  The impala jdbc/odbc comes down as a zip Unzip it, and navigate to `ClouderaImpalaJDBC-<version>`
-2.  Find `ClouderaImpala_JDBC-<version>.zip` and copy it to wherever you keep your jars.
-3.  [Proceed to Dbeaver Connectivity](#Dbeaver-Connectivty)
+1.  The impala jdbc/odbc comes down as a zip called `impala_driver_jdbc_odbc.zip`
+2.  From Finder or the command line, unzip it, and navigate to `ClouderaImpalaJDBC-<version>`, where the version # will likely change over time.
+
+```
+cnelson2@10434 impala-jar % unzip impala_driver_jdbc_odbc.zip
+Archive:  impala_driver_jdbc_odbc.zip
+   creating: ClouderaImpala_JDBC-2.6.23.1028/
+   creating: ClouderaImpala_JDBC-2.6.23.1028/docs/
+  inflating: ClouderaImpala_JDBC-2.6.23.1028/docs/Cloudera-JDBC-Driver-for-Impala-Install-Guide.pdf
+  inflating: ClouderaImpala_JDBC-2.6.23.1028/docs/third-party-licenses.txt
+  inflating: ClouderaImpala_JDBC-2.6.23.1028/docs/Cloudera-JDBC-Driver-for-Impala-Release-Notes.txt
+  inflating: ClouderaImpala_JDBC-2.6.23.1028/docs/Cloudera-JDBC-Driver-for-Impala-Release-Notes.pdf
+ extracting: ClouderaImpala_JDBC-2.6.23.1028/ClouderaImpalaJDBC42-2.6.23.1028.zip
+ extracting: ClouderaImpala_JDBC-2.6.23.1028/ClouderaImpalaJDBC41-2.6.23.1028.zip
+   creating: ClouderaImpalaODBC-2.6.13.1015/
+  inflating: ClouderaImpalaODBC-2.6.13.1015/ClouderaImpalaODBC.dmg
+  inflating: ClouderaImpalaODBC-2.6.13.1015/ClouderaImpalaODBC-32bit-2.6.13.1015-1.ppc.rpm
+  inflating: ClouderaImpalaODBC-2.6.13.1015/Cloudera-ODBC-Driver-for-Impala-Install-Guide.pdf
+  inflating: ClouderaImpalaODBC-2.6.13.1015/clouderaimpalaodbc-32bit_2.6.13.1015-2_i386.deb
+  inflating: ClouderaImpalaODBC-2.6.13.1015/ClouderaImpalaODBC-2.6.13.1015-1.ppc.rpm
+  inflating: ClouderaImpalaODBC-2.6.13.1015/Release-Notes-Impala-ODBC.pdf
+  inflating: ClouderaImpalaODBC-2.6.13.1015/ClouderaImpalaODBC-2.6.13.1015-1.x86_64.rpm
+  inflating: ClouderaImpalaODBC-2.6.13.1015/clouderaimpalaodbc_2.6.13.1015-2_amd64.deb
+  inflating: ClouderaImpalaODBC-2.6.13.1015/ClouderaImpalaODBC-32bit-2.6.13.1015-1.i686.rpm
+  inflating: ClouderaImpalaODBC-2.6.13.1015/ClouderaImpalaODBC64.msi
+  inflating: ClouderaImpalaODBC-2.6.13.1015/ClouderaImpalaODBC32.msi
+
+cnelson2@10434 impala-jar % cd ClouderaImpala_JDBC-2.6.23.1028
+
+cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 % ls -lart
+total 38512
+-rwxr-xr-x@ 1 cnelson2  staff  9808876 Feb 16  2021 ClouderaImpalaJDBC41-2.6.23.1028.zip
+-rwxr-xr-x@ 1 cnelson2  staff  9906674 Feb 16  2021 ClouderaImpalaJDBC42-2.6.23.1028.zip
+drwxr-xr-x@ 6 cnelson2  staff      192 Apr  2  2021 docs
+drwxr-xr-x@ 5 cnelson2  staff      160 Apr  2  2021 .
+drwxr-xr-x  5 cnelson2  staff      160 May  3 10:58 ..
+cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
+```
+
+
+3.  Under the `ClouderaImpala_JDBC-<version>` folder, Find `ClouderaImpalaJDBC41-<version>.zip` and copy it to wherever you keep your jars.  The actual Impala jar is inside that zip, but you don't need to unzip this for Dbeaver to use it.
+4.  [Proceed to Dbeaver Connectivity](#Dbeaver-Connectivty)
 
 
 ---
