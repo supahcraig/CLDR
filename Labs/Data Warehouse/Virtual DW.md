@@ -1,6 +1,6 @@
 
 
-*assumes a CDP PC environment exists*
+*assumes a CDP Public Cloud environment exists*
 
 
 # Table of Contents
