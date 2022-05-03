@@ -1,6 +1,5 @@
 # Connecting to a Virtual Warehouse via Dbeaver
 
-Video Walkthrough:
 
 [Video Walkthrough](https://youtu.be/bKibGaCicW0)
 
