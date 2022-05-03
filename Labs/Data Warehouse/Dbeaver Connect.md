@@ -74,11 +74,11 @@
 
 ### Authentication
 
-*for Non-SSO enabled Virtual Data Warehouse*
+**for Non-SSO enabled Virtual Data Warehouse**
 
 6.  Username/password are your CDP workload credentials. Check `Save Password Locally`
 
-*for Non-SSO enabled Virtual Data Warehouse*
+**for Non-SSO enabled Virtual Data Warehouse**
 
 7.  Username/password are your SSO credentials.  Check `Save Password Locally`
 
@@ -99,10 +99,10 @@ The drivers that install with Dbeaver _may_ not work perfectly with your Virtual
 ![](./images/dbeaver/dbeaver-delete-jar.png)
 
 12.  Click Add File to point dbeaver to your Cloudera-supplied driver.  Navigate to the location where you put the jar and select your file.
-  *  *Hive:*
+  *  **Hive:**
       *  `hive-jdbc-3.10-SNAPSHOT-standalone.jar`
       *  Click Find Class, it should return `org.apache.hive.jdbc.HiveDriver` in the dropdown.
-  *  *Impala:* 
+  *  **Impala:** 
       *  `ClouderaImpalaJDBC41-<version>.zip`
       *  Click Find Class, it should return `com.cloudera.jdbc41.Driver` in the dropdown.
 
@@ -111,7 +111,7 @@ Add File             |  Verify Driver Location
 ![](./images/dbeaver/dbeaver-add-jar.png)  |  ![](./images/dbeaver/dbeaver-verify-jar.png)
 
 
-13.  Click Test Connection, verify successful connection.  If you didn't supply your credentials, it will prompt you for them now.   _If_ your Virtual Warehouse has SSO enabled, a browswer tab will open to handle the authentication, which you can close if you like.   If you _aren't_ already signed into your SSO provider, the browser tab will be your SSO sign-in page.  You will need to authenticate before Dbeaver will connect.
+13.  Click Test Connection to verify successful configuration & connectivity.  If you didn't supply your credentials, it will prompt you for them now.   _If_ your Virtual Warehouse has SSO enabled, a browser tab will open to handle the authentication, which you can close if you like.   If you _aren't_ already signed into your SSO provider, the browser tab will be your SSO sign-in page.  You will need to authenticate before Dbeaver will connect.  If you _don't_ have SSO enabled, none of that applies.
 
 ![](./images/dbeaver/dbeaver-test-connection.png)
 
