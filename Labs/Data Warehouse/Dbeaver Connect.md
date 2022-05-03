@@ -42,11 +42,13 @@
       * remove the `jdbc:hive2://` prefix from the URL; dbeaver will add it for you in the JDBC URL box.
   * Leave the port empty.  
   * Database/Schema can be left empty or set to the database you want to connect into.
-  * _The authentication section will be covered later in this document._
+  * _The authentication section & Driver Settings will be covered later in this document._
 
 ![](./images/dbeaver/dbeaver-update-host.png)
 
+5.  [Proceed to Authentication[(#Authentication)
 
+---
 
 ### Impala Connection Setup
 
