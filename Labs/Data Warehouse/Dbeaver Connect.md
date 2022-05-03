@@ -208,10 +208,20 @@ Open a new SQL window and execute a query.  If you see the barber pole for execu
 
 # Troubleshooting
 
-* SSO sign-in?
-* AWS security groups?
+## SSO 
 
-### Invalid Session ID
+If your virtual warehouse is SSO Enabled, anything executed will need to first be authenticated via SSO.  If you aren't already SSO-authenticated, expect a browser tab to open up with your SSO login page whenever you connect, or if you try to run a query after your SSO has expired.  Re-authenticate via SSO, and then execute your SQL.
+
+
+
+## AWS security groups?
+
+Timeout issues are usually the result of a Cloud-provider firewall issue.  In AWS, this means the security group which manages the Hive/Impala connectivity is not open to your IP address on the necessary ports.   
+
+TODO:  identify the necessary security groups & required ports
+
+
+## Invalid Session ID
 
 If you've already demonstrated that you are able to connect & run queries, but then mysteriously start seeing connection errors, it can usually be solved by using Dbeaver's Invaliate/Reconnect option, or by Disconnecting and the Reconnecting.
 
