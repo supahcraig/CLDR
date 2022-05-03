@@ -128,9 +128,9 @@ cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
     * **SSO:** 
         * `jdbc:impala://coordinator-hs2-<vdw name>.<env name>.a465-9q4k.cloudera.site:443/default;AuthMech=12;transportMode=http;httpPath=cliservice;ssl=1;auth=browser`
 
-![](./images/dbeaver/cdp-vdw-impala-jdbc-url.png)
+![](./images/dbeaver/vdw-impala-jdbc-url.png)
 
-4. General Hive Connectivity
+4. General Impala Connectivity
 
     * Take the copied URL and past into the host box.
         * remove the `jdbc:impala://` prefix from the URL; dbeaver will add it for you in the JDBC URL box.
