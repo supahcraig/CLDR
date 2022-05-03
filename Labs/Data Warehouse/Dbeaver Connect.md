@@ -210,4 +210,17 @@ Open a new SQL window and execute a query.  If you see the barber pole for execu
 
 * SSO sign-in?
 * AWS security groups?
-* Invalid Session ID?
+
+### Invalid Session ID
+
+If you've already demonstrated that you are able to connect & run queries, but then mysteriously start seeing connection errors, it can usually be solved by using Dbeaver's Invaliate/Reconnect option, or by Disconnecting and the Reconnecting.
+
+![](./images/dbeaver/beaver-connection-troubleshoot.png)
+
+You can monitor the status of an establishing connection in the lower right corner of Dbeaver, although it will not show anything once the connection process has completed or failed.
+
+![](./images/dbeaver/connection-progress.png)
+
+You can also check the status of a connection in the Database Navigator.   Connected databases will show a green check.  Valid disconnected databases will not have any icon overlaid.   Invalid databases will have a red X.
+
+![](./images/dbeaver/dbeaver-disconnected.png)
