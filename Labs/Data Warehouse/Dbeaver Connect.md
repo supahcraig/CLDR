@@ -2,7 +2,7 @@
 
 Video Walkthrough:
 
-![Video Walkthrough](https://youtu.be/bKibGaCicW0)
+[![Video Walkthrough](./images/dbeaver/cdp-home.png)](https://youtu.be/bKibGaCicW0)
 
 
 ## Environment setup
