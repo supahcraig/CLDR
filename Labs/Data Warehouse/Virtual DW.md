@@ -25,10 +25,15 @@
 # Prerequisites and Assumptions
 
 * It is assumed you have a CDP (public cloud) environment built
-* CDP CLI should be installed & configured
+
+If you intend to use the CDP CLI these pre-requisites must also be met:
+* CDP CLI should be installed & configured.
 * jq should be installed, we're going to use it heavily
 
-This covers the CDP CLI & CDP environment spin up, installing `jq` is left as an exercise for the reader.
+This covers the CDP CLI & CDP environment spin up, installing CDP CLI & `jq` are left as an exercise for the reader.
+
+[Installing CDP CLI](https://docs.cloudera.com/cdp/latest/cli/topics/mc-cdp-cli.html)
+
 
 ---
 
