@@ -9,6 +9,7 @@
   * [Prerequisites](#Prerequisites-and-Assumptions)
 
 * Using the CDP Data Warehouse Console
+  * [Activating the DW Environment](#Activating-the-DW-Environment)
   * [Creating a Database Catalog](#Creating-a-Database-Catalog-from-the-console)
   * [Creating a Hive Virtual Warehouse](#Hive-Virtual-Warehouse)
 
