@@ -1,6 +1,8 @@
 # Connecting to a Virtual Warehouse via Dbeaver
 
 
+## Video Walkthrough
+
 [Click here for a video walkthrough](https://youtu.be/bKibGaCicW0)
 [![Video Walkthrough](./images/dbeaver/cdp-home.png)](https://youtu.be/bKibGaCicW0)
 
