@@ -42,19 +42,21 @@
 
 3.  Copy the JDBC URL from the CDP VDW screen, under the "3-dot" context menu for your virtual warehouse.   It will look something like this, depending on whether or not you enabled SSO when you created the Virtual Warehouse.
 
-*Non-SSO:* `hs2-cnelson2-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;retries=3;`
+    * **Non-SSO:** 
+        * `hs2-cnelson2-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;retries=3;`
 
-*SSO:* `jdbc:hive2://hs2-cnelson2-hive-sso.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;auth=browser;`
+    * **SSO:** 
+        * `jdbc:hive2://hs2-cnelson2-hive-sso.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;auth=browser;`
 
 ![](./images/dbeaver/cdp-vdw-copy-jdbc-url.png)
 
 4. General Hive Connectivity
 
-  * Take the copied URL and past into the host box.
-      * remove the `jdbc:hive2://` prefix from the URL; dbeaver will add it for you in the JDBC URL box.
-  * Leave the port empty.  
-  * Database/Schema can be left empty or set to the database you want to connect into.
-  * _The authentication section & Driver Settings will be covered later in this document._
+    * Take the copied URL and past into the host box.
+        * remove the `jdbc:hive2://` prefix from the URL; dbeaver will add it for you in the JDBC URL box.
+    * Leave the port empty.  
+    * Database/Schema can be left empty or set to the database you want to connect into.
+    * _The authentication section & Driver Settings will be covered later in this document._
 
 ![](./images/dbeaver/dbeaver-update-host.png)
 
@@ -99,12 +101,13 @@ The drivers that install with Dbeaver _may_ not work perfectly with your Virtual
 ![](./images/dbeaver/dbeaver-delete-jar.png)
 
 12.  Click Add File to point dbeaver to your Cloudera-supplied driver.  Navigate to the location where you put the jar and select your file.
-  *  **Hive:**
-      *  `hive-jdbc-3.10-SNAPSHOT-standalone.jar`
-      *  Click Find Class, it should return `org.apache.hive.jdbc.HiveDriver` in the dropdown.
-  *  **Impala:** 
-      *  `ClouderaImpalaJDBC41-<version>.zip`
-      *  Click Find Class, it should return `com.cloudera.jdbc41.Driver` in the dropdown.
+
+* **Hive:**
+    *  `hive-jdbc-3.10-SNAPSHOT-standalone.jar`
+    *  Click Find Class, it should return `org.apache.hive.jdbc.HiveDriver` in the dropdown.
+*  **Impala:**
+    * `ClouderaImpalaJDBC41-<version>.zip`
+    *  Click Find Class, it should return `com.cloudera.jdbc41.Driver` in the dropdown.
 
 Add File             |  Verify Driver Location
 :-------------------------:|:-------------------------:
