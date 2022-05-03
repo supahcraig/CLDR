@@ -10,6 +10,9 @@
 
 ![](./images/dbeaver/cdp-vdw-download-jar.png)
 
+![](./images/dbeaver/cdp-vdw-impala-download-jar.png)
+
+
 ### Hive Jar
 1.  Optionally copy the jar to wherever you like to keep your jars.  Wherever you decide to put it, you'll need this location later when we point Dbeaver to the downloaded jar.
 
