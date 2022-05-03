@@ -2,8 +2,8 @@
 
 ## Environment setup
 
-1.  create a virtual warehouse (hive or impala, SSO enabled or otherwise...we'll connect to both, although beeline doesn't work with SSO yet)
-2.  Download the JDBC/ODBC jar
+1.  Create a Virtual Warehouse (hive or impala, SSO enabled or otherwise...we'll connect to both, although beeline doesn't work with SSO yet)
+2.  Download the JDBC jar for Hive or the JDBC/ODBC jar for Impala
 
 ![](./images/dbeaver/cdp-vdw-download-jar.png)
 
@@ -74,13 +74,13 @@
 
 ### Authentication
 
-_for Non-SSO enabled Virtual Data Warehouse_
+*for Non-SSO enabled Virtual Data Warehouse*
 
-6.  Username/password are your CDP workload password; save password locally
+6.  Username/password are your CDP workload credentials. Check `Save Password Locally`
 
-_for Non-SSO enabled Virtual Data Warehouse_
+*for Non-SSO enabled Virtual Data Warehouse*
 
-7.  Leave the username/password blank; it will prompty you for credentials
+7.  Username/password are your SSO credentials.  Check `Save Password Locally`
 
 ---
 
@@ -99,19 +99,19 @@ The drivers that install with Dbeaver _may_ not work perfectly with your Virtual
 ![](./images/dbeaver/dbeaver-delete-jar.png)
 
 12.  Click Add File to point dbeaver to your Cloudera-supplied driver.  Navigate to the location where you put the jar and select your file.
-  *  Hive:
+  *  *Hive:*
       *  `hive-jdbc-3.10-SNAPSHOT-standalone.jar`
-      *  Click Find Class, it should return `org.apache.hive.jdbc.HiveDriver`
-  *  Impala: 
+      *  Click Find Class, it should return `org.apache.hive.jdbc.HiveDriver` in the dropdown.
+  *  *Impala:* 
       *  `ClouderaImpalaJDBC41-<version>.zip`
-      *  Click Find Class, it should return `com.cloudera.jdbc41.Driver`
+      *  Click Find Class, it should return `com.cloudera.jdbc41.Driver` in the dropdown.
 
 Add File             |  Verify Driver Location
 :-------------------------:|:-------------------------:
 ![](./images/dbeaver/dbeaver-add-jar.png)  |  ![](./images/dbeaver/dbeaver-verify-jar.png)
 
 
-13.  Click Test Connection, verify successful connection.  SSO connections will prompt for your Okta/SSO username & password.
+13.  Click Test Connection, verify successful connection.  If you didn't supply your credentials, it will prompt you for them now.   _If_ your Virtual Warehouse has SSO enabled, a browswer tab will open to handle the authentication, which you can close if you like.   If you _aren't_ already signed into your SSO provider, the browser tab will be your SSO sign-in page.  You will need to authenticate before Dbeaver will connect.
 
 ![](./images/dbeaver/dbeaver-test-connection.png)
 
@@ -120,3 +120,14 @@ Add File             |  Verify Driver Location
 ### Running Queries
 
 Open a new SQL window and execute a query.  If you see the barber pole for execution, you're in good shape.  You may have to wait for the VDW to spin back up, but it should run to completion.   SSO connections may ask for your SSO (Okta) username & password, which will briefly open a tab in your web browser to handle the SSO authentication.  If connection issues arise, invalidate/reconnect or a full disconnect/reconnect seems to do the trick.
+
+
+
+
+---
+
+## Troubleshooting
+
+* SSO sign-in?
+* AWS security groups?
+* Invalid Session ID?
