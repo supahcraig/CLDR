@@ -24,11 +24,11 @@
 
 ![](./images/dbeaver/dbeaver-new-connection.png)
 
-3.  Select Apache Hive from the ist of database drivers.   
+2.  Select Apache Hive from the ist of database drivers.   
 
 ![](./images/dbeaver/dbeaver-hive-select.png)
 
-5.  Copy the JDBC URL from the CDP VDW screen, under the "3-dot" context menu for your virtual warehouse.   It will look something like this:
+3.  Copy the JDBC URL from the CDP VDW screen, under the "3-dot" context menu for your virtual warehouse.   It will look something like this:
 
 *Non-SSO:* `hs2-cnelson2-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;retries=3;`
 
@@ -36,10 +36,16 @@
 
 ![](./images/dbeaver/cdp-vdw-copy-jdbc-url.png)
 
-5a. Paste the URL into the host box.   Remove the `jdbc:hive2://` from the URL; dbeaver will add it for you.
+4. General Hive Connectivity
 
-5.  Port should be empty
-6.  database/schema can be `default` or a database of your choosing.
+  * Take the copied URL and past into the host box.
+      * remove the `jdbc:hive2://` prefix from the URL; dbeaver will add it for you in the JDBC URL box.
+  * Leave the port empty.  
+  * Database/Schema can be left empty or set to the database you want to connect into.
+  * _The authentication section will be covered later in this document._
+
+![](./images/dbeaver/dbeaver-update-host.png)
+
 
 
 ### Impala Connection Setup
