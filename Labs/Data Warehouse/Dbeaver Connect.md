@@ -4,7 +4,7 @@ Video Walkthrough:
 
 [![Video Walkthrough](./images/dbeaver/cdp-home.png)](https://youtu.be/bKibGaCicW0)
 
-
+ 
 ## Environment setup
 
 1.  Create a Virtual Warehouse (Hive or Impala, SSO enabled or otherwise...we'll connect to both)
