@@ -6,7 +6,7 @@
 
 [Walkthrough of creating a Virtual Warehouse](https://github.com/supahcraig/CLDR/blob/main/Labs/Data%20Warehouse/Virtual%20DW.md)
 
-2.  Download the JDBC jar for Hive or the JDBC/ODBC jar for Impala
+2.  Download the JDBC jar for Hive or the JDBC/ODBC driver for Impala
 
 ![](./images/dbeaver/cdp-vdw-download-jar.png)
 
@@ -20,9 +20,9 @@
 
 ---
 
-### Impala Jar
-1.  The impala jdbc/odbc comes down as a zip called `impala_driver_jdbc_odbc.zip`
-2.  From Finder or the command line, unzip it, and navigate to `ClouderaImpalaJDBC-<version>`, where the version # will likely change over time.
+### Impala Driver
+1.  The impala jdbc/odbc driver comes down as a zip called `impala_driver_jdbc_odbc.zip`
+2.  From Finder or the command line, unzip it and navigate to `ClouderaImpalaJDBC-<version>`, where the version # will likely change over time.
 
 ```
 cnelson2@10434 impala-jar % unzip impala_driver_jdbc_odbc.zip
@@ -157,7 +157,7 @@ cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
 
 ### Driver Setup
 
-The drivers that install with Dbeaver _may_ not work perfectly with your Virtual Warehouse.  It is recommended to use the drivers you can download directly from your Virtual Warehouse.  (See [Downloading Hive Jar](#Hive-Jar) and/or [Downloading Impala Jar](#Impala-Jar))
+The drivers that install with Dbeaver _may_ not work perfectly with your Virtual Warehouse.  It is recommended to use the drivers you can download directly from your Virtual Warehouse.  (See [Downloading Hive Jar](#Hive-Jar) and/or [Downloading Impala Jar](#Impala-Driver))
 
 8.  Edit Driver Settings
 
