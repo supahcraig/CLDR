@@ -198,7 +198,7 @@ Hive Test Connection             |  Impala Test Connection
 
 
 
-
+14.  CLICK FINISH!
 
 
 
