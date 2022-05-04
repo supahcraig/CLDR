@@ -29,7 +29,7 @@
 
 ### Impala Driver
 1.  The impala jdbc/odbc driver comes down as a zip called `impala_driver_jdbc_odbc.zip`
-2.  From Finder or the command line, unzip it and navigate to `ClouderaImpalaJDBC-<version>`, where the version # will likely change over time.
+2.  From Finder or the command line, unzip it and navigate to `ClouderaImpala_JDBC-<version>`, where the version # will likely change over time.
 
 ```
 cnelson2@10434 impala-jar % unzip impala_driver_jdbc_odbc.zip
@@ -107,7 +107,7 @@ cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
     * Take the copied URL and past into the host box.
         * remove the `jdbc:hive2://` prefix from the URL; dbeaver will add it for you in the JDBC URL box.
     * Leave the port empty.  
-    * Database/Schema can be left empty or set to the database you want to connect into.
+    * Database/Schema should be set to the database you want to connect into.
     * _The authentication section & Driver Settings will be covered later in this document._
 
 ![](./images/dbeaver/dbeaver-update-host.png)
@@ -142,7 +142,7 @@ cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
     * Take the copied URL and past into the host box.
         * remove the `jdbc:impala://` prefix from the URL; dbeaver will add it for you in the JDBC URL box.
     * Set the port to 443.  
-    * Database/Schema can be left empty or set to the database you want to connect into.
+    * Database/Schema should be set to the database you want to connect into.
     * _The authentication section & Driver Settings will be covered later in this document._
 
 ![](./impala/dbeaver/dbeaver-impala-update-host.png)
@@ -156,7 +156,7 @@ cnelson2@10434 ClouderaImpala_JDBC-2.6.23.1028 %
 
 6.  Username/password are your CDP workload credentials. Check `Save Password Locally`
 
-**for Non-SSO enabled Virtual Data Warehouse**
+**for SSO enabled Virtual Data Warehouse**
 
 7.  Username/password are your SSO credentials.  Check `Save Password Locally`
 
