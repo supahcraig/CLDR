@@ -130,9 +130,9 @@ from bb.atbats_r ab
    , bb.final_pitch f
 where cast(ab.ab_id as bigint) = cast(f.ab_id as bigint);
 
-drop table bb.umpire_game_totals;
+
 create table bb.umpire_game_totals as
-select count(*), umpire_name, assigned_base
+select count(*) as game_count, umpire_name, assigned_base
 from (
   select game_id
        , umpire_1b as umpire_name
