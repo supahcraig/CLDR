@@ -1,4 +1,18 @@
-create database bb;
+drop table if exists bb.atbats;
+drop table if exists bb.pitches;
+drop table if exists bb.games;
+
+drop table if exists bb.atbats_r;
+drop table if exists bb.pitches_r;
+drop table if exists bb.games_r;
+
+drop table if exists bb.final_pitch_num_r;
+drop table if exists bb.atbat_final_pitch;
+drop table if exists bb.final_pitch;
+
+drop table if exists bb.umpire_game_totals;
+
+create database if not exists bb;
 use bb;
 
 create external table bb.atbats(
