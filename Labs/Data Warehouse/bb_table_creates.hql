@@ -18,7 +18,7 @@ ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 with serdeproperties(
   "separatorChar" = ",",
   "quoteChar" = "\"")
-location "s3a://crnxx-uat2/baseball/atbats/"
+location "s3a://goes-se-sandbox01/cnelson2/baseball/atbats/"
 tblproperties ("skip.header.line.count"="1");
 
 create external table bb.pitches(
@@ -66,7 +66,7 @@ ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 with serdeproperties(
   "separatorChar" = ",",
   "quoteChar" = "\"")
-location "s3a://crnxx-uat2/baseball/pitches/"
+location "s3a://goes-se-sandbox01/cnelson2/baseball/pitches/"
 tblproperties ("skip.header.line.count"="1");
 
 drop table bb.games;
@@ -91,7 +91,7 @@ ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 with serdeproperties(
   "separatorChar" = ",",
   "quoteChar" = "\"")
-location "s3a://crnxx-uat2/baseball/games/"
+location "s3a://goes-se-sandbox01/cnelson2/baseball/games/"
 tblproperties ("skip.header.line.count"="1");
 
 create table bb.games_r as select * from bb.games;
