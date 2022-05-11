@@ -83,7 +83,6 @@ with serdeproperties(
 location "s3a://goes-se-sandbox01/cnelson2/baseball/pitches/"
 tblproperties ("skip.header.line.count"="1");
 
-drop table bb.games;
 create external table bb.games(
 attendance int,
 away_final_score int,
