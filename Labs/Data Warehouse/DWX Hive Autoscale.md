@@ -33,13 +33,16 @@ Remember to copy the data to the bucket for your environment.  If you're using t
 
 ## DDL
 
-The DDL to create the bb database and supporting tables is found in this repository (`bb_table_setup.hql`) and can be run in beeline.
+The DDL to create the bb database and supporting tables is found in this repository (`bb_table_setup.hql`) and can be run in beeline.  Additional info on connecting to Hive with beeline can also be found in this repo.
 
+The URL here is from the "Copy JDBC URL" link in your virtual warehouse, with `;user=<your CDP username>` tacked on the end, and `bb_table_setup.hql` is the name of the hql file found in this repo.
 
-
+```
+./beeline -p -u 'jdbc:hive2://hs2-cnelson2-hive-vdw.dw-se-sandbox-aws.a465-9q4k.cloudera.site/default;transportMode=http;httpPath=cliservice;socketTimeout=60;ssl=true;retries=3;user=cnelson2' -f bb_table_setup.hql
+```
 
 ### LOAD TEST SQL
-Using the JMeter load test technique, this is the load test for Impala scale-up.   The query identifies at bats of more than 6 pitches where no curveball was thrown.   Why?  Because it seems like fun.
+Using the JMeter load test technique, this is the load test for Impala scale-up.   The query identifies at bats of more than 6 pitches where no curveball was thrown.   Why?  Because it seems like fun and also because it makes it scale up.
 
 ```
 select count(*), g.game_id, g.venue_name
