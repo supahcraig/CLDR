@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.1">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="HiveConcurrency-01" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath">./jdbc-binaries/</stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Users" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">${__P(Loops,5)}</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">500</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">0</stringProp>
+        <longProp name="ThreadGroup.start_time">1448412990000</longProp>
+        <longProp name="ThreadGroup.end_time">1448412990000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="JDBC Connection Config" enabled="true">
+          <stringProp name="dataSource">impalaConnection</stringProp>
+          <stringProp name="poolMax">150</stringProp>
+          <stringProp name="timeout">0</stringProp>
+          <stringProp name="trimInterval">0</stringProp>
+          <boolProp name="autocommit">true</boolProp>
+          <stringProp name="transactionIsolation">DEFAULT</stringProp>
+          <boolProp name="keepAlive">true</boolProp>
+          <stringProp name="connectionAge">0</stringProp>
+          <stringProp name="checkQuery"></stringProp>
+          <stringProp name="dbUrl">jdbc:impala://coordinator-crnxx-vdw.dw-crnxx-aw-env.a465-9q4k.cloudera.site:443/default;AuthMech=3;transportMode=http;httpPath=cliservice;ssl=1</stringProp>
+          <stringProp name="driver">com.cloudera.impala.jdbc.Driver</stringProp>
+          <stringProp name="username">cnelson2</stringProp>
+          <stringProp name="password">Avatar1#</stringProp>
+          <stringProp name="TestPlan.comments">Will use connections per thread in concurrency mode</stringProp>
+          <stringProp name="initQuery"></stringProp>
+          <boolProp name="preinit">false</boolProp>
+          <stringProp name="connectionProperties"></stringProp>
+        </JDBCDataSource>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="Execute" enabled="true">
+          <stringProp name="dataSource">impalaConnection</stringProp>
+          <stringProp name="queryType">Select Statement</stringProp>
+          <stringProp name="query">select count(*), ab.game_id, ab.event from bb.atbats ab, bb.games g where g.game_id = ab.game_id group by ab.game_id, ab.event having event = 'Triple' and count(*) > 2</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as Object</stringProp>
+          <stringProp name="resultSetMaxRows"></stringProp>
+        </JDBCSampler>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
