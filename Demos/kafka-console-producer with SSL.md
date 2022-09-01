@@ -1,4 +1,5 @@
 Helpful articles:
+
 https://docs.cloudera.com/runtime/7.2.10/kafka-managing/topics/kafka-manage-cli-producer.html
 https://docs.cloudera.com/runtime/7.2.10/kafka-securing/topics/kafka-secure-ldap-client.html
 https://community.cloudera.com/t5/Community-Articles/MySQL-CDC-with-Kafka-Connect-Debezium-in-CDP-Public-Cloud/ta-p/345321
