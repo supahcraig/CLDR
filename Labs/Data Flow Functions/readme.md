@@ -176,7 +176,7 @@ This should cause our S3 trigger to fire, which will cause our lambda to execute
 
 Monitoring can be done via Monitoring from the lambda console, or by going directly to Cloudwatch.   Find the latest log stream in Cloudwatch for your lambda and click into it.   Resume auto retry to stream new log info into the console and watch as nifi fires up and does it's thing importing NARs, etc, and finally running your flow.  This invocation took 49783ms, which is to be expected because it was a cold start. 
 
-![Cloudwatch Cold Start Logs](./images/naaf-cold-start.png)
+![Cloudwatch Cold Start Logs](./images/naaf-cold-start-log.png)
 
 Now that the lambda is warmed up, if we drop another object into our S3 bucket we should see a much quicker execution since much of the initialization has already been completed.
 
