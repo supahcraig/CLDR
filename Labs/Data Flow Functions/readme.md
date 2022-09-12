@@ -88,6 +88,10 @@ If your flow has other paramters defined (such as AWS credentials), you can add 
 * Supply key/value pairs for your sensitive paramters, being certain that the keys match exactly with the parameter names in your flow
 * Save the secret with the exact same name as your flow's parameter context
 
+![New Secret](./images/naaf-new-secret.png)
+
+![Name your Secret](./images/naaf-secret-name.png)
+
 
 7.  Allow usage of the secret
   * if you used a secret, you need to give your lambda the privs to use it
