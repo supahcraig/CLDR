@@ -140,6 +140,8 @@ From the Lambda console,
 * Actions --> Publish
   * this will make it live, but you still need to invoke it somehow
 
+![Publish New Lambda Version](./images/naaf-publish-lambda.png)
+
 
 9.  Add trigger
   * add/configure a trigger for whatever you want.  Easiest POC is to trigger on S3.
