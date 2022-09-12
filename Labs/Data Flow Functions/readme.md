@@ -30,7 +30,7 @@ Download your flow definition.   This is what we will upload to the CDF Flow Cat
 
 You don't need a cluster or even a CDP environment.   Just the catalog, which lives in the control plane.
 
-![CDF Import Flow Definition](./images/naaf-cdf-import-flow.png)
+![CDF Import Flow Definition](./images/naaf-import-data-flow.png)
 
 
 ## 2a.  Optional:  Create a Machine User in CDP
