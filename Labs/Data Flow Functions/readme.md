@@ -60,7 +60,8 @@ The code itself will be an artifact you can download from the CDF UI once Data F
 
 The handler defaults to `example.Hello::handleRequest`, but we need to change it to `com.cloudera.naaf.aws.lambda.StatelessNiFiFunctionHandler::handleRequest`
 
-<< screen cap >>
+![Lambda Runtime Settings](./images/naaf-lambda-runtime-settings.png)
+
 
 ### Configure Environment Variables
 
