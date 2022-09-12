@@ -83,8 +83,8 @@ If your flow has other paramters defined (such as AWS credentials), you can add 
     
 ### OPTIONAL:  Create/Configure an AWS Secret
 
-* create a new secret
-* Use "other type of secret"
+* Create a new secret
+* Select "other type of secret"
 * Supply key/value pairs for your sensitive paramters, being certain that the keys match exactly with the parameter names in your flow
 * Save the secret with the exact same name as your flow's parameter context
 
@@ -93,13 +93,14 @@ If your flow has other paramters defined (such as AWS credentials), you can add 
 ![Name your Secret](./images/naaf-secret-name.png)
 
 
-7.  Allow usage of the secret
-  * if you used a secret, you need to give your lambda the privs to use it
-  * Under Configuration --> Permissions click on the role name to open the IAM page for the role
-  * Click Add Permissions dropdown and click Attach Policies
-  * Fnd the SecretsManagerReadWrite policy and attach it.  NOTE:  this is more permisive than you need, but it will work as a POC
+### OPTIONAL:  Allow Usage of the Secret
 
-Or use a tailored policy to restrict your lambda to just that one secret:
+If you used a secret, you need to allow your Lambda to access that secret.   From the Lambda Console, under Configuration, go to Permissions and find the IAM Role Lambda created for you.   Clicking on it will open a new browser tab for the IAM page for that role.   The role itself has basic lambda execution permisions, which is not permissive enough to access your secret.  
+
+* Click Add Permisions
+  * Click Create inline policy
+* When the Create Policy page opens, click on the JSON tab and paste the following IAM policy JSON document, being sure to change the resource to point to the ARN of your Secret.
+
 ```
 {
     "Version": "2012-10-17",
@@ -125,11 +126,13 @@ Or use a tailored policy to restrict your lambda to just that one secret:
 }
 ```
 
+This will add permissions for your Lambda to list (but not accsss) all your secrets, and also the ability to read this and only this secret.  Give it a name, Click Review Policy, and then Create Policy to attach it to the role.
 
 
+## Publish your Lambda
 
-8.  Publish your lambda
-  * Actions --> Publish
+From the Lambda console, 
+* Actions --> Publish
   * this will make it live, but you still need to invoke it somehow
 
 
