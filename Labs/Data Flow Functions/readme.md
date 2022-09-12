@@ -143,16 +143,32 @@ From the Lambda console,
 ![Publish New Lambda Version](./images/naaf-publish-lambda.png)
 
 
-9.  Add trigger
-  * add/configure a trigger for whatever you want.  Easiest POC is to trigger on S3.
-  * if you publish a new version of your lambda the trigger association will stay with the prior version of the lambda.  You can change that by going to the bucket your trigger is on and going to Properties and manually editing the trigger with the newlabmda version 
+## Add a Trigger
+
+We need some mechanism to trigger our lambda, and for this exmample we want to trigger execution of our flow whenever an object shows up in a particular area in an S3 bucket.   
+
+* Click on the `+ Add Trigger` button in your Lambda function.
+* Open the dropdown and select your event source from the list.   S3 is what we're looking for here, but note there are tons of options.
+* Put your bocket name in the Bucket box
+* Trigger for all object create events
+* Use `trigger-files/` as the prefix.   Think of this like a subdirectory; we're going to trigger on objects in the trigger-files/ subdirectory.
+* Check the Recursive Invocation acknowldegement.   This is to ensure your flow is not going to write to the same bucket/prefix you're triggering on, because that could cause a singularity.  It won't prevent you from doing this, it's just making you acknowldege that this is a thing, and you're promising you're not that dumb.   
+
+![Trigger create](./images/naaf-lambda-trigger.png)
+
+![Trigger added](./images/naaf-lambda-trigger-added.png)
 
 
+# Test it!
+
+
+
+## Monitoring a Serverless Flow
 Monitoring can be done via Monitoring from the lambda console, or look in cloudwatch.
 
 
 
-## Other notes
+## Troubleshooting notes
 
 - if you need to upload a new version of your flow to CDF, be sure to change the Flow CRN in your lambda environment variables
 - if you change anything about the lambda (i.e. environment variables) you'll need to republish the lambda, and a new version will become active
