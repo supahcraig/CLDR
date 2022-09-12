@@ -161,10 +161,35 @@ We need some mechanism to trigger our lambda, and for this exmample we want to t
 
 # Test it!
 
+Manually copy a file from your local filesysem to your s3 bucket:
+
+```
+echo "dez caught it" > sample.txt
+aws s3 cp sample.txt s3://crnaa-uat2/trigger-files/sample-alpha
+```
+
+This should cause our S3 trigger to fire, which will cause our lambda to execute our data flow definition.   Let's check the logs just to be sure.
+
 
 
 ## Monitoring a Serverless Flow
-Monitoring can be done via Monitoring from the lambda console, or look in cloudwatch.
+
+Monitoring can be done via Monitoring from the lambda console, or by going directly to Cloudwatch.   Find the latest log stream in Cloudwatch for your lambda and click into it.   Resume auto retry to stream new log info into the console and watch as nifi fires up and does it's thing importing NARs, etc, and finally running your flow.  This invocation took 49783ms, which is to be expected because it was a cold start. 
+
+![Cloudwatch Cold Start Logs](./images/naaf-cold-start.png)
+
+Now that the lambda is warmed up, if we drop another object into our S3 bucket we should see a much quicker execution since much of the initialization has already been completed.
+
+```
+aws s3 cp sample.txt s3://crnaa-uat2/trigger-files/sample-bravo
+```
+
+![Cloudwatch warm start logs](./images/naaf-warm-start.png)
+
+Notice this execution took only 116.95ms.
+
+
+# Conclusion
 
 
 
