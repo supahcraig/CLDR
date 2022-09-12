@@ -73,6 +73,8 @@ Data Flow Functions suppors a bunch of environment variables to fine tune the fl
 * `FAILURE_PORTS`:  you created an output port in your flow and connected processor failures to it.  This is the name of that output port.
 * `FLOW_CRN`:  This is the CRN of your flow in the Flow Catalog.  Make sure you use the CRN that includes your flow's version, ending in `/v.1` or whatever the actual version number is.
 
+![Data Flow CRN](./images/naaf-cdf-import-flow-CRN.png)
+
 If your flow has other paramters defined (such as AWS credentials), you can add them here as well.  However if you have parameters you wish to keep more secure (such as AWS credentials), you may prefer to keep them in an AWS Secret.  Lambda will first look for flow paramters in the Lambda environment varialbes, but if it doesn't find them it will look for an AWS Secret with the same name as your flow's parameter context.
 
 ![Lambda Environment Variables](./images/naaf-lambda-envvars.png)
