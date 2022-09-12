@@ -13,7 +13,7 @@ Data Flow Functions is a way to run nifi flows without provisioning any resource
 Either in a docker container running locally or in a Data Flow data hub, build out a simple flow inside a processor group.
 
 * Create a parameter context with the name:  `NAAF_CONTEXT`
-  * add parameters for your AWS access & secret keys (Note:  AWS_ACCESS_KEY & AWS_SECRET_KEY appear to be reserved names within Lambda)
+  * add parameters for your AWS access & secret keys (Note:  `AWS_ACCESS_KEY` & `AWS_SECRET_KEY` appear to be reserved names within Lambda)
 * add an input port from local connections
   * this will recieve the event trigger payload; bascially info from whatever has triggered our flow
 * connect it to a log attributes processor
