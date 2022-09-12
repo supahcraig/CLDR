@@ -191,6 +191,7 @@ Notice this execution took only 116.95ms.
 
 # Conclusion
 
+With minimal effort we were able to get a nifi data flow without provisioning any server resources, and without even having a CDP Environment to execute against.   That's because AWS Lambda handles all the execution, and only charges us for what we used.    If you have batch or trigger or event driven type of flows, Data Flow Functions could be a great option for you.   If you have flows that run 24x7 or handle continuous streaming type flows, DFF might not be a great fit.   
 
 
 ## Troubleshooting notes
