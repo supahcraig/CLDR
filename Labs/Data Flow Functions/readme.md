@@ -8,7 +8,7 @@ Data Flow Functions is a way to run nifi flows without provisioning any resource
 
 ## 1.  Create a Flow
 
-<< screen cap >>
+![Nifi Flow](./images/naaf-nifi-flow.png)
 
 Either in a docker container running locally or in a Data Flow data hub, build out a simple flow inside a processor group.
 
