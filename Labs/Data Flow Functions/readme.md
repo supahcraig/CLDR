@@ -50,6 +50,34 @@ Rough steps:
   * Click Add Permissions dropdown and click Attach Policies
   * Fnd the SecretsManagerReadWrite policy and attach it.  NOTE:  this is more permisive than you need, but it will work as a POC
 
+Or use a tailored policy to restrict your lambda to just that one secret:
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetResourcePolicy",
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+                "secretsmanager:ListSecretVersionIds"
+            ],
+            "Resource": [
+                "arn:aws:secretsmanager:us-east-2:981304421142:secret:NAAF_CRN-ATPP1O"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": "secretsmanager:ListSecrets",
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+
+
 
 8.  Publish your lambda
   * Actions --> Publish
