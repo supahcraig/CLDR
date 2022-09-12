@@ -149,3 +149,13 @@ From the Lambda console,
 
 
 Monitoring can be done via Monitoring from the lambda console, or look in cloudwatch.
+
+
+
+## Other notes
+
+- if you need to upload a new version of your flow to CDF, be sure to change the Flow CRN in your lambda environment variables
+- if you change anything about the lambda (i.e. environment variables) you'll need to republish the lambda, and a new version will become active
+- if you publish a new version of your lambda, you'll notice that it will lose the trigger association.   That's because the trigger will still be attached to the prior version of the lambda.   There is no way from within lambda to handle this.  You must go to the thing that the trigger is on (the s3 bucket in our case, and edit the properties of the trigger.  You can point it to the new version of the lambda from there.  Or delete it and attach a new trigger from your labmda.
+
+- Your cdp access keys may have an extra `%` character at the end.  This is not part of the key, don't include it.
