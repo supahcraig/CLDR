@@ -47,7 +47,7 @@ From the AWS console create a new lambda function.
   * x86_64 is the arch
   * << CREATE FUNCTION >>
 
-<< screen cap >> 
+[![New Lambda](./images/naaf-new-lambda.png]
 
 
 ## 4.  Configure your Lambda
