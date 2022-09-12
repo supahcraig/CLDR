@@ -97,8 +97,13 @@ If your flow has other paramters defined (such as AWS credentials), you can add 
 
 If you used a secret, you need to allow your Lambda to access that secret.   From the Lambda Console, under Configuration, go to Permissions and find the IAM Role Lambda created for you.   Clicking on it will open a new browser tab for the IAM page for that role.   The role itself has basic lambda execution permisions, which is not permissive enough to access your secret.  
 
+![Lambda IAM Role](./images/naaf-lambda-role.png)
+
 * Click Add Permisions
   * Click Create inline policy
+
+![Create Inline Policy](./images/naaf-add-policy.png)
+
 * When the Create Policy page opens, click on the JSON tab and paste the following IAM policy JSON document, being sure to change the resource to point to the ARN of your Secret.
 
 ```
