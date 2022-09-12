@@ -1,21 +1,41 @@
 Basis doc is here:  https://docs.google.com/document/d/1Y5fxctYIXAOejvl-Kl9PVvuadP7VLmvwLtCNL3CEDFg/edit#
 
-Rough steps:
 
-1.  create a flow
-  * create a process group; everything needs to go into it
-  * create a parameter context with a name you like.   If you will have sensitive data make sure it doesn't have the same name as an exiting AWS Secret
-  * the "entry point" is an input port recieved from local connections.
-  * don't terminate the failures, send them to an output port
-  * save your flow definition along with the external services if you had any
+The purpose of this lab is to use a Data Flow Function (aka serverless Nifi) to "monitor" an s3 bucket for new objects, and then put the metadata for that object into another S3 bucket.   Nothing earth shattering here.   The point of this is to demonstrate data flow functions, it is up to the reader to find something novel to do with them.
+
+Data Flow Functions is a way to run nifi flows without provisioning any resources to run your flow, instead using an AWS Lambda to execute your flow whenever it is triggered.   The lambda code is actually a nifi binary supplied by Cloudera/CDP, which is just the nifi engine.   Your lambda will know about your flow by virtue of a lambda environment variable that points to your specific flow in the CDF flow catalog.   Note that you *do not need a CDP environment to run nifi this way.*  The flow catalog actually lives in the CDP Control Plane.
 
 
-2.  Upload your flow definition to the Data Flow Catalog
-  * you don't need a cluster or even a CDP environment.   Just the catalog, which lives in the control plane.
+## Create a Flow
 
-3.  OPTIONAL:  create a machine user in CDP
-  * give them the DFCatalogViewer role (and probably sync users)
-  * store the access & seret keys somewhere
+Either in a docker container running locally or in a Data Flow data hub, build out a simple flow inside a processor group.
+
+* Create a parameter context with the name:  `NAAF_CONTEXT`
+  * add parameters for your AWS access & secret keys (Note:  AWS_ACCESS_KEY & AWS_SECRET_KEY appear to be reserved names within Lambda)
+* add an input port from local connections
+  * this will recieve the event trigger payload; bascially info from whatever has triggered our flow
+* connect it to a log attributes processor
+  * no config necessary
+* connect it to a PutS3 processor
+  * configure it to put files to an S3 bucket in your desired region (I used us-east-2)
+  * set the access & secrets to the parameters you created: i.e. `#{cloud_access_key}` 
+* add an output port named `failures` and connect the failure outputs of other processors to it; don't terminate your failures.
+
+Download your flow definition.   This is what we will upload to the CDF Flow Catalog.
+
+
+## Import Your Flow Definition to the CDF Flow Catalog
+
+You don't need a cluster or even a CDP environment.   Just the catalog, which lives in the control plane.
+
+
+## Optional:  Create a Machine User in CDP
+
+You don't have to do this, but it's probably a best practice, since you can restrict the roles to be minimal privs.  The alternative is to use your personal CDP secret & access key.   Either way your Lambda will need to gain access to CDP in order to read the data flow catalog to find your flow definition.   If you do create a machine user, be certain to save the CSV with the access & secret keys.   You will need them later.
+
+The only role the machine user needs is `DFCatalogViewer`
+
+
 
 
 4.  Create your lambda
@@ -64,7 +84,7 @@ Or use a tailored policy to restrict your lambda to just that one secret:
                 "secretsmanager:ListSecretVersionIds"
             ],
             "Resource": [
-                "arn:aws:secretsmanager:us-east-2:981304421142:secret:NAAF_CRN-ATPP1O"
+                "ARN:TO:YOUR:SECRET"
             ]
         },
         {
