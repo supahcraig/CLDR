@@ -1,12 +1,14 @@
 Basis doc is here:  https://docs.google.com/document/d/1Y5fxctYIXAOejvl-Kl9PVvuadP7VLmvwLtCNL3CEDFg/edit#
 
 
-The purpose of this lab is to use a Data Flow Function (aka serverless Nifi) to "monitor" an s3 bucket for new objects, and then put the metadata for that object into another S3 bucket.   Nothing earth shattering here.   The point of this is to demonstrate data flow functions, it is up to the reader to find something novel to do with them.
+The purpose of this lab is to use a Data Flow Function in AWS (aka serverless Nifi) to "monitor" an s3 bucket for new objects, and then put the metadata for that object into another S3 bucket.   Nothing earth shattering here.   The point of this is to demonstrate data flow functions, it is up to the reader to find something novel to do with them.
 
 Data Flow Functions is a way to run nifi flows without provisioning any resources to run your flow, instead using an AWS Lambda to execute your flow whenever it is triggered.   The lambda code is actually a nifi binary supplied by Cloudera/CDP, which is just the nifi engine.   Your lambda will know about your flow by virtue of a lambda environment variable that points to your specific flow in the CDF flow catalog.   Note that you *do not need a CDP environment to run nifi this way.*  The flow catalog actually lives in the CDP Control Plane.
 
 
-## Create a Flow
+## 1.  Create a Flow
+
+<< screen cap >>
 
 Either in a docker container running locally or in a Data Flow data hub, build out a simple flow inside a processor group.
 
@@ -24,44 +26,60 @@ Either in a docker container running locally or in a Data Flow data hub, build o
 Download your flow definition.   This is what we will upload to the CDF Flow Catalog.
 
 
-## Import Your Flow Definition to the CDF Flow Catalog
+## 2.  Import Your Flow Definition to the CDF Flow Catalog
 
 You don't need a cluster or even a CDP environment.   Just the catalog, which lives in the control plane.
 
+<< screen cap >>
 
-## Optional:  Create a Machine User in CDP
+## 2a.  Optional:  Create a Machine User in CDP
 
 You don't have to do this, but it's probably a best practice, since you can restrict the roles to be minimal privs.  The alternative is to use your personal CDP secret & access key.   Either way your Lambda will need to gain access to CDP in order to read the data flow catalog to find your flow definition.   If you do create a machine user, be certain to save the CSV with the access & secret keys.   You will need them later.
 
 The only role the machine user needs is `DFCatalogViewer`
 
 
+## 3.  Create a Lambda
 
-
-4.  Create your lambda
-  * author from scratch
+From the AWS console create a new lambda function.
+* author from scratch
   * runtime is Java 8 on Amazon Linux 2
   * x86_64 is the arch
   * << CREATE FUNCTION >>
 
-5.  Configure your lambda
-  * for the code, you'll need the binaries, which are currently held under lock & key.   Ask Pierre Villard for them.
-  * under Configuration --> Environtment variables you'll need to create 4 env vars at a minumim:
-    - DF_ACCESS_KEY for your CDP access key (for the machine use you created in #3, or your creds)
-    - DF_PRIVATE_KEY for your CDP private key  (for the machine use you created in #3, or your creds)
-    - FAILURE_PORTS matching the name of the output port in your flow.  If there are multiples, you can comma separate them
-    - FLOW_CRN corresponding to the CRN of your flow.   Note there are 2 CRN's listed in the Data Flow Catalog for each flow, you want the one with the version number appeneded to the end.
+<< screen cap >> 
 
-    If you had additional parameters in your flow, add them as environment variables here.
+
+## 4.  Configure your Lambda
+
+### Upload the Code
+
+The code itself will be an artifact you can download from the CDF UI once Data Flow Functions goes GA.  Until then it is held under lock & key; ask Pierre Villard for the link.  Downlaod it to your local machine, and then upload it it through the lambda console.
+
+### Edit Runtime Settings
+
+The handler defaults to `example.Hello::handleRequest`, but we need to change it to `com.cloudera.naaf.aws.lambda.StatelessNiFiFunctionHandler::handleRequest`
+
+<< screen cap >>
+
+### Configure Environment Variables
+
+Data Flow Functions suppors a bunch of environment variables to fine tune the flow operation.  For our purposes we only *need* 4 variables:
+
+* `DF_ACCESS_KEY`: this is the CDP access key for your machine user.
+* `DF_PRIVATE_KEY`:  this is the CDP private key for your machine user.
+* `FAILURE_PORTS`:  you created an output port in your flow and connected processor failures to it.  This is the name of that output port.
+* `FLOW_CRN`:  This is the CRN of your flow in the Flow Catalog.  Make sure you use the CRN that includes your flow's version, ending in `/v.1` or whatever the actual version number is.
+
+If your flow has other paramters defined (such as AWS credentials), you can add them here as well.  However if you have parameters you wish to keep more secure (such as AWS credentials), you may prefer to keep them in an AWS Secret.  Lambda will first look for flow paramters in the Lambda environment varialbes, but if it doesn't find them it will look for an AWS Secret with the same name as your flow's parameter context.
+
     
-    If you have any sensitive paramters (i.e. AWS acccess/secret, database password, etc) you *CAN* put them in the Lambda env var, or you can store them in an AWS Secret.  It will first check the lambda env vars for an entry matching the parameter name in the flow.   If it doesn't find it there it will look for an AWS Secret with the same name as your flow's parameter context, and then it will look inside the secret for a key matching the parameter name.
-    
-   
-6.  OPTIONAL:  Create/Configure AWS Secret
-  * create a new secret
-  * Use "other type of secret"
-  * Supply key/value pairs for your sensitive paramters, being certain that the keys match exactly with the parameter names in your flow
-  * Save the secret with the exact same name as your flow's parameter context
+### OPTIONAL:  Create/Configure an AWS Secret
+
+* create a new secret
+* Use "other type of secret"
+* Supply key/value pairs for your sensitive paramters, being certain that the keys match exactly with the parameter names in your flow
+* Save the secret with the exact same name as your flow's parameter context
 
 
 7.  Allow usage of the secret
