@@ -73,6 +73,8 @@ Data Flow Functions suppors a bunch of environment variables to fine tune the fl
 
 If your flow has other paramters defined (such as AWS credentials), you can add them here as well.  However if you have parameters you wish to keep more secure (such as AWS credentials), you may prefer to keep them in an AWS Secret.  Lambda will first look for flow paramters in the Lambda environment varialbes, but if it doesn't find them it will look for an AWS Secret with the same name as your flow's parameter context.
 
+![Lambda Environment Variables](./images/naaf-lambda-envvars)
+
     
 ### OPTIONAL:  Create/Configure an AWS Secret
 
