@@ -2,7 +2,6 @@
 # http://funnifi.blogspot.com/2016/03/executescript-json-to-json-revisited_14.html
 
 import json
-import java.io
 from datetime import datetime
 from org.apache.commons.io import IOUtils
 from java.nio.charset import StandardCharsets
