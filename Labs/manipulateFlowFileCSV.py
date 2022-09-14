@@ -1,5 +1,3 @@
-import json
-import java.io
 from datetime import datetime
 from org.apache.commons.io import IOUtils
 from java.nio.charset import StandardCharsets
