@@ -3,6 +3,9 @@ coming soon!
 
 Taken from Paul's CDE workshop.
 https://docs.google.com/document/d/1qqfII1i4spfGnhKd9rZKnpSgt9UIFE07WbuulGQxn-U/edit
+(unclear if this is being maintained or what)
+
+https://www.cloudera.com/tutorials/enrich-data-using-cloudera-data-engineering.html
 
 
 ## Assets:
