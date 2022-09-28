@@ -47,6 +47,36 @@ Wait ~90 minutes for the service to deploy.
 
 ---
 
+## Using the CLI
+
+### Create a resource
+
+Remember, when you set up the CDE CLI you pointed it at the JOBS API for your virtual cluster.  Any commands you run will be for that cluster.
+
+`cde resource create --name cli_resource`
+
+### Upload a file to a resource
+
+```
+cde resource upload --name cli_resource --local-path Pre-SetupDW.py
+cde resource upload --name cli_resource --local-path EnrichData_ETL.py
+cde resource upload --name cli_resource --local-path Hive2Iceberg.py
+cde resource upload --name cli_resource --local-path Airflow-Dag.py
+```
+
+### Creating a Job
+
+```
+cde job create --name cli_presetup --type spark --application-file /cli_resource/Pre-SetupDW.py
+cde job create --name cli_enrich --type spark --application-file /cli_resource/EnrichData_ETL.py
+cde job create --name cli_iceberg --type spark --application-file /cli_resource/Hive2Iceberg.py
+cde job create --name cli_airflow --type airflow --dag-file /cli_resource/Airflow-Dag.py
+```
+
+TODO:  figure out why the airflow job create doesn't work
+
+
+
 ## Create a Resource
 
 A Resources is basically a folder to hold any code objects you will want to create CDE jobs for.   You can upload all your code into a single resource that you will reference when you create a job.
