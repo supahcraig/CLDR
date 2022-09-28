@@ -20,17 +20,15 @@ Unzip that, and upload the 5 `csv` files to your S3 bucket.
 
 I put mine into `s3://goes-se-sandbox01/cnelson2/cde-workshop/`
 
-rename the `*.py` files to begin with your username.  For me this is `cnelson2`.  Any references to that here should be changed to your username.
 
 
-## CDP Resources
 
-* CDP env
-* CDE env
-* CDE virtual cluster
-
+---
 
 ## Pre-Requisites
+
+* A CDP Environment
+
 
 ### Create a CDP new CDE Service.  
 
@@ -47,10 +45,36 @@ Wait ~90 minutes for the service to deploy.
 * Spark Version select Spark 3.x
 * Enable Iceberg analytic tables
 
+---
 
 ## Create a Resource
 
 A Resources is basically a folder to hold any code objects you will want to create CDE jobs for.   You can upload all your code into a single resource that you will reference when you create a job.
+
+Before we upload the coad we need to make a few edits.  You will also find 4 `*.py` files under either the Spark2 or Spark3 folder.   Navigate to whichever spark version your virtual cluster was created with.  We will need to make a few small edits to each file.
+
+TODO:  turn these into CDE job arguments so you won't have to touch the code at all.
+
+### Pre-SetupDW.py
+
+Change the `s3BucketName` variable to the S3 path where you put your `csv` files.   *Do not include a trailing /*
+Change `prefix` to your CDP username (or anything you want, really...just be consistent)
+
+### EnrichData_ETL.py
+
+Change `prefix` to your CDP username (or anything you want, really...just be consistent)
+
+### Hive2Iceberg.py
+
+Change the `s3BucketName` variable to the S3 path where you put your `csv` files.   *Do not include a trailing /*
+Change `prefix` to your CDP username (or anything you want, really...just be consistent)
+
+### Airflow-Dag.py
+
+Change `prefix` to your CDP username (or anything you want, really...just be consistent)
+
+---
+
 
 ### Create a Resource
 
@@ -66,6 +90,8 @@ A Resources is basically a folder to hold any code objects you will want to crea
 * Select files and add all your code 
 * Click `Upload`
 
+
+---
 
 
 ## Create a Job / Build & enrich some Hive tables
