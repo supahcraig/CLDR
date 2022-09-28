@@ -6,7 +6,6 @@ from cloudera.cdp.airflow.operators.cde_operator import CDEJobRunOperator
 from cloudera.cdp.airflow.operators.cdw_operator import CDWOperator
 from airflow.operators.dummy_operator import DummyOperator
 
-prefix = 'cnelson2'
 
 default_args = {
     'owner': 'Airflow',
@@ -27,13 +26,13 @@ dag = DAG(
 create_step1 = CDEJobRunOperator(
     task_id='create-dwh',
     dag=dag,
-    job_name=f'{prefix}-Pre-SetupDW'
+    job_name=f'Pre-SetupDW'
 )
 
 enrich_step2 = CDEJobRunOperator(
     task_id='enrich-dwh',
     dag=dag,
-    job_name=f'{prefix}-EnrichData_ETL'
+    job_name=f'EnrichData_ETL'
 )
 
 create_step1 >> enrich_step2
