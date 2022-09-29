@@ -77,7 +77,7 @@ Change `prefix` to your CDP username (or anything you want, really...just be con
 
 
 
-## Using the CLI
+# Using the CLI
 
 ### Create a resource
 
@@ -103,6 +103,9 @@ cde job create --name cli_iceberg --type spark --application-file /cli_resource/
 cde job create --name cli_airflow --type airflow --dag-file Airflow-Dag.py --mount-1-resource cli_resource
 ```
 
+---
+
+# Using the UI
 
 
 ## Create a Resource
