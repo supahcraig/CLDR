@@ -1,4 +1,4 @@
-coming soon!
+Repo moved to supahcraig/cde_cars_lab
 
 
 Taken from Paul's CDE workshop.
