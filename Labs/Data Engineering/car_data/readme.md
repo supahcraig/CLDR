@@ -133,7 +133,7 @@ Change `prefix` to your CDP username (or anything you want, really...just be con
   * `Select from Resource`
   * Select `Pre-SetupDW.py` from the resource you just created; `Select File`
 * (don't need to touch main class, arguments, or configurations)
-  * older versions of CDE may have required this configuration:
+  * I have not found this configuration to be necessary, but Paul had it in his lab.
   * config key:  `spark.yarn.access.hadoopFileSystems`
   * config value:  `s3a://workshop8451-workshop-files,s3a://workshop8451-bucket` where those buckets correspond to where your data is?
 * Click Create & Run
