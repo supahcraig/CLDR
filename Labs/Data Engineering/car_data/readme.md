@@ -11,7 +11,7 @@ https://www.cloudera.com/tutorials/enrich-data-using-cloudera-data-engineering.h
 ## Assets:
 
 ```
-wget https://www.cloudera.com/content/dam/www/marketing/tutorials/enrich-data-using-cloudera-data-engineering/tutorial-files.zip`
+wget https://www.cloudera.com/content/dam/www/marketing/tutorials/enrich-data-using-cloudera-data-engineering/tutorial-files.zip
 ```
 
 Unzip that, and upload the 5 `csv` files to your S3 bucket.   
