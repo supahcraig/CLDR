@@ -14,6 +14,6 @@ If you have the CDP CLI already configured, it will authenticate through that us
 
 Test it:
 
-`cde jobs list`
+`cde job list`
 
 should give you a list of the jobs on your virtual cluster.   Or an empty json payload if you dont' have any jobs yet.
