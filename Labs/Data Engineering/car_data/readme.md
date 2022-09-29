@@ -103,6 +103,20 @@ cde job create --name cli_iceberg --type spark --application-file /cli_resource/
 cde job create --name cli_airflow --type airflow --dag-file Airflow-Dag.py --mount-1-resource cli_resource
 ```
 
+### Running a Job
+
+(currently this is not working, unlear if the command is the issue or if CDE is having problems)
+
+`cde job run --name cli_presetup`
+
+`cde job run --name cli_enrich`
+
+`cde job run --name cli_iceberg`
+
+
+TODO:  launch an airflow dag
+
+
 ---
 
 # Using the UI
