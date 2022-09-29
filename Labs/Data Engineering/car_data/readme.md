@@ -10,16 +10,18 @@ https://www.cloudera.com/tutorials/enrich-data-using-cloudera-data-engineering.h
 
 ## Assets:
 
+The Cloudera tutorial utilizes these assets, although some modification on them is required.   Code found in this repo simplifies this.
+
 ```
 wget https://www.cloudera.com/content/dam/www/marketing/tutorials/enrich-data-using-cloudera-data-engineering/tutorial-files.zip
 ```
+
 
 Unzip that, and upload the 5 `csv` files to your S3 bucket.   
 
 `aws s3 cp . s3://<YOUR BUCKET>/PREFIX/cde_workshop/ --recursive --exclude "*" --include "*.csv"`
 
 I put mine into `s3://goes-se-sandbox01/cnelson2/cde-workshop/`
-
 
 
 
@@ -47,39 +49,7 @@ Wait ~90 minutes for the service to deploy.
 
 ---
 
-## Using the CLI
-
-### Create a resource
-
-Remember, when you set up the CDE CLI you pointed it at the JOBS API for your virtual cluster.  Any commands you run will be for that cluster.
-
-`cde resource create --name cli_resource`
-
-### Upload a file to a resource
-
-```
-cde resource upload --name cli_resource --local-path Pre-SetupDW.py
-cde resource upload --name cli_resource --local-path EnrichData_ETL.py
-cde resource upload --name cli_resource --local-path Hive2Iceberg.py
-cde resource upload --name cli_resource --local-path Airflow-Dag.py
-```
-
-### Creating a Job
-
-```
-cde job create --name cli_presetup --type spark --application-file /cli_resource/Pre-SetupDW.py
-cde job create --name cli_enrich --type spark --application-file /cli_resource/EnrichData_ETL.py
-cde job create --name cli_iceberg --type spark --application-file /cli_resource/Hive2Iceberg.py
-cde job create --name cli_airflow --type airflow --dag-file /cli_resource/Airflow-Dag.py
-```
-
-TODO:  figure out why the airflow job create doesn't work
-
-
-
-## Create a Resource
-
-A Resources is basically a folder to hold any code objects you will want to create CDE jobs for.   You can upload all your code into a single resource that you will reference when you create a job.
+## Adjust the Code Slightly
 
 Before we upload the coad we need to make a few edits.  You will also find 4 `*.py` files under either the Spark2 or Spark3 folder.   Navigate to whichever spark version your virtual cluster was created with.  We will need to make a few small edits to each file.
 
@@ -104,6 +74,41 @@ Change `prefix` to your CDP username (or anything you want, really...just be con
 Change `prefix` to your CDP username (or anything you want, really...just be consistent)
 
 ---
+
+
+
+## Using the CLI
+
+### Create a resource
+
+Remember, when you set up the CDE CLI you pointed it at the JOBS API for your virtual cluster.  Any commands you run will be for that cluster.
+
+`cde resource create --name cli_resource`
+
+### Upload a file to a resource
+
+```
+cde resource upload --name cli_resource --local-path Pre-SetupDW.py
+cde resource upload --name cli_resource --local-path EnrichData_ETL.py
+cde resource upload --name cli_resource --local-path Hive2Iceberg.py
+cde resource upload --name cli_resource --local-path Airflow-Dag.py
+```
+
+### Creating a Job
+
+```
+cde job create --name cli_presetup --type spark --application-file /cli_resource/Pre-SetupDW.py
+cde job create --name cli_enrich --type spark --application-file /cli_resource/EnrichData_ETL.py
+cde job create --name cli_iceberg --type spark --application-file /cli_resource/Hive2Iceberg.py
+cde job create --name cli_airflow --type airflow --dag-file Airflow-Dag.py --mount-1-resource cli_resource
+```
+
+
+
+## Create a Resource
+
+A Resources is basically a folder to hold any code objects you will want to create CDE jobs for.   You can upload all your code into a single resource that you will reference when you create a job.
+
 
 
 ### Create a Resource
