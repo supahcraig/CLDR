@@ -494,9 +494,13 @@ You may find that you need to update the /etc/hosts file to add `privateIP ipa.d
 
 ---
 
+## Install IPA Client
 -- Next steps to document... create a server and set it up to connect to this IPA host
 
-`apt install freeipa-client`
+```
+sudo -i
+apt install -y freeipa-client
+```
 
 At the purple promts:
 | Prompt | Value |
