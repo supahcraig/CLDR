@@ -510,8 +510,14 @@ At the purple promts:
 | Administrative server:  | `ipa.dim.local` |
 
 
+## Update /etc/hosts
 
 Update /etc/hosts to include Private ip of ipa server with ipa.dim.local
+It should look something like this:
+`10.100.11.204 ipa.dim.local ipa`
+
+## Client Setup
+
 then run the client setup:  `ipa-client-install --mkhomedir`
 
 | Prompt | Value |
@@ -523,8 +529,8 @@ then run the client setup:  `ipa-client-install --mkhomedir`
 | Do you want to configure chrony with NTP server or pool address? | `yes` |
 | Enter NTP source server address | _Enter to skip_ |
 | Enter a NTP source pool address | _Enter to skip_ |
-| --- | --- |
 | Continue to configure the system with these values? | `yes` |
+| --- | --- |
 | User authorized to enroll computers | `admin` |
 
 (dim.local, then ipa.dim.local)
@@ -534,6 +540,10 @@ for the above you'll need to makre sure the boxes can talk to each other (same v
 To test, ssh from the broker you just set up back to the IPA server using the user you set up:
 
 `ssh cnelson@ipa.dim.local`
+
+---
+
+Next steps?   Make something do kerberos things with the IPA server.
 
 
 ---
