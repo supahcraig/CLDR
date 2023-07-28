@@ -490,6 +490,7 @@ Use your public IP to call up the freeIPA UI
 From a browser, navgate to `https://18.119.162.9`
 
 If it just spins, ensure that your secuity group is open on 443 from your IP.  It uses a self-signed cert, so your browser will tell you this is unsafe.  Tell it to pound sand, you know whay you're doing.
+You may find that you need to update the /etc/hosts file to add `privateIP ipa.dim.local`
 
 ---
 
