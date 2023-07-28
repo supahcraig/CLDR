@@ -496,6 +496,42 @@ You may find that you need to update the /etc/hosts file to add `privateIP ipa.d
 
 -- Next steps to document... create a server and set it up to connect to this IPA host
 
+`apt install freeipa-client`
+
+At the purple promts:
+| Prompt | Value |
+|---|---|
+| Kerberos 5 realm | `DIM.LOCAL` |
+| Kerberos servers: | _private IP of IPA server_ |
+| Administrative server:  | `ipa.dim.local` |
+
+
+
+Update /etc/hosts to include Private ip of ipa server with ipa.dim.local
+then run the client setup:  `ipa-client-install --mkhomedir`
+
+| Prompt | Value |
+|---|---|
+| Provide the domain name of your IPA server:  | `dim.local` |
+| Provide your IPA server name | `ipa.dim.local` |
+|---|---|
+| Proceed with fixed values and no DNS discovery? | `yes` |
+| Do you want to configure chrony with NTP server or pool address? | `yes` |
+| Enter NTP source server address | _Enter to skip_ |
+| Enter a NTP source pool address | _Enter to skip_ |
+| --- | --- |
+| Continue to configure the system with these values? | `yes` |
+| User authorized to enroll computers | `admin` |
+
+(dim.local, then ipa.dim.local)
+
+for the above you'll need to makre sure the boxes can talk to each other (same vpc, or peered with routes & secutiry group access from the broker vpc)
+
+To test, ssh from the broker you just set up back to the IPA server using the user you set up:
+
+`ssh cnelson@ipa.dim.local`
+
+
 ---
 
 ##### 🔗 Links and References
